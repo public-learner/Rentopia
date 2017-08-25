@@ -1,0 +1,26 @@
+{
+  "name": "propman",
+  "version": "1.0.0",
+  "description": "Revolutionize real-estate leasing",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "pg": "^7.2.0"
+  },
+  "devDependencies": {
+    "jest": "^20.0.4"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JorBazFanChild/PropMan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JorBazFanChild/PropMan/issues"
+  },
+  "homepage": "https://github.com/JorBazFanChild/PropMan#readme"
+}
