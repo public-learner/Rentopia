@@ -7,7 +7,9 @@
     "bluebird": "^3.5.0",
     "pg": "^7.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^20.0.4"
+  },
   "scripts": {
     "test": "jest"
   },
