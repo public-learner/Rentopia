@@ -149,5 +149,5 @@ ALTER TABLE documents ADD CONSTRAINT fk_documents_landlords FOREIGN KEY ( landlo
 
 ALTER TABLE documents ADD CONSTRAINT fk_documents_tenants FOREIGN KEY ( tenant_id ) REFERENCES tenants( tenant_id );
 
-ALTER TABLE documents ADD CONSTRAINT fk_documents_properties FOREIGN KEY ( document_id ) REFERENCES properties( property_id );
+ALTER TABLE documents ADD CONSTRAINT fk_documents_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
 
