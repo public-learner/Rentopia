@@ -4,10 +4,10 @@ const { Pool, Client } = require('pg')
 // for connection information
 const pool = new Pool()
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
+// pool.query('SELECT NOW()', (err, res) => {
+//   console.log(err, res)
+//   pool.end()
+// })
 
 // // you can also use async/await
 // const res = await pool.query('SELECT NOW()')
@@ -20,3 +20,5 @@ pool.query('SELECT NOW()', (err, res) => {
 
 // const res = await client.query('SELECT NOW()')
 // await client.end()
+
+module.exports = pool;
