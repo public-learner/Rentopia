@@ -1,22 +1,43 @@
-const { Pool, Client } = require('pg')
+const Koa = require('koa')
+const app = new Koa()
+let router = require('koa-router')()
 
-// pools will use environment variables
-// for connection information
-const pool = new Pool()
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
+// middleware
+
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  ctx.set('X-Response-Time', `${ms}ms`);
+});
+
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+});
+
+// response
+
+app.use(async ctx => {
+  ctx.body = 'Hello World';
+});
+
+// routing
+
+
+
+
+// use router
+app
+	.use(router.routes())
+	.use(router.allowedMethods())
+
+const port = process.env.PORT || 8000
+
+app.listen(port, () => {
+	console.log('Listening on port: ', port)
 })
 
-// // you can also use async/await
-// const res = await pool.query('SELECT NOW()')
-// await pool.end()
-
-// // clients will also use environment variables
-// // for connection information
-// const client = new Client()
-// await client.connect()
-
-// const res = await client.query('SELECT NOW()')
-// await client.end()
