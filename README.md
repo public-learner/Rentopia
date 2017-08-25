@@ -38,6 +38,10 @@ In another terminal:
 yarn dev:wds
 ```
 
+## Testing
+
+Uses TravisCI. See https://docs.travis-ci.com/user/notifications/#Configuring-slack-notifications for slack notification setup.
+
 Navigate to `localhost:8000`
 
 ### Roadmap
@@ -47,3 +51,4 @@ View the project roadmap [here](https://github.com/JorBazFanChild/PropMan/issues
 ## Contributing
 
 See [PRESS-RELEASE.md](https://github.com/JorBazFanChild/PropMan/blob/master/PRESS-RELEASE.md) to learn about PropMan.
+
