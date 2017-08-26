@@ -8,7 +8,12 @@ let docs = require('./routes/docs.js')
 let props = require('./routes/props.js')
 let messages = require('./routes/messages.js')
 let config = require('../webpack.config.js')
+let db = require('../db/db_config.js')
+const bodyParser = require('koa-bodyparser');
 
+// db connection
+// db now available from ctx throughout app
+app.context.db = db
 
 // middleware
 let koaWebpack = require('koa-webpack')
@@ -16,6 +21,11 @@ const middleware = koaWebpack({
   config: config
 })
 app.use(middleware)
+
+// bodyparser
+// the parsed body will store in ctx.request.body
+// if nothing was parsed, body will be an empty object {}
+app.use(bodyParser())
 
 // app.use(async (ctx, next) => {
 //   const start = Date.now();
@@ -40,7 +50,9 @@ app.use(middleware)
 // api.use('/api/messages', messages.routes())
 // api.use('/api/auth', auth.routes())
 
-
+app.use(async (ctx, next) => {
+	ctx.body = await ctx.db.query(`SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public'; `)
+})
 
 // use router
 app
