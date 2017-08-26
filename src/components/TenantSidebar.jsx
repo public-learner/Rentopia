@@ -12,7 +12,7 @@ class TenantSideBar extends Component {
 
 function mapStateToProps(state) {
 	return{
-		tenantMessage: state.tenantMessage,
+		tenantMessages: state.tenantMessages,
 		tenantDocs: state.tenantDocs
 	}
 }

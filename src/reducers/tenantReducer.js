@@ -30,3 +30,27 @@ export tenantDocs = (state = null, action) => {
 			return state;
 	}
 }
+
+export messageSelected = (state = null, action) => {
+	switch(action.type) {
+
+		case FETCH_DOCS:
+		  return action.payload;
+
+		default:
+			return state;
+	}
+}
+
+export docSelected = (state = null, action) => {
+	switch(action.type) {
+
+		case FETCH_DOCS:
+		  return action.payload;
+
+		default:
+			return state;
+	}
+}
+
+
