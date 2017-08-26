@@ -8,5 +8,5 @@ services:
   - postgresql
 before_script:
   - export PGDATABASE=leasetopia
-  - psql -c 'create database leasetopia;' -U postgres
+  - psql -c "CREATE DATABASE leasetopia;" -U postgres
   - psql -U machetedb_app_user -d postgres -a -f ./db/createdb.sql
