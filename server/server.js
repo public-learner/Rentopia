@@ -7,10 +7,17 @@ let auth = require('./routes/auth.js')
 let docs = require('./routes/docs.js')
 let props = require('./routes/props.js')
 let messages = require('./routes/messages.js')
-
+let config = require('../webpack.config.js')
 
 
 // middleware
+let koaWebpack = require('koa-webpack')
+const middleware = koaWebpack({
+  config: config
+})
+app.use(middleware({
+  config: config
+}))
 
 // app.use(async (ctx, next) => {
 //   const start = Date.now();
