@@ -1,12 +1,12 @@
 const Koa = require('koa')
 const app = new Koa()
 let api = require('koa-router')()
-let users = require('./routes/users')
-let tenants = require('./routes/tenants')
-let auth = require('./routes/auth')
-let docs = require('./routes/docs')
-let props = require('./routes/props')
-let messages = require('./routes/messages')
+let users = require('./routes/users.js')
+let tenants = require('./routes/tenants.js')
+let auth = require('./routes/auth.js')
+let docs = require('./routes/docs.js')
+let props = require('./routes/props.js')
+let messages = require('./routes/messages.js')
 
 
 
@@ -28,12 +28,12 @@ let messages = require('./routes/messages')
 
 
 // routing
-api.use('/users', users.routes())
-api.use('/tenants', tenants.routes())
-api.use('/docs', docs.routes())
-api.use('/props', props.routes())
-api.use('/messages', messages.routes())
-api.use('/auth', auth.routes())
+api.use('/api/users', users.routes())
+api.use('/api/tenants', tenants.routes())
+api.use('/api/docs', docs.routes())
+api.use('/api/props', props.routes())
+api.use('/api/messages', messages.routes())
+api.use('/api/auth', auth.routes())
 
 
 

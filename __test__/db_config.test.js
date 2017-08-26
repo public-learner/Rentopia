@@ -4,8 +4,8 @@ afterAll( () => {
 	pool.end()
 })
 //credentials should work from env variables
-test('Creds work, query successfully', () => {
-	return expect(pool.query('SELECT $1::text as greeting', ['hello world'])
+test('Creds work, query successfully', async () => {
+	await expect(pool.query('SELECT $1::text as greeting', ['hello world'])
   .then( (res) => { 
   	return res.rows[0].greeting 
   })
