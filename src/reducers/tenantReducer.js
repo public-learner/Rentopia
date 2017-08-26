@@ -1,6 +1,6 @@
-import { FETCH_RENT, FETCH_MESSAGES, FETCH_DOCS } from '../actions';
+import { FETCH_RENT, FETCH_MESSAGES, FETCH_DOCS } from '../actions/tenantDashboardGetters.js';
 
-export tenantRentDue = (state = null, action) => {
+export function tenantRentDue(state = null, action) {
 	switch(action.type) {
 		case FETCH_RENT: 
 			return action.payload;
@@ -9,7 +9,7 @@ export tenantRentDue = (state = null, action) => {
 			return state;
 	}
 }
-export tenantMessages = (state = null, action) => {
+export function tenantMessages(state = null, action) {
 	switch(action.type) {
 
 		case FETCH_MESSAGES:
@@ -20,7 +20,7 @@ export tenantMessages = (state = null, action) => {
 	}
 }
 
-export tenantDocs = (state = null, action) => {
+export function tenantDocs(state = null, action) {
 	switch(action.type) {
 
 		case FETCH_DOCS:
@@ -31,7 +31,7 @@ export tenantDocs = (state = null, action) => {
 	}
 }
 
-export messageSelected = (state = null, action) => {
+export function selectedTenantMessage(state = null, action) {
 	switch(action.type) {
 
 		case FETCH_DOCS:
@@ -42,7 +42,7 @@ export messageSelected = (state = null, action) => {
 	}
 }
 
-export docSelected = (state = null, action) => {
+export function selectedTenantDoc(state = null, action) {
 	switch(action.type) {
 
 		case FETCH_DOCS:

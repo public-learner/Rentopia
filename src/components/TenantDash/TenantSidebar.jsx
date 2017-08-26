@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class TenantSideBar extends Component {
+
+	componentDidMount() {
+		console.log('hhheeeerrrrooooo')
+	}
 	render() {
 		return (
 			<div>
+			YOOOOOO
 			</div>
 		)
 	}

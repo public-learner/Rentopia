@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRentDue, getMessages, getDocs} from '../actions/tenantDashboardGetters';
-import TenantSidebar from './TenantSidebar';
+import { bindActionCreators } from 'redux';
+import { getRentDue, getMessages, getDocs} from '../../actions/tenantDashboardGetters';
+import TenantSidebar from './TenantSidebar.jsx';
 
 class TenantDashboard extends Component {
 
   componentWillMount() {
-  	const id = this.props.userId
-  	this.props.getRentDue(id)
-  	this.props.getMessages(id)
-  	this.props.getDocs(id)
+    console.log('hererererere')
+  	// const id = this.props.userId
+  	// this.props.getRentDue(id)
+  	// this.props.getMessages(id)
+  	// this.props.getDocs(id)
   }
 
   render() {
   	return (
-      <div>
-        <Switch>
-        </Switch>
+      <div> Hello World!
+      <TenantSidebar />
       </div>
   	)
   }
@@ -24,7 +25,7 @@ class TenantDashboard extends Component {
 
 function mapStateToProps(state) {
 	return {
-		userId: state.user.userId,
+		// userId: state.user.userId,
 		tenantRentDue: state.tenantRentDue,
 		tenantMessage: state.tenantMessage,
 		tenantDocs: state.tenantDocs

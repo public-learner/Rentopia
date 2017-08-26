@@ -6,7 +6,7 @@ export const FETCH_DOCS = 'fetch_docs_for_tenant_user';
 
 const ROOT_URL = 'http://127.0.0.1:3302/' // get user's rent url
 
-export getRentDue = (id) => {
+export function getRentDue(id) {
 	const request = axios.get(`${ROOT_URL}/rent`, {params: {id: id}})
 	// axios is a async helper that was imported
 
@@ -18,7 +18,7 @@ export getRentDue = (id) => {
 	}
 }
 
-export getMessages = (id) => {
+export function getMessages(id) {
 	const request = axios.get(`${ROOT_URL}/messages`, {params: {id: id}})
 
 	return {
@@ -27,7 +27,7 @@ export getMessages = (id) => {
 	}
 }
 
-export getDocs = (id) => {
+export function getDocs(id) {
 	const request = axios.get(`${ROOT_URL}/docs`, {params: {id: id}})
 
 	return {
