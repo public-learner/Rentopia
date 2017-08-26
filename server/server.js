@@ -43,16 +43,16 @@ app.use(bodyParser())
 
 
 // routing
-// api.use('/api/users', users.routes())
-// api.use('/api/tenants', tenants.routes())
-// api.use('/api/docs', docs.routes())
-// api.use('/api/props', props.routes())
-// api.use('/api/messages', messages.routes())
-// api.use('/api/auth', auth.routes())
+api.use('/api/users', users.routes())
+api.use('/api/tenants', tenants.routes())
+api.use('/api/docs', docs.routes())
+api.use('/api/props', props.routes())
+api.use('/api/messages', messages.routes())
+api.use('/api/auth', auth.routes())
 
-app.use(async (ctx, next) => {
-	ctx.body = await ctx.db.query(`SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public'; `)
-})
+// app.use(async (ctx, next) => {
+// 	//ctx.body = await ctx.db.query(`SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public'; `)
+// })
 
 // use router
 app
