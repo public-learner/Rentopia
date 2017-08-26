@@ -4,5 +4,6 @@ const { Pool, Client } = require('pg')
 // for connection information
 const pool = new Pool()
 
-
-module.exports = pool;
+module.exports = {
+	query: (text, params) => pool.query(text, params)
+}
