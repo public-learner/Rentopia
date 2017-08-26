@@ -7,6 +7,6 @@ notifications:
 services:
   - postgresql
 before_script:
+  - psql -U postgres -c "CREATE DATABASE leasetopia;"
   - export PGDATABASE=leasetopia
-  - psql -c "CREATE DATABASE leasetopia;" -U postgres
-  - psql -U machetedb_app_user -d postgres -a -f ./db/createdb.sql
+  - psql -U postgres -d leasetopia -a -f ./db/createdb.sql
