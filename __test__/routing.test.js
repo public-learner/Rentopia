@@ -1,3 +1,3 @@
 test('return null', () => {
-	expect(null).toBe(null)
+  expect(null).toBe(null)
 })
