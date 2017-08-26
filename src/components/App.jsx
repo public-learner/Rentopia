@@ -16,13 +16,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('Inside TenantDashboard.jsx')
-    // const id = this.props.userId
-    this.props.getMessages()
-    this.props.getDocs()
-    this.props.getRentDue()
-    // this.props.getMessages(id)
-    // this.props.getDocs(id)
+
   }
 
   render() {
@@ -30,14 +24,15 @@ class App extends React.Component {
     return(
       <div>
         {!this.state.loggedIn && <Splash />}
-        <Tenant />
       </div>
     )
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({getMessages, getDocs, getRentDue}, dispatch)
-}
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({getMessages, getDocs, getRentDue}, dispatch)
+// }
 
-export default connect(null, mapDispatchToProps)(App) 
+export default App
+
+// export default connect(null, mapDispatchToProps)(App) 
