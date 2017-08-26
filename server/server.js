@@ -15,9 +15,7 @@ let koaWebpack = require('koa-webpack')
 const middleware = koaWebpack({
   config: config
 })
-app.use(middleware({
-  config: config
-}))
+app.use(middleware)
 
 // app.use(async (ctx, next) => {
 //   const start = Date.now();
@@ -35,12 +33,12 @@ app.use(middleware({
 
 
 // routing
-api.use('/api/users', users.routes())
-api.use('/api/tenants', tenants.routes())
-api.use('/api/docs', docs.routes())
-api.use('/api/props', props.routes())
-api.use('/api/messages', messages.routes())
-api.use('/api/auth', auth.routes())
+// api.use('/api/users', users.routes())
+// api.use('/api/tenants', tenants.routes())
+// api.use('/api/docs', docs.routes())
+// api.use('/api/props', props.routes())
+// api.use('/api/messages', messages.routes())
+// api.use('/api/auth', auth.routes())
 
 
 
