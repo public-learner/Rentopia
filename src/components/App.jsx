@@ -17,14 +17,7 @@ class App extends React.Component {
     return(
       <div>
         {!this.state.loggedIn && <Splash />}
-<<<<<<< HEAD
-<<<<<<< HEAD
         <Tenant />
-=======
-        <Blah />
->>>>>>> setting up routing for either login or signup
-=======
->>>>>>> server connected to webpack
       </div>
     )
   }
