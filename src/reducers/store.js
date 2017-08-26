@@ -1,8 +1,13 @@
 import { combineReducers } from 'redux';
-// import RentTotalReducer from './rentTotalReducer';
+import { tenantRentDue, tenantMessages, tenantDocs, selectedTenantMessage, selectedTenantDoc } from './tenantReducer';
 
 const rootReducer = combineReducers({
-  //rentTotalDue: RentTotalReducer
+  tenantRentDue: tenantRentDue,
+  tenantMessages: tenantMessages,
+  tenantDocs: tenantDocs,
+  selectedTenantMessage: selectedTenantMessage,
+  selectedTenantDoc: selectedTenantDoc
+
 });
 
 export default rootReducer;

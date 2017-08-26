@@ -2,6 +2,7 @@ import React from 'react'
 // import landlord main component
 // import tenant main component
 import Splash from './Splash/splash.jsx'
+import Tenant from './TenantDash/TenantDashboard.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends React.Component {
     return(
       <div>
         {!this.state.loggedIn && <Splash />}
+        <Tenant />
       </div>
     )
   }
