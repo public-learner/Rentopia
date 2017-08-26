@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
-import { tenantRentDue, tenantMessages, tenantDocs, selectedTenantMessage, selectedTenantDoc } from './tenantReducer';
+import { tenantRentDue, tenantMessages, tenantDocs, selectedTenantMedia } from './tenantReducer';
 
 const rootReducer = combineReducers({
   tenantRentDue: tenantRentDue,
   tenantMessages: tenantMessages,
   tenantDocs: tenantDocs,
-  selectedTenantMessage: selectedTenantMessage,
-  selectedTenantDoc: selectedTenantDoc
+  selectedTenantMedia: selectedTenantMedia
 
 });
 

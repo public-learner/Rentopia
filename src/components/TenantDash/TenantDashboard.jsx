@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getRentDue, getMessages, getDocs} from '../../actions/tenantDashboardGetters';
+// import { bindActionCreators } from 'redux';
 import TenantSidebar from './TenantSidebar.jsx';
 
 class TenantDashboard extends Component {
 
-  componentWillMount() {
-    console.log('hererererere')
-  	// const id = this.props.userId
-  	// this.props.getRentDue(id)
-  	// this.props.getMessages(id)
-  	// this.props.getDocs(id)
-  }
+  // I will be populating the Messages and Docs data from Database
 
   render() {
   	return (
-      <div> Hello World!
+      <div>
       <TenantSidebar />
+      <div style={{marginRight: "300px", float: "right", width: "50%", height: "350px", border: "1px solid gray"}}>
+        <h3> Header </h3>
+        <p> {this.props.media} </p>
+      </div>
+        <p style={{width: "100%", float: "right", textAlign: "center"}}>
+          Rent Due: {this.props.tenantRentDue}
+          <button> Make Payment </button>
+        </p>
       </div>
   	)
   }
@@ -25,15 +26,9 @@ class TenantDashboard extends Component {
 
 function mapStateToProps(state) {
 	return {
-		// userId: state.user.userId,
 		tenantRentDue: state.tenantRentDue,
-		tenantMessage: state.tenantMessage,
-		tenantDocs: state.tenantDocs
+    media: state.selectedTenantMedia
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators({getRentDue: getRentDue, getMessages: getMessages, getDocs: getDocs}, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TenantDashboard)
+export default connect(mapStateToProps)(TenantDashboard)
