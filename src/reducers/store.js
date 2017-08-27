@@ -6,7 +6,7 @@ const rootReducer = combineReducers({
   tenantRentDue: tenantRentDue,
   tenantMessages: tenantMessages,
   tenantDocs: tenantDocs,
-  selectedTenantMedia: selectedTenantMedia
+  selectedTenantMedia: selectedTenantMedia,
   userSignin: userSignin
 
 });

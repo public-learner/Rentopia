@@ -14,7 +14,6 @@ class Login extends React.Component {
 
   handleSignin(e) {
     e.preventDefault()
-    console.log(e.target.password.value)
     this.props.signinUser({
       name: e.target.email.value,
       price: e.target.password.value
@@ -27,7 +26,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="loginForm">
-        <form id="loginForm" onSubmit={this.handleSignin.bind(this)}>
+        <form onSubmit={this.handleSignin.bind(this)}>
           <label>Email Address</label><input ref="emailInput" name="email"></input>
           <label>Password</label><input ref="passwordInput" name="password" type="password"></input>
           <button type="submit">Submit</button>
