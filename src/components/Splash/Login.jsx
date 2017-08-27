@@ -15,8 +15,8 @@ class Login extends React.Component {
   handleSignin(e) {
     e.preventDefault()
     this.props.signinUser({
-      name: e.target.email.value,
-      price: e.target.password.value
+      email: e.target.email.value,
+      password: e.target.password.value
     })
 
     e.target.email.value = ''

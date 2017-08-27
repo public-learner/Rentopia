@@ -1,11 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { signupUser } from '../../actions/authGetters'
 
 class Signup extends React.Component {
 
   handleSignup(e) {
     e.preventDefault()
-    console.log('hello')
-
+    this.props.signupUser({
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+      userType: e.target.userType.value        
+    })
     e.target.firstName.value = ''
     e.target.lastName.value = ''
     e.target.email.value = ''
@@ -20,6 +29,11 @@ class Signup extends React.Component {
           <label>Last Name</label><input ref="lastNameInput" name="lastName"></input>
           <label>Email Address</label><input ref="emailInput" name="email"></input>
           <label>Password</label><input ref="passwordInput" name="password" type="password"></input>
+          <label>User Type</label>
+            <select name="userType">
+              <option value="tenant">Tenant</option>
+              <option value="landlord">Landlord</option>
+            </select>
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -27,4 +41,8 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({signupUser: signupUser}, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(Signup)

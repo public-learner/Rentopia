@@ -16,10 +16,10 @@ export function signinUser(credentials) {
 
 export function signupUser(credentials) {
   const request = axios.post(`${ROOT_URL}/signin`, {
-      email: credentials.email,
-      password: credentials.password,
       firstName: credentials.firstName,
       lastName: credentials.lastName,
+      email: credentials.email,
+      password: credentials.password,
       userType: credentials.userType
     })
   return {
