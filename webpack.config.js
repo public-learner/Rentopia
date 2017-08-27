@@ -22,7 +22,7 @@ const config = {
           use: 'css-loader'
         }),
         test: /\.css$/
-      },
+      }
     ]
   },
   plugins: [

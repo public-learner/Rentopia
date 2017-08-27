@@ -4,7 +4,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <h2>Signup</h2>
+      <h2>Signup Page</h2>
     )
   }
 }
