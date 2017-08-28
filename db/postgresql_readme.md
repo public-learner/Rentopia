@@ -1,7 +1,7 @@
 # Instructions for PostgreSQL installation
 
 # Install postgreSQL using brew
-brew install postgres
+brew install postgresql
 
 # Install postgres module for node.js
 npm install -g pg
