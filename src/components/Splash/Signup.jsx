@@ -9,11 +9,12 @@ class Signup extends React.Component {
 
   handleSignup(e) {
     e.preventDefault()
+    let isLandlord = (e.target.userType.value === 'landlord')
     this.props.signupUser({
       name: e.target.name.value,
       email: e.target.email.value,
       password: e.target.password.value,
-      userType: e.target.userType.value        
+      isLandlord: isLandlord        
     })
     e.target.firstName.value = ''
     e.target.lastName.value = ''

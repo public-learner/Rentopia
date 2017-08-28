@@ -21,3 +21,8 @@
 .signupSelect {
   text-align: left;
 }
+
+.paymentForm {
+  width: 50%;
+  margin: 0 auto;
+}

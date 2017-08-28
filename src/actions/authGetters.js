@@ -5,12 +5,12 @@ export const USER_SIGNUP = 'user_signup'
 
 export function signupUser(credentials) {
   const request = axios.post(`${ROOT_URL}/signup`, {
-      firstName: credentials.firstName,
-      lastName: credentials.lastName,
+      name: credentials.name,
       email: credentials.email,
       password: credentials.password,
-      userType: credentials.userType
+      isLandlord: credentials.isLandlord
     })
+
   return {
     type: USER_SIGNUP,
     payload: request
