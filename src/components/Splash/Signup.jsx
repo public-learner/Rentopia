@@ -10,8 +10,7 @@ class Signup extends React.Component {
   handleSignup(e) {
     e.preventDefault()
     this.props.signupUser({
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
+      name: e.target.name.value,
       email: e.target.email.value,
       password: e.target.password.value,
       userType: e.target.userType.value        
@@ -24,20 +23,22 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="signupForm">
-        <form onSubmit={this.handleSignup.bind(this)}>
-          <label>First Name</label><input ref="firstNameInput" name="firstName"></input>
-          <label>Last Name</label><input ref="lastNameInput" name="lastName"></input>
-          <label>Email Address</label><input ref="emailInput" name="email"></input>
-          <label>Password</label><input ref="passwordInput" name="password" type="password"></input>
-          <label>User Type</label>
+      <div>
+        <form className="signupForm" onSubmit={this.handleSignup.bind(this)}>
+          <input className="signupInput" name="name" placeholder="Full Name"></input>
+          <input className="signupInput" name="email" placeholder="Email"></input>
+          <input className="signupInput" name="password" type="password" placeholder="Password"></input>
+          <div className="signupSelect">
+            <label>User Type</label>
+            <br/>
             <select name="userType">
               <option value="tenant">Tenant</option>
               <option value="landlord">Landlord</option>
             </select>
-          <button type="submit">Submit</button>
+          </div>
+          <button className="signupButton" type="submit">Create Account</button>
         </form>
-        <div>Have an account? <Link to='/' className="link">Signin</Link></div>
+        <div>Have an account? <Link to='/' className="link">Log in</Link></div>
       </div>
     )
   }

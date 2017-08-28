@@ -3,19 +3,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 
-import { signinUser } from '../../actions/authGetters'
+import { loginUser } from '../../actions/authGetters'
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
 
-    }
-  }
-
-  handleSignin(e) {
+  handleLogin(e) {
     e.preventDefault()
-    this.props.signinUser({
+    this.props.loginUser({
       email: e.target.email.value,
       password: e.target.password.value
     })
@@ -26,21 +20,20 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="loginForm">
-        <form onSubmit={this.handleSignin.bind(this)}>
-          <label>Email Address</label><input ref="emailInput" name="email"></input>
-          <label>Password</label><input ref="passwordInput" name="password" type="password"></input>
-          <button type="submit">Submit</button>
+      <div>
+        <form className="loginForm" onSubmit={this.handleLogin.bind(this)}>
+          <input className="loginInput" name="email" placeholder="Email"></input>
+          <input className="loginInput" name="password" type="password" placeholder="Password"></input>
+          <button className="loginButton" type="submit">Log in</button>
         </form>
-        <div>Don't have an account? <Link to='/signup' className="link">Signup</Link></div>
+        <div>Don't have an account? <Link to='/signup' className="link">Sign up</Link></div>
       </div>
-
     )
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({signinUser: signinUser}, dispatch)
+  return bindActionCreators({loginUser: loginUser}, dispatch)
 }
 
 export default connect(null, mapDispatchToProps)(Login)

@@ -1,18 +1,7 @@
 import axios from 'axios'
 
-export const CHECK_USER_SIGNIN = 'check_user_signin'
-export const CHECK_USER_SIGNUP = 'check_user_signup'
-
-export function signinUser(credentials) {
-  const request = axios.post(`${ROOT_URL}/signin`, {
-      email: credentials.email,
-      password: credentials.password
-    })
-  return {
-    type: CHECK_USER_SIGNIN,
-    payload: request
-  }
-}
+export const USER_LOGIN = 'user_login'
+export const USER_SIGNUP = 'user_signup'
 
 export function signupUser(credentials) {
   const request = axios.post(`${ROOT_URL}/signup`, {
@@ -23,7 +12,19 @@ export function signupUser(credentials) {
       userType: credentials.userType
     })
   return {
-    type: CHECK_USER_SIGNUP,
+    type: USER_SIGNUP,
+    payload: request
+  }
+}
+
+export function loginUser(credentials) {
+  const request = axios.post(`${ROOT_URL}/login`, {
+      email: credentials.email,
+      password: credentials.password
+    })
+  // request should have userId, rentDue, messages, docs, media
+  return {
+    type: USER_LOGIN,
     payload: request
   }
 }
