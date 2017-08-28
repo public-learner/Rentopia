@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Navbar } from 'react-bootstrap'
 
-const Nav = () => (
+const SplashNavBar = () => (
   <header>
     <nav>
       <ul>
@@ -12,4 +13,4 @@ const Nav = () => (
   </header>
 )
 
-export default Nav
+export default SplashNavBar

@@ -1,0 +1,28 @@
+.loginForm, .signupForm {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 10px 30px 10px 30px;
+  text-align: center;
+}
+
+.loginInput, .signupInput {
+  display: block;
+  margin: 0px;
+}
+
+.loginButton, .signupButton {
+  width: 100%;
+}
+
+.signup label {
+  float: left;
+}
+
+.signupSelect {
+  text-align: left;
+}
+
+.paymentForm {
+  width: 50%;
+  margin: 0 auto;
+}
