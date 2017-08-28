@@ -15,7 +15,7 @@ export function signinUser(credentials) {
 }
 
 export function signupUser(credentials) {
-  const request = axios.post(`${ROOT_URL}/signin`, {
+  const request = axios.post(`${ROOT_URL}/signup`, {
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       email: credentials.email,

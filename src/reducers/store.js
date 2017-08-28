@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
 import { tenantRentDue, tenantMessages, tenantDocs, selectedTenantMedia } from './tenantReducer';
-import { userSignin } from './authReducer'
+import { userSignin, userSignup } from './authReducer'
 
 const rootReducer = combineReducers({
   tenantRentDue: tenantRentDue,
   tenantMessages: tenantMessages,
   tenantDocs: tenantDocs,
   selectedTenantMedia: selectedTenantMedia,
-  userSignin: userSignin
+  userSignin: userSignin,
+  userSignup: userSignup
 
 });
 

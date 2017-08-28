@@ -1,9 +1,19 @@
-import { CHECK_USER_SIGNIN } from '../actions/authGetters'
+import { CHECK_USER_SIGNIN, CHECK_USER_SIGNUP } from '../actions/authGetters'
 
 export function userSignin(state = null, action) {
   switch(action.type) {
     case CHECK_USER_SIGNIN: 
-      return action.payload.userId;
+      return action.payload.userId
+
+    default:
+      return state;
+  }
+}
+
+export function userSignin(state = null, action) {
+  switch(action.type) {
+    case CHECK_USER_SIGNUP: 
+      return action.payload.userId
 
     default:
       return state;
