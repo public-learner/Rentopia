@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router-dom'
 
 import { signinUser } from '../../actions/authGetters'
 
@@ -31,6 +32,7 @@ class Login extends React.Component {
           <label>Password</label><input ref="passwordInput" name="password" type="password"></input>
           <button type="submit">Submit</button>
         </form>
+        <div>Don't have an account? <Link to='/signup' className="link">Signup</Link></div>
       </div>
 
     )

@@ -10,7 +10,6 @@ class Splash extends React.Component {
   render() {
     return (
       <div>
-        <SplashNavBar />
         <main>
           <Switch>
             <Route exact path='/' component={Login} />

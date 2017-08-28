@@ -10,7 +10,7 @@ export function userSignin(state = null, action) {
   }
 }
 
-export function userSignin(state = null, action) {
+export function userSignup(state = null, action) {
   switch(action.type) {
     case CHECK_USER_SIGNUP: 
       return action.payload.userId
