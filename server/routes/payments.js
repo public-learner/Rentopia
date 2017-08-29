@@ -41,9 +41,16 @@ router
     ctx.body = 'Successful payment'
   })
   .post('/submerchantCreation', async ctx => {
-    console.log(ctx.request.body.merchantAccountParams)
-    ctx.response.status = 201
-    ctx.body = 'Succesful payment setup'
+    ctx.request.body.merchantAccountParams.masterMerchantAccountId = config.MERCHANT_ACCOUNT_ID
+    let merchantAccountParams = ctx.request.body.merchantAccountParams
+    console.log(merchantAccountParams)
+
+    await gateway.merchantAccount.create(merchantAccountParams, function(err,result) {
+      console.log(result)
+    })
+
+    // ctx.response.status = 201
+    // ctx.body = 'Succesful payment setup'
   }) 
 
 module.exports = {
