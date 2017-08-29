@@ -1,10 +1,10 @@
 let router = require('koa-router')()
 
-let createLandlord = async (ctx, landlord) => {
+let createLandlord = async (ctx, user) => {
 	console.log(`creating landlord.........`)
-	let ll = await ctx.db.query(`INSERT INTO landlords (landlord_name, user_id) VALUES ('${landlord.name}', ${landlord.user.user_id}) RETURNING *`)
+	let ll = await ctx.db.query(`INSERT INTO landlords (landlord_name, user_id) VALUES ('${landlord.user_name}', ${landlord.user.user_id}) RETURNING *`)
 	// console.log(ll)
-	return ll
+	return ll.rows[0]
 }
 
 
@@ -13,9 +13,7 @@ router
 
 	})
 	.post('/add', async (ctx, next) => {
-		// console.log(ctx.request.landlord)
-		console.log('hello, dave')
-		ctx.body = `hello, dave`
+		
 	})
 
 

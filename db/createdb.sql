@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS users, landlords, properties, tenants, messages, transactio
 
 CREATE TABLE users ( 
 	user_id              SERIAL NOT NULL,
+	user_name						 text ,
 	email                text  NOT NULL,
 	user_password        text  NOT NULL,
 	creditcard           text  ,
@@ -14,7 +15,6 @@ CREATE TABLE users (
 
 CREATE TABLE landlords ( 
 	landlord_id          SERIAL NOT NULL,
-	landlord_name        text  ,
 	payment_set_up       bool DEFAULT false ,
 	created_date         date DEFAULT current_date ,
 	user_id              integer  NOT NULL,
@@ -42,7 +42,7 @@ ALTER TABLE properties ADD CONSTRAINT fk_properties_landlords FOREIGN KEY ( land
 
 CREATE TABLE tenants ( 
 	tenant_id            SERIAL NOT NULL,
-	name                 text  ,
+	tenant_email				 text NOT NULL ,
 	rent                 integer DEFAULT 0 NOT NULL,
 	property_id          integer  NOT NULL,
 	is_active            bool DEFAULT true NOT NULL,
