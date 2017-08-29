@@ -9,6 +9,7 @@ class Login extends React.Component {
 
   handleLogin(e) {
     e.preventDefault()
+    console.log(this)
     this.props.loginUser({
       email: e.target.email.value,
       password: e.target.password.value
