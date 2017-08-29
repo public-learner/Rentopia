@@ -31,8 +31,9 @@ class PaymentSetup extends React.Component {
     if (!this.state.bankIsSelected) {
       if (e.target.venmoEmail) {
         destination = 'email'
+      } else {  
+        destination = 'mobile_phone'
       }
-      destination = 'mobile_phone'
       accountNum = ''
       routingNum = ''
       phoneNum = e.target.phoneNum.value,
