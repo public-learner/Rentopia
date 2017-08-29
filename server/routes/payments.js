@@ -21,20 +21,10 @@ router
         submitForSettlement: true
       }
     })
+    let paymentIdentifier = new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
     ctx.response.status = 201
     ctx.body = 'Successful payment'
 
-    // gateway.transaction.sale({
-    //   amount: "100.00",
-    //   paymentMethodNonce: 'fake-valid-nonce',
-    //   options: {
-    //     submitForSettlement: true
-    //   }
-    // }, await function (err, result) {
-    //   console.log('PAID')
-    //   ctx.response.status = 201
-    //   ctx.body = 'Successful payment'
-    // });
   }) 
 
 module.exports = router
