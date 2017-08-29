@@ -91,7 +91,7 @@ ALTER TABLE messages ADD CONSTRAINT fk_messages_users_recipient FOREIGN KEY ( re
 
 CREATE TABLE transactions ( 
 	transaction_id       SERIAL NOT NULL,
-	paypal_id            integer  ,
+	payment_identifier   text  ,
 	transaction_amount   numeric  ,
 	sender_id            integer  ,
 	recipient_id         integer  ,

@@ -20,9 +20,22 @@ const createNewTenant = async (ctx, user, property) => {
 	}
 }
 
+const retrieveActiveTenantData = async (ctx, tenant) => {
+	let property, docs, messages, transactions
+	property = await props.getProperty(ctx, tenant.property_id)
+	//docs will return as {tenant docs, propertyDocs}
+	docs = await docs.getTenantDocs(ctx, tenant)
+	// messages will return as {sentMessages[], receivedMessages[], broadcasts[]}
+	messages = await messages.getTenantMessages(ctx, tenant)
+	//transactions = await getTenantTransactions(ctx, tenant)
+	output = {tenant: tenant, property: property, messages: messages, docs: docs}
+	return output
+}
+
 module.exports = {
 	routes: router,
 	updateTenant: updateTenant,
 	createNewTenant: createNewTenant,
 	checkForActiveTenant: checkForActiveTenant,
+	retrieveActiveTenantData: retrieveActiveTenantData,
 }

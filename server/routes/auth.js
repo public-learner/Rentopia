@@ -4,66 +4,83 @@ let landlords = require('./landlords.js')
 let props = require('./props.js')
 
 
-const retrieveActiveTenantData = async (ctx, tenant) => {
-	let property, docs, messages, transactions
-	property = await props.getProperty(ctx, tenant.property_id)
-	//docs will return as {tenant docs, propertyDocs}
-	docs = await docs.getTenantDocs(ctx, tenant)
-	// messages will return as {sentMessages[], receivedMessages[], broadcasts[]}
-	messages = await messages.getTenantMessages(ctx, tenant)
-	//transactions = await getTenantTransactions(ctx, tenant)
-	output = {tenant: tenant, property: property, messages: messages, docs: docs}
-	return output
+const getUserByEmail = async (ctx) => {
+	let userRows
+	userRows = await ctx.db.query(`SELECT * FROM users WHERE email = '${ctx.request.body.email}';`)
+	return userRows.rows[0]
 }
 
+const createUser = async (ctx) => {
+	let userRows
+	userRows = await ctx.db.query(`INSERT INTO users (email, user_password, is_landlord) VALUES ('${ctx.request.body.email}', '${ctx.request.body.password}', ${ctx.request.body.isLandlord}) RETURNING *;`)
+	return userRows.rows[0]
+}
 
-//signup
+// Signup
 auth
 	.post('/signup', async (ctx, next) => {
-		//data stored in ctx.request.body
+		// data stored in ctx.request.body
 		let output, user;
-		user = await ctx.db.query(`SELECT * FROM users WHERE email = '${ctx.request.body.email}';`)
-		if(user.rowCount !== 0) {
-			// Send error, user already exists
+		user = await getUserByEmail(ctx)
+		if(user) {
+			// send error, user already exists
 			ctx.response.status = 418
 			ctx.body = `User already exists`
 		} else {
-			const userRows = await ctx.db.query(`INSERT INTO users (email, user_password, is_landlord) VALUES ('${ctx.request.body.email}', '${ctx.request.body.password}', ${ctx.request.body.isLandlord}) RETURNING *;`)
-			user = userRows.rows[0]
+			// create new user record here
+			user = createUser(ctx)
 
 			const isLandlord = ctx.request.body.isLandlord
 			// we created a user. Now we want to make a matching landlord record OR tenant record for them.
 			if(isLandlord){
-				//if it's a landlord, create it
+				// if it's a landlord, create it
 				const landlordOut = await landlords.createLandlord(ctx, user)
-				//return the user that was created and the landlord that was created
+				// return the user that was created and the landlord that was created
 				output = {user: user, landlord: landlordOut}
 			} else {
 				let tenant
 				// see if there is an active tenant, via email
 				tenant = await tenants.checkForActiveTenant(ctx, user)
 				if(tenant) {
-					//if yes, link tenant to user and return user, tenant, and property
+					// if yes, link tenant to user and return user, tenant, and property
 					tenant = await tenants.updateTenant(ctx, user, tenant)
-					//retrieve the tenant data for this tenant
-					output = await retrieveActiveTenantData(ctx, tenant)
+					// retrieve the tenant data for this tenant
+					output = await tenants.retrieveActiveTenantData(ctx, tenant)
 					output.user = user
 				} else {
-					//if not, create new tenant user not associated to a property
+					// if not, create new tenant user not associated to a property
 					tenant = await tenants.createNewTenant(ctx, user)
 					output = {user: user, tenant: tenant, property: property}
 				}
 			}
 			ctx.body = output
+		} // end User Does Not Exist
+	}) //end signup
+
+// Sign in
+	.get(`/signin`, async (ctx, next) => {
+		// insert actual user auth here
+		let user, tenant, landlord, output
+		user = await getUserByEmail(ctx)
+		if(user.is_landlord) {
+			//landlord = await landlords.getLandlord(ctx, user)
+		} else {
+			tenant = await checkForActiveTenant(ctx, user)
+			if(tenant) {
+				//all gucci
+				output = await tenants.retrieveActiveTenantData(ctx, tenant)
+				output.user = user
+			} else {
+				ctx.response.status = 402
+				ctx.body = `WOOP WOOP WOOP -- Forbidden`
+			}
 		}
-	})
-
-
-//signin
-
+		ctx.body = output
+	}) // end sign in
 
 
 
 module.exports = {
 	routes: auth,
+	getUserByEmail: getUserByEmail,
 }
