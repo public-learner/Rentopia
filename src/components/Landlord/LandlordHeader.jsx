@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const SplashNavBar = () => (
+const Header = () => (
   <Navbar className="navbar" inverse collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand className="brand">
@@ -11,10 +11,10 @@ const SplashNavBar = () => (
     </Navbar.Header>
     <Nav>
       <NavItem>
-        <Link to='/proprietor' className="link">Landlord Dashboard</Link>
+        <Link to='/proprietor/properties' className="link">Properties</Link>
       </NavItem>
       <NavItem>
-        <Link to='/tenant' className="link">Tenant Dashboard</Link>
+        <Link to='/proprietor/tenants' className="link">Tenants</Link>
       </NavItem>
     </Nav>
     <Nav pullRight>
@@ -23,6 +23,6 @@ const SplashNavBar = () => (
       </NavItem>
     </Nav>
   </Navbar>
-)
+);
 
-export default SplashNavBar
+export default Header;
