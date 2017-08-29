@@ -26,22 +26,15 @@ const SplashNavBar = () => (
     <Nav pullRight>
       <NavItem>
         <Dropdown>
-             <DropdownTrigger>Profile</DropdownTrigger>
-             <DropdownContent>
-                 <img src="avatar.jpg" /> Username
-                 <ul>
-                     <li>
-                         <a href="/profile">Profile</a>
-                     </li>
-                     <li>
-                         <a href="/favorites">Favorites</a>
-                     </li>
-                     <li>
-                         <a href="/logout">Log Out</a>
-                     </li>
-                 </ul>
-             </DropdownContent>
-         </Dropdown>
+          <DropdownTrigger>Profile</DropdownTrigger>
+          <DropdownContent>
+            <img src="avatar.jpg" /> Username
+            <ul>
+              <Link className="logout" to={'/logout'}>Logout</Link>
+              <Link className="logout" to={'/profile'}>Your Profile</Link>
+            </ul>
+          </DropdownContent>
+        </Dropdown>
       </NavItem>
     </Nav>
   </Navbar>
