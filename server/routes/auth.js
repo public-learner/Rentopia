@@ -2,7 +2,7 @@ let auth = require('koa-router')()
 let tenants = require('./tenants.js')
 let landlords = require('./landlords.js')
 let props = require('./props.js')
-
+let payments = require('./payments.js')
 
 const getUserByEmail = async (ctx) => {
 	let userRows
@@ -63,10 +63,10 @@ auth
 // Sign in
 	.post(`/signin`, async (ctx, next) => {
 		// insert actual user auth here
-		let user, tenant, landlord, output
+		let user, tenant, landlord, properties, output
 		user = await getUserByEmail(ctx)
 		if(user.is_landlord) {
-			//landlord = await landlords.getLandlord(ctx, user)
+			output = landlords.getLandlordData(ctx, user)
 		} else {
 			tenant = await tenants.checkForActiveTenant(ctx, user)
 			if(tenant) {
@@ -74,7 +74,7 @@ auth
 				output = await tenants.retrieveActiveTenantData(ctx, tenant)
 				output.user = user
 			} else {
-				ctx.response.status = 402
+				ctx.response.status = 403
 				ctx.body = `WOOP WOOP WOOP -- Forbidden`
 			}
 		}

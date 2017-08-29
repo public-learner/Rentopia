@@ -16,7 +16,15 @@ const getUserMessages = async (ctx, tenantOrLandlord) => {
 	return output
 }
 
+const getPropertyBroadcasts = async (ctx, property_id) => {
+	let broadcastsRows, broadcasts
+	broadcastsRows = await ctx.db.query(`SELECT * FROM messages WHERE property_id = ${property_id} AND sender_id IS NULL AND recipient_id IS NULL;`)
+	broadcasts = broadcastsRows.rows
+	return broadcasts
+}
+
 module.exports = {
 	routes: router,
-	getUserMessages: getUserMessages
+	getUserMessages: getUserMessages,
+	getPropertyBroadcasts: getPropertyBroadcasts,
 }

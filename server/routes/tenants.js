@@ -38,6 +38,15 @@ const retrieveActiveTenantData = async (ctx, tenant) => {
 	return output
 }
 
+router
+	.get('/:property_id', async (ctx, next) => {
+		//gets all tenants at a specific property
+		let tenantRows, tenants
+		tenantRows = await ctx.db.query(`SELECT * FROM tenants WERE property_id = ${this.params.property_id}`)
+		tenants = tenantRows.rows
+		return tenants
+	})
+
 module.exports = {
 	routes: router,
 	updateTenant: updateTenant,
