@@ -44,7 +44,7 @@ CREATE TABLE tenants (
 	tenant_id            SERIAL NOT NULL,
 	tenant_email				 text NOT NULL ,
 	rent                 integer DEFAULT 0 NOT NULL,
-	property_id          integer  NOT NULL,
+	property_id          integer  ,
 	is_active            bool DEFAULT true NOT NULL,
 	due_date             date  ,
 	created_date         date DEFAULT current_date ,

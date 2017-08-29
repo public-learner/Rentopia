@@ -46,9 +46,9 @@ app.use(bodyParser())
 
 // routing
 api.use('/api/users', users.routes.routes())
-api.use('/api/tenants', tenants.routes())
+api.use('/api/tenants', tenants.routes.routes())
 api.use('/api/docs', docs.routes())
-api.use('/api/props', props.routes())
+api.use('/api/props', props.routes.routes())
 api.use('/api/messages', messages.routes())
 api.use('/api/payments', payments.routes())
 api.use('/api/auth', auth.routes.routes())

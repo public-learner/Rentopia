@@ -5,6 +5,6 @@ let getProperty = async (ctx, property_id) => {
 }
 
 module.exports = {
-	router: router,
+	routes: router,
 	getProperty: getProperty,
 }

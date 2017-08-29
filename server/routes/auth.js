@@ -7,21 +7,21 @@ let props = require('./props.js')
 auth
 	.post('/signup', async (ctx, next) => {
 		//data stored in ctx.request.body
-		let output;
-		let user = await ctx.db.query(`SELECT * FROM users WHERE email = ${ctx.request.body.email};`)
+		let output, user;
+		user = await ctx.db.query(`SELECT * FROM users WHERE email = '${ctx.request.body.email}';`)
 		if(user.rowCount !== 0) {
 			// Send error, user already exists
 			ctx.response.status = 418
 			ctx.body = `User already exists`
 		} else {
-			user = await ctx.db.query(`INSERT INTO users (email, user_password, is_landlord) VALUES ('${ctx.request.body.email}', '${ctx.request.body.password}', ${ctx.request.body.isLandlord}) RETURNING *;`)
+			const userRows = await ctx.db.query(`INSERT INTO users (email, user_password, is_landlord) VALUES ('${ctx.request.body.email}', '${ctx.request.body.password}', ${ctx.request.body.isLandlord}) RETURNING *;`)
+			user = userRows.rows[0]
 			//insert will return an obj with command, rowCount, oid, rows[{}], and fields[]
 			//ctx.body = user
 			const isLandlord = ctx.request.body.isLandlord
 			// we created a user. Now we want to make a matching landlord record OR tenant record for them.
 			if(isLandlord){
 				//if it's a landlord, create it
-				user = insert.rows[0]
 				const landlordOut = await landlords.createLandlord(ctx, user)
 				//return the user that was created and the landlord that was created
 				output = {user: user, landlord: landlordOut}
@@ -29,7 +29,8 @@ auth
 				let tenant, property
 				//if it's not a landlord, it will be a tenant
 				//see if the user has any active tenant records to link to the user VIA EMAIL
-				if(tenantRows.length > 0) {
+					tenant = await tenants.checkForActiveTenant(ctx, user)
+				if(tenant) {
 					//if yes, link tenant to user and return user, tenant, and property
 					tenant = await tenants.updateTenant(ctx, user)
 					property = await props.getProperty(ctx, tenant.property_id)
@@ -37,12 +38,15 @@ auth
 					//need direct messages messages
 					//need property broadcasts
 					//transactions
+					output = {user: user, tenant: tenant, property: property}
 				} else {
 					//if not, create new tenant user not associated to a property
+					tenant = await tenants.createNewTenant(ctx, user)
+					output = {user: user, tenant: tenant, property: property}
 				}
 			}
+			ctx.body = output
 		}
-		ctx.body = output
 	})
 
 
