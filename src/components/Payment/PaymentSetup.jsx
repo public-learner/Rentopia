@@ -1,5 +1,5 @@
 import React from 'react'
-import { months, days, years } from './birthdayData'
+import { statesList, months, days, years } from './formHelperData'
 import { submerchantCreation } from '../../actions/paymentGetters'
 
 class PaymentSetup extends React.Component {
@@ -29,7 +29,7 @@ class PaymentSetup extends React.Component {
     }
 
     if (!this.state.bankIsSelected) {
-      if (e.target.venmoEmail) {
+      if (e.target.venmoEmail.value !== '') {
         destination = 'email'
       } else {  
         destination = 'mobile_phone'
@@ -73,6 +73,14 @@ class PaymentSetup extends React.Component {
 
     this.setState({
       bankIsSelected: (e.target.value === 'bank')
+    })
+  }
+
+  renderStates() {
+    return statesList.map((usState, i) => {
+      return (
+        <option key={i}> {usState} </option>
+      )
     })
   }
 
@@ -144,7 +152,11 @@ class PaymentSetup extends React.Component {
               <h4>2. Address</h4>
               <label>Street Address</label><br/><input name="street" className="paymentInput"></input><br/>
               <label>City</label><br/><input name="city" className="paymentInput"></input><br/>
-              <label>State</label><br/><input name="state" className="paymentInput"></input><br/>
+              <label>State</label><br/>
+              <select name="state">
+                {this.renderStates()}
+              </select>
+              <br/>
               <label>Zip Code</label><br/><input name="zip" type="text" className="paymentInput"></input><br/>
             </div>
             <div>
@@ -176,30 +188,3 @@ class PaymentSetup extends React.Component {
 }
 
 export default PaymentSetup
-
-/*
-merchantAccountParams = {
-  individual: {
-    firstName: "Jane", // should already have from initial signup
-    lastName: "Doe", // should already have from initial signup
-    email: "jane@14ladders.com", // should already have from initial signup
-    dateOfBirth: "1981-11-19",
-    address: {
-      streetAddress: "111 Main St",
-      locality: "Chicago",
-      region: "IL",
-      postalCode: "60622"
-    }
-  },
-  funding: {
-    descriptor: "Blue Ladders",
-    destination: braintree.MerchantAccount.FundingDestination.Bank, // can be either bank, mobile_phone, or email
-    email: "funding@blueladders.com", // for venmo
-    mobilePhone: "5555555555", // for venmo
-    accountNumber: "1123581321", //for bank
-    routingNumber: "071101307" // for bank
-  },
-  tosAccepted: true, // need to do a terms of service thing
-  masterMerchantAccountId: "14ladders_marketplace" // inside of braintree.config.js
-};
-*/

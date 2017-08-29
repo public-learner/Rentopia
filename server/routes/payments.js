@@ -28,6 +28,7 @@ router
   })
   .post('/payRent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
+    let wakaflakkaflame
 
     await gateway.transaction.sale({
       amount: "100.00",
@@ -45,12 +46,13 @@ router
     let merchantAccountParams = ctx.request.body.merchantAccountParams
     console.log(merchantAccountParams)
 
-    await gateway.merchantAccount.create(merchantAccountParams, function(err,result) {
-      console.log(result)
+    await gateway.merchantAccount.create(merchantAccountParams, 
+      await function(err,result) {
+        console.log(result)
     })
 
-    // ctx.response.status = 201
-    // ctx.body = 'Succesful payment setup'
+    ctx.response.status = 201
+    ctx.body = 'Succesful payment setup'
   }) 
 
 module.exports = {
