@@ -1,4 +1,4 @@
-# PropMan
+# Rentopia
 
   Suite life, Sweet Life.
 
@@ -17,7 +17,7 @@
 
 ## Usage
 
-  Add `/node_modules/` to your `.gitignore`.
+  
 
 ## Dependencies
 
@@ -25,30 +25,25 @@
 
 ## Development
 
-### Installing Dependencies and Starting
+### Getting started
 
-From within the root directory:
+  clone the repo from the url
+  `npm i`
+  `npm start`
 
-```
-yarn install && yarn start
-```
+### [Github issue and Waffle.io workflow](https://github.com/JorBazFanChild/Rentopia/blob/master/waffle_workflow.md)
 
-In another terminal:
-```
-yarn dev:wds
-```
+### [Postgres Installation Instructions](https://github.com/JorBazFanChild/Rentopia/blob/master/db/postgresql_readme.md) 
 
 ## Testing
 
-Uses TravisCI. See https://docs.travis-ci.com/user/notifications/#Configuring-slack-notifications for slack notification setup.
 
-Navigate to `localhost:8000`
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/JorBazFanChild/PropMan/issues)
+View the project roadmap [here](https://github.com/JorBazFanChild/Rentopia/issues)
 
 ## Contributing
 
-See [PRESS-RELEASE.md](https://github.com/JorBazFanChild/PropMan/blob/master/PRESS-RELEASE.md) to learn about PropMan.
+See [PRESS-RELEASE.md](https://github.com/JorBazFanChild/Rentopia/blob/master/PRESS-RELEASE.md) to learn about PropMan.
 
