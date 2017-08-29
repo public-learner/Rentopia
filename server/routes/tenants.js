@@ -1,7 +1,13 @@
 let router = require('koa-router')()
+let props = require('./props.js')
+let messages = require('./messages.js')
+let docs = require('./docs.js')
+let payments = require('./payments.js')
+
+
 
 const updateTenant = async (ctx, user) => {
-	let tenantRows = ctx.db.query(`UPDATE tenants SET user_id = ${user.user_id} WHERE tenant_email = '${user.email}'' AND is_active = true RETURNING *;`)
+	let tenantRows = ctx.db.query(`UPDATE tenants SET user_id = ${user.user_id} WHERE tenant_email = '${user.email}' AND is_active = true RETURNING *;`)
 	return tenantRows.rows[0]
 }	
 
@@ -21,14 +27,14 @@ const createNewTenant = async (ctx, user, property) => {
 }
 
 const retrieveActiveTenantData = async (ctx, tenant) => {
-	let property, docs, messages, transactions
+	let property, docArray, messagesArray, transactions
 	property = await props.getProperty(ctx, tenant.property_id)
 	//docs will return as {tenant docs, propertyDocs}
-	docs = await docs.getTenantDocs(ctx, tenant)
+	docArray = await docs.getUserDocs(ctx, tenant)
 	// messages will return as {sentMessages[], receivedMessages[], broadcasts[]}
-	messages = await messages.getTenantMessages(ctx, tenant)
-	//transactions = await getTenantTransactions(ctx, tenant)
-	output = {tenant: tenant, property: property, messages: messages, docs: docs}
+	messagesArray = await messages.getUserMessages(ctx, tenant)
+	transactions = await payments.getUserTransactions(ctx, tenant)
+	output = {tenant: tenant, property: property, messages: messagesArray, docs: docArray}
 	return output
 }
 

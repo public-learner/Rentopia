@@ -9,6 +9,16 @@ let gateway = braintree.connect({
   privateKey: config.PRIVATE_KEY
 })
 
+const getUserTransactions = async (ctx, tenantOrLandlord) => {
+  let output, transactionsArray
+  output = {}
+  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
+  output.sentPayments = transactionsArray.rows
+  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
+  output.receivedPayments = transactionsArray.rows
+  return output
+}
+
 router
   .post('/payrent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
@@ -27,4 +37,7 @@ router
 
   }) 
 
-module.exports = router
+module.exports = {
+  routes: router,
+  getUserTransactions: getUserTransactions,
+}
