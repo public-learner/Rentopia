@@ -10,19 +10,31 @@ let gateway = braintree.connect({
 })
 
 router
-  .post('/payrent', ctx => {
+  .post('/payrent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
     console.log(nonceFromClient)
 
-    gateway.transaction.sale({
-      amount: "10.00",
+    await gateway.transaction.sale({
+      amount: "100.00",
       paymentMethodNonce: 'fake-valid-nonce',
       options: {
         submitForSettlement: true
       }
-    }, function (err, result) {
-      console.log('PAID')
-    });
+    })
+    ctx.response.status = 201
+    ctx.body = 'Successful payment'
+
+    // gateway.transaction.sale({
+    //   amount: "100.00",
+    //   paymentMethodNonce: 'fake-valid-nonce',
+    //   options: {
+    //     submitForSettlement: true
+    //   }
+    // }, await function (err, result) {
+    //   console.log('PAID')
+    //   ctx.response.status = 201
+    //   ctx.body = 'Successful payment'
+    // });
   }) 
 
 module.exports = router
