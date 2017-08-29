@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { ModalContainer, ModalRoute } from 'react-router-modal';
 import TenantSidebar from './TenantSidebar.jsx';
 import Payment from '../Payment/Payment.jsx';
 import Modal from 'react-modal';
@@ -30,10 +29,16 @@ class TenantDashboard extends Component {
     super()
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: true,
     }
   }
-  // I will be populating the Messages and Docs data from Database
+
+  componentDidMount() {
+    this.setState({
+      modalIsOpen: false
+    })
+  }
+
   openModal() {
     this.setState({modalIsOpen: true});
   }
@@ -41,7 +46,7 @@ class TenantDashboard extends Component {
   closeModal() {
     this.setState({modalIsOpen: false});
   }
-  // <Link to='/paymentModal' className="link">Make Payment</Link>
+
   render() {
   	return (
       <div>
@@ -55,16 +60,14 @@ class TenantDashboard extends Component {
             <button onClick={this.openModal.bind(this)}> Make Payment </button>
           </p>
 
-            <ModalRoute component={Payment} path='/paymentModal'/>
-          
-            <Modal
-              isOpen={this.state.modalIsOpen}
-              onRequestClose={this.closeModal.bind(this)}
-              style={customStyles}
-              contentLabel="Payment Modal"
-            > 
-              <Payment />
-            </Modal>
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onRequestClose={this.closeModal.bind(this)}
+            style={customStyles}
+            contentLabel="Payment Modal"
+          > 
+            <Payment />
+          </Modal>
       </div>
   	)
   }
@@ -78,3 +81,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(TenantDashboard)
+
