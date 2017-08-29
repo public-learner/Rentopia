@@ -5,7 +5,9 @@ import Splash from './Splash/SplashMain.jsx'
 import Tenant from './TenantDash/TenantDashboard.jsx'
 import { getMessages, getDocs, getRentDue } from '../actions/tenantDashboardGetters';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import Payment from './Payment/Payment.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,6 +26,8 @@ class App extends React.Component {
     return(
       <div>
         {!this.state.loggedIn && <Splash />}
+
+        <Tenant />
       </div>
     )
   }
