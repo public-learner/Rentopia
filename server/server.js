@@ -7,6 +7,7 @@ let auth = require('./routes/auth.js')
 let docs = require('./routes/docs.js')
 let props = require('./routes/props.js')
 let messages = require('./routes/messages.js')
+let payments = require('./routes/payments.js')
 let config = require('../webpack.config.js')
 let db = require('../db/db_config.js')
 const bodyParser = require('koa-bodyparser');
@@ -49,6 +50,7 @@ api.use('/api/docs', docs.routes())
 api.use('/api/props', props.routes())
 api.use('/api/messages', messages.routes())
 api.use('/api/auth', auth.routes())
+api.use('/api/payments', payments.routes())
 
 // app.use(async (ctx, next) => {
 // 	//ctx.body = await ctx.db.query(`SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public'; `)

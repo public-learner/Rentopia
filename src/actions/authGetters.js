@@ -4,6 +4,8 @@ export const USER_LOGIN = 'user_login'
 export const USER_SIGNUP = 'user_signup'
 const ROOT_URL = 'http://127.0.0.1:8000'
 
+const ROOT_URL = 'http://localhost:8000'
+
 export function signupUser(credentials) {
   const request = axios.post(`${ROOT_URL}/signup`, {
       name: credentials.name,
