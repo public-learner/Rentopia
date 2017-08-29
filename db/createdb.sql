@@ -3,7 +3,8 @@
 DROP TABLE IF EXISTS users, landlords, properties, tenants, messages, transactions, events, documents CASCADE;
 
 CREATE TABLE users ( 
-	user_id              integer DEFAULT 1000 NOT NULL,
+	user_id              SERIAL NOT NULL,
+	user_name						 text ,
 	email                text  NOT NULL,
 	user_password        text  NOT NULL,
 	creditcard           text  ,
@@ -13,8 +14,7 @@ CREATE TABLE users (
  );
 
 CREATE TABLE landlords ( 
-	landlord_id          integer DEFAULT 1000 NOT NULL,
-	landlord_name        text  ,
+	landlord_id          SERIAL NOT NULL,
 	payment_set_up       bool DEFAULT false ,
 	created_date         date DEFAULT current_date ,
 	user_id              integer  NOT NULL,
@@ -26,7 +26,7 @@ CREATE INDEX idx_landlords ON landlords ( user_id );
 ALTER TABLE landlords ADD CONSTRAINT fk_landlords_users FOREIGN KEY ( user_id ) REFERENCES users( user_id );
 
 CREATE TABLE properties ( 
-	property_id          integer DEFAULT 1000 NOT NULL,
+	property_id          SERIAL NOT NULL,
 	property_name        text  NOT NULL,
 	address              text  ,
 	city                 text  ,
@@ -41,10 +41,10 @@ CREATE INDEX idx_properties ON properties ( landlord_id );
 ALTER TABLE properties ADD CONSTRAINT fk_properties_landlords FOREIGN KEY ( landlord_id ) REFERENCES landlords( landlord_id );
 
 CREATE TABLE tenants ( 
-	tenant_id            integer DEFAULT 1000 NOT NULL,
-	name                 text  ,
+	tenant_id            SERIAL NOT NULL,
+	tenant_email				 text NOT NULL ,
 	rent                 integer DEFAULT 0 NOT NULL,
-	property_id          integer  NOT NULL,
+	property_id          integer  ,
 	is_active            bool DEFAULT true NOT NULL,
 	due_date             date  ,
 	created_date         date DEFAULT current_date ,
@@ -61,7 +61,7 @@ ALTER TABLE tenants ADD CONSTRAINT fk_tenants_properties FOREIGN KEY ( property_
 ALTER TABLE tenants ADD CONSTRAINT fk_tenants_users FOREIGN KEY ( user_id ) REFERENCES users( user_id );
 
 CREATE TABLE messages ( 
-	message_id           integer DEFAULT 1000 NOT NULL,
+	message_id           SERIAL NOT NULL,
 	message_content      text  ,
 	message_type         text  NOT NULL,
 	property_id          integer  ,
@@ -90,8 +90,8 @@ ALTER TABLE messages ADD CONSTRAINT fk_messages_users_sender FOREIGN KEY ( sende
 ALTER TABLE messages ADD CONSTRAINT fk_messages_users_recipient FOREIGN KEY ( recipient_id ) REFERENCES users( user_id );
 
 CREATE TABLE transactions ( 
-	transaction_id       integer DEFAULT 1000 NOT NULL,
-	paypal_id            integer  ,
+	transaction_id       SERIAL NOT NULL,
+	payment_identifier   text  ,
 	transaction_amount   numeric  ,
 	sender_id            integer  ,
 	recipient_id         integer  ,
@@ -110,7 +110,7 @@ ALTER TABLE transactions ADD CONSTRAINT fk_transactions_users_sender FOREIGN KEY
 ALTER TABLE transactions ADD CONSTRAINT fk_transactions_users_recipient FOREIGN KEY ( recipient_id ) REFERENCES users( user_id );
 
 CREATE TABLE events ( 
-	event_id             integer  NOT NULL,
+	event_id             SERIAL  NOT NULL,
 	event_text           text  ,
 	property_id          integer  ,
 	created_date         date DEFAULT current_date ,
@@ -122,7 +122,7 @@ CREATE INDEX idx_events ON events ( property_id );
 ALTER TABLE events ADD CONSTRAINT fk_events_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
 
 CREATE TABLE documents ( 
-	document_id          integer DEFAULT 1000 NOT NULL,
+	document_id          SERIAL NOT NULL,
 	landlord_id          integer  ,
 	doc_type             text  ,
 	doc_url              text  ,
