@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 
 import { loginUser } from '../../actions/authGetters'
-import Payment from '../Payment/Payment.jsx'
 
 class Login extends React.Component {
 
