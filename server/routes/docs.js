@@ -35,6 +35,11 @@ const createRawtext = async (ctx) => {
 
 
 router
+	.get('/:id', async (ctx, next) => {
+		let docRows
+		docRows = await ctx.db.query(`SELECT * FROM documents WHERE document_id = ${ctx.params.id};`)
+		ctx.body = docRows.rows[0]
+	})
 	.post('/add/:type', async (ctx, next) => {
 		//types are lease, image, other, rawtext
 		//ctx.request.body ->  {user_id, doc_type, landlord_id, tenant_id?, property_id, doc_body?, doc_url?}
@@ -50,8 +55,6 @@ router
 			ctx.response.status = 406
 			ctx.body = `Invalid type: must be rawtext, image, other, or lease`
 		}
-
-
 	})
 
 module.exports = {

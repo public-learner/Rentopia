@@ -10,6 +10,7 @@ let gateway = braintree.connect({
 })
 
 const getUserTransactions = async (ctx, tenantOrLandlord) => {
+  //REFACTOR WITH PROMISE.ALL
   let output, transactionsArray
   output = {}
   transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
@@ -20,10 +21,14 @@ const getUserTransactions = async (ctx, tenantOrLandlord) => {
 }
 
 router
+  .get('/:id', async (ctx, next) => {
+    let paymentRows
+    paymentRows = ctx.db.query(`SELECT * FROM transactions WHERE transaction_id = ${ctx.params.id};`)
+    ctx.body = await paymentRows.rows[0]
+  })
   .post('/payrent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
-    console.log(nonceFromClient)
-
+    // console.log(nonceFromClient)
     await gateway.transaction.sale({
       amount: "100.00",
       paymentMethodNonce: 'fake-valid-nonce',
@@ -34,7 +39,6 @@ router
     let paymentIdentifier = new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
     ctx.response.status = 201
     ctx.body = 'Successful payment'
-
   }) 
 
 module.exports = {
