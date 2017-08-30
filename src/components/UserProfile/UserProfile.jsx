@@ -1,14 +1,4 @@
 import React, { Component } from 'react'
-<<<<<<< HEAD
-
-class UserProfile extends Component {
-	render() {
-		return (
-			<div>
-			</div>
-		)
-	}
-=======
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { setEditedProfileInfo } from '../../actions/setEditedProfileInfo';
@@ -93,27 +83,19 @@ class UserProfile extends Component {
 		</div>
 		)
 	}
->>>>>>> 053ccb6ad529af1dee67465910f216b1b477a5d1
 }
 
 function mapStateToProps(state) {
 	return {
-<<<<<<< HEAD
 
-=======
 		name: state.user && state.user.user_name,
 		email: state.user && state.user.email,
 		userId: state.user && state.user.user_id
->>>>>>> 053ccb6ad529af1dee67465910f216b1b477a5d1
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-<<<<<<< HEAD
-  return bindActionCreators({selectedMedia}, dispatch)
-=======
   return bindActionCreators({setEditedProfileInfo}, dispatch)
->>>>>>> 053ccb6ad529af1dee67465910f216b1b477a5d1
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
