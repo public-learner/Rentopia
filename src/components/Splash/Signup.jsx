@@ -10,7 +10,7 @@ class Signup extends React.Component {
   handleSignup(e) {
     e.preventDefault()
     let isLandlord = (e.target.userType.value === 'landlord')
-    let res = this.props.signupUser({
+    signupUser({
       name: e.target.name.value,
       email: e.target.email.value,
       password: e.target.password.value,
@@ -61,7 +61,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({signupUser, loginUser}, dispatch)
+  return bindActionCreators({loginUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
