@@ -87,6 +87,7 @@ class UserProfile extends Component {
 
 function mapStateToProps(state) {
 	return {
+
 		name: state.user && state.user.user_name,
 		email: state.user && state.user.email,
 		userId: state.user && state.user.user_id
