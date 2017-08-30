@@ -1,5 +1,5 @@
 import { SET_PROFILE } from '../actions/setEditedProfileInfo'
-import { USER_LOGIN } from '../actions/authGetters'
+import { USER_LOGIN, TENANT_LOGIN, LL_LOGIN } from '../actions/authGetters'
 import { FETCH_RENT, FETCH_MESSAGES, FETCH_DOCS, FETCH_SELECTED_MEDIA } 
 	from '../actions/tenantDashboardGetters.js';
 
@@ -29,7 +29,25 @@ export function isLoggedIn(state = {}, action) {
 export function tenantData(state = null, action) {
   switch(action.type) {
     case USER_LOGIN: 
-      return action.payload.data.tenant
+      if (action.payload.data.tenant) {
+        return action.payload.data.tenant
+      } else {
+        return state
+      }
+
+    default:
+      return state;
+  }
+}
+
+export function landlordData(state = null, action) {
+  switch(action.type) {
+    case USER_LOGIN: 
+      if (action.payload.data.landlord) {
+        return action.payload.data.landlord
+      } else {
+        return state
+      }
 
     default:
       return state;
@@ -61,7 +79,11 @@ export function messages(state = null, action) {
 export function docs(state = null, action) {
   switch(action.type) {
     case USER_LOGIN: 
-      return action.payload.data.docs
+      if (action.payload.data.tenant) {
+        return action.payload.data.docs
+      } else {
+        return state
+      }
     case FETCH_DOCS: 
       return action.payload.data.docs
 
