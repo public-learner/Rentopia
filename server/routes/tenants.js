@@ -8,7 +8,7 @@ let Users = require('./users.js')
 const updateTenant = async (ctx, user) => {
 	let tenantRows
 	if(user) {
-		tenantRows = ctx.db.query(`UPDATE tenants SET user_id = ${user.user_id} WHERE tenant_email = '${user.email}' AND is_active = true RETURNING *;`)
+		tenantRows = await ctx.db.query(`UPDATE tenants SET user_id = ${user.user_id} WHERE tenant_email = '${user.email}' AND is_active = true RETURNING *;`)
 	} else {
 		// add landlord updating here
 	}
@@ -43,6 +43,8 @@ const createNewTenant = async (ctx, user, property_id) => {
 }
 
 const retrieveActiveTenantData = async (ctx, tenant) => {
+  //REFACTOR WITH PROMISE.ALL
+
 	let property, docArray, messagesArray, transactions
 	property = await props.getProperty(ctx, tenant.property_id)
 	// docs will return as {tenant docs, propertyDocs}
@@ -55,6 +57,11 @@ const retrieveActiveTenantData = async (ctx, tenant) => {
 }
 
 router
+	.get('/:id', async (ctx, next) => {
+		let userRows
+		userRows = await ctx.db.query(`SELECT * FROM tenants WHERE tenant_id = ${ctx.params.id};`)
+		ctx.body = userRows.rows[0]
+	})
 	.get('/:property_id', async (ctx, next) => {
 		// gets all tenants at a specific property
 		let tenantRows
