@@ -28,8 +28,7 @@ const createRawtext = async (ctx) => {
 	// if there is no id, give it a null value
 	obj.tenant_id = obj.tenant_id || null
 	obj.landlord_id = obj.landlord_id || null
-
-	doc = await ctx.db.query(`INSERT INTO documents (landlord_id, doc_type, tenant_id, property_id, doc_body) VALUES (${obj.landlord_id},'${obj.doc_type}', ${obj.tenant_id}, ${obj.propert_id}, '${obj.doc_body}') RETURNING *;`)
+	doc = await ctx.db.query(`INSERT INTO documents (landlord_id, doc_type, tenant_id, property_id, doc_body) VALUES (${obj.landlord_id},'${obj.doc_type}', ${obj.tenant_id}, ${obj.property_id}, '${obj.doc_body}') RETURNING *;`)
 	return doc.rows[0]
 }
 
@@ -60,4 +59,5 @@ router
 module.exports = {
 	routes: router,
 	getUserDocs: getUserDocs,
+	createRawtext: createRawtext,
 }

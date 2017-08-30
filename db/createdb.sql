@@ -42,7 +42,7 @@ CREATE INDEX idx_properties ON properties ( landlord_id );
 ALTER TABLE properties ADD CONSTRAINT fk_properties_landlords FOREIGN KEY ( landlord_id ) REFERENCES landlords( landlord_id );
 
 CREATE TABLE tenants ( 
-	tenant_id            SERIAL NOT NULL,
+	tenant_id            SERIAL NOT NULL ,
 	tenant_email				 text NOT NULL ,
 	rent                 integer DEFAULT 0 NOT NULL,
 	property_id          integer  ,
@@ -59,7 +59,7 @@ CREATE INDEX idx_tenants_0 ON tenants ( user_id );
 
 ALTER TABLE tenants ADD CONSTRAINT fk_tenants_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
 
-ALTER TABLE tenants ADD CONSTRAINT fk_tenants_users FOREIGN KEY ( user_id ) REFERENCES users( user_id );
+ALTER TABLE tenants ADD CONSTRAINT fk_tenants_users FOREIGN KEY ( user_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
 CREATE TABLE messages ( 
 	message_id           SERIAL NOT NULL,
@@ -84,11 +84,11 @@ COMMENT ON COLUMN messages.message_type IS 'direct, broadcast';
 
 COMMENT ON COLUMN messages.property_id IS 'property for tenants to see alerts/broadcasts';
 
-ALTER TABLE messages ADD CONSTRAINT fk_messages_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
+ALTER TABLE messages ADD CONSTRAINT fk_messages_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id ) ON DELETE CASCADE;
 
-ALTER TABLE messages ADD CONSTRAINT fk_messages_users_sender FOREIGN KEY ( sender_id ) REFERENCES users( user_id );
+ALTER TABLE messages ADD CONSTRAINT fk_messages_users_sender FOREIGN KEY ( sender_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
-ALTER TABLE messages ADD CONSTRAINT fk_messages_users_recipient FOREIGN KEY ( recipient_id ) REFERENCES users( user_id );
+ALTER TABLE messages ADD CONSTRAINT fk_messages_users_recipient FOREIGN KEY ( recipient_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
 CREATE TABLE transactions ( 
 	transaction_id       SERIAL NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE events (
 
 CREATE INDEX idx_events ON events ( property_id );
 
-ALTER TABLE events ADD CONSTRAINT fk_events_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
+ALTER TABLE events ADD CONSTRAINT fk_events_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id ) ON DELETE CASCADE;
 
 CREATE TABLE documents ( 
 	document_id          SERIAL NOT NULL,
@@ -146,9 +146,9 @@ COMMENT ON COLUMN documents.property_id IS 'document belongs to which property?'
 
 COMMENT ON COLUMN documents.doc_body IS 'For text-only docs with no file upload';
 
-ALTER TABLE documents ADD CONSTRAINT fk_documents_landlords FOREIGN KEY ( landlord_id ) REFERENCES landlords( landlord_id );
+ALTER TABLE documents ADD CONSTRAINT fk_documents_landlords FOREIGN KEY ( landlord_id ) REFERENCES landlords( landlord_id ) ON DELETE CASCADE;
 
-ALTER TABLE documents ADD CONSTRAINT fk_documents_tenants FOREIGN KEY ( tenant_id ) REFERENCES tenants( tenant_id );
+ALTER TABLE documents ADD CONSTRAINT fk_documents_tenants FOREIGN KEY ( tenant_id ) REFERENCES tenants( tenant_id ) ON DELETE CASCADE;
 
-ALTER TABLE documents ADD CONSTRAINT fk_documents_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
+ALTER TABLE documents ADD CONSTRAINT fk_documents_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id ) ON DELETE CASCADE;
 
