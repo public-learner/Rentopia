@@ -28,31 +28,31 @@ router
   })
   .post('/payRent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
-    let wakaflakkaflame
 
-    await gateway.transaction.sale({
+    let result = await gateway.transaction.sale({
       amount: "100.00",
       paymentMethodNonce: 'fake-valid-nonce',
       options: {
         submitForSettlement: true
       }
     })
-    let paymentIdentifier = new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
-    ctx.response.status = 201
-    ctx.body = 'Successful payment'
+
+    let paymentIdentifier = result.transaction.id
+    if (result.success) {
+      ctx.response.status = 201
+      ctx.body = 'Successful payment'
+    }
   })
   .post('/submerchantCreation', async ctx => {
     ctx.request.body.merchantAccountParams.masterMerchantAccountId = config.MERCHANT_ACCOUNT_ID
     let merchantAccountParams = ctx.request.body.merchantAccountParams
-    console.log(merchantAccountParams)
 
-    await gateway.merchantAccount.create(merchantAccountParams, 
-      await function(err,result) {
-        console.log(result)
-    })
+    let result = await gateway.merchantAccount.create(merchantAccountParams)
 
-    ctx.response.status = 201
-    ctx.body = 'Succesful payment setup'
+    if (result.success) {    
+      ctx.response.status = 201
+      ctx.body = 'Succesful payment setup'
+    }
   }) 
 
 module.exports = {
