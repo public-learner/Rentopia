@@ -2,6 +2,8 @@ import React from 'react'
 import { statesList, months, days, years } from './formHelperData'
 import { submerchantCreation } from '../../actions/paymentGetters'
 
+import { Accordion, Panel } from 'react-bootstrap'
+
 class PaymentSetup extends React.Component {
   constructor(props) {
     super(props)
@@ -133,52 +135,51 @@ class PaymentSetup extends React.Component {
       <div className="paymentSetup">
         <h1>Set up your payments</h1>
           <form onSubmit={this.handleSubmit.bind(this)}>
-            <div>
-              <h4>1. Personal Information</h4>
-              <label>Full Name</label><br/><input name="name" className="paymentInput" defaultValue="Jordan Hoang"></input><br/>
-              <label>E-mail address</label><br/><input name="email" className="paymentInput" defaultValue="jordan.n.hoang@gmail.com"></input><br/>
-              <label>Birthday</label><br/>
-              <select name="month">
-                {this.renderMonths()}
-              </select>
-              <select name="day">
-                {this.renderDays()}
-              </select>
-              <select name="year">
-                {this.renderYears()}
-              </select>
-            </div>
-            <div>
-              <h4>2. Address</h4>
-              <label>Street Address</label><br/><input name="street" className="paymentInput"></input><br/>
-              <label>City</label><br/><input name="city" className="paymentInput"></input><br/>
-              <label>State</label><br/>
-              <select name="state">
-                {this.renderStates()}
-              </select>
-              <br/>
-              <label>Zip Code</label><br/><input name="zip" type="text" className="paymentInput"></input><br/>
-            </div>
-            <div>
-              <h4>3. Funding Information</h4>
-                <h5>Select your desired payment method</h5>
-                <label>Bank </label>
-                <input className="paymentOption"
-                  type="radio" 
-                  value="bank" 
-                  checked={this.state.bankIsSelected} 
-                  onChange={this.handleOptionChange.bind(this)}>
-                </input>
-                <label>Venmo </label>
-                <input className="paymentOption"
-                  type="radio" 
-                  value="venmo" 
-                  checked={!this.state.bankIsSelected}
-                  onChange={this.handleOptionChange.bind(this)}>
-                </input>
-                <div>{this.state.bankIsSelected && this.renderBankForm()}</div>
-                <div>{!this.state.bankIsSelected && this.renderVenmoForm()}</div>
-            </div>
+            <Accordion>
+              <Panel header="1. Personal Information" eventKey="1">
+                <label>Full Name</label><br/><input name="name" className="paymentInput" defaultValue="Jordan Hoang"></input><br/>
+                <label>E-mail address</label><br/><input name="email" className="paymentInput" defaultValue="jordan.n.hoang@gmail.com"></input><br/>
+                <label>Birthday</label><br/>
+                <select name="month">
+                  {this.renderMonths()}
+                </select>
+                <select name="day">
+                  {this.renderDays()}
+                </select>
+                <select name="year">
+                  {this.renderYears()}
+                </select>
+              </Panel>
+              <Panel header="2. Address" eventKey="2">
+                <label>Street Address</label><br/><input name="street" className="paymentInput"></input><br/>
+                <label>City</label><br/><input name="city" className="paymentInput"></input><br/>
+                <label>State</label><br/>
+                <select name="state">
+                  {this.renderStates()}
+                </select>
+                <br/>
+                <label>Zip Code</label><br/><input name="zip" type="text" className="paymentInput"></input><br/>
+              </Panel>
+              <Panel header="3. Funding Information" eventKey="3">
+                  <h5>Select your desired payment method</h5>
+                  <label>Bank </label>
+                  <input className="paymentOption"
+                    type="radio" 
+                    value="bank" 
+                    checked={this.state.bankIsSelected} 
+                    onChange={this.handleOptionChange.bind(this)}>
+                  </input>
+                  <label>Venmo </label>
+                  <input className="paymentOption"
+                    type="radio" 
+                    value="venmo" 
+                    checked={!this.state.bankIsSelected}
+                    onChange={this.handleOptionChange.bind(this)}>
+                  </input>
+                  <div>{this.state.bankIsSelected && this.renderBankForm()}</div>
+                  <div>{!this.state.bankIsSelected && this.renderVenmoForm()}</div>
+              </Panel>
+            </Accordion>
             <div>By clicking submit, you agree to our <a href='#'>Terms of Service</a></div>
             <button type="submit">Submit</button>
           </form>
