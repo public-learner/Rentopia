@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { getLandlordProperties, landlordTenants } from './landlordReducer';
-import { userData, tenantData, messages, notifications, docs, properties} from './reducers'
+import { userData, tenantData, messages, notifications, docs, properties, isLoggedIn} from './reducers'
 import { selectedTenantMedia } from './tenantReducer';
 import { tenantPaidRent } from './paymentReducer'
 
