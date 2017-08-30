@@ -20,7 +20,6 @@ const getLandlord = async (ctx, user_id) => {
 
 const getLandlordData = async (ctx, user) => {
   //REFACTOR WITH PROMISE.ALL
-	
 	let landlord, properties, transactions, msgs
 	landlord = await getLandlord(ctx, user.user_id)
 	properties = await props.getLandlordProperties(ctx, landlord.landlord_id)

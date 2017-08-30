@@ -26,7 +26,6 @@ export function signupUser(credentials, cb) {
 }
 
 export function loginUser(credentials) {
-  console.log('login called', credentials.email, credentials.password)
   const request = axios.post(`${ROOT_URL}/api/auth/signin`, {
       email: credentials.email,
       password: credentials.password
