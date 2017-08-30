@@ -49,7 +49,7 @@ auth
 	}) //end signup
 
 // Sign in
-	.post(`/signin`, async (ctx, next) => {
+	.post('/signin', async (ctx, next) => {
 		// insert actual user auth here
 		let user, tenant, landlord, properties, output
 		user = await Users.getUserByEmail(ctx)
@@ -60,7 +60,9 @@ auth
 		}
 
 		if(user && user.is_landlord) {
-			output = landlords.getLandlordData(ctx, user)
+			output = await landlords.getLandlordData(ctx, user)
+			output.user = user
+			ctx.body = output
 		} else if(user) {
 			tenant = await tenants.checkForActiveTenant(ctx, user)
 			if(tenant) {
