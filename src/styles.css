@@ -26,3 +26,34 @@
   width: 100%;
   margin: 0 auto;
 }
+
+.methodTitle {
+  text-align: center
+}
+
+.paymentSetupForm {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.paymentInput {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.paymentOption {
+  margin: 4px !important;
+}
+
+.paymentSetupSubmit {
+  text-align: center;
+}
+
+.termsOfService {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.transactionsTable {
+  margin: 0 10px;
+}

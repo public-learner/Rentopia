@@ -16,6 +16,9 @@ const SplashNavBar = () => (
       <NavItem>
         <Link to='/tenant' className="link">Tenant Dashboard</Link>
       </NavItem>
+      <NavItem>
+        <Link to='/paymentsetup' className="link">Payment Setup</Link>
+      </NavItem>
     </Nav>
     <Nav pullRight>
       <NavItem>

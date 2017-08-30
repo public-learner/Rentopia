@@ -26,19 +26,37 @@ router
     paymentRows = ctx.db.query(`SELECT * FROM transactions WHERE transaction_id = ${ctx.params.id};`)
     ctx.body = await paymentRows.rows[0]
   })
-  .post('/payrent', async ctx => {
+  .post('/payRent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
-    // console.log(nonceFromClient)
-    await gateway.transaction.sale({
-      amount: "100.00",
+
+    let result = await gateway.transaction.sale({
+      merchantAccountId: 'j_dawg_instant_dxm5kfqq',
+      amount: "500.00",
       paymentMethodNonce: 'fake-valid-nonce',
       options: {
         submitForSettlement: true
-      }
+      },
+      serviceFeeAmount: "00.00"
     })
-    let paymentIdentifier = new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
-    ctx.response.status = 201
-    ctx.body = 'Successful payment'
+
+    console.log(result)
+    let paymentIdentifier = result.transaction.id
+    if (result.success) {
+      ctx.response.status = 201
+      ctx.body = 'Successful payment'
+    }
+  })
+  .post('/submerchantCreation', async ctx => {
+    ctx.request.body.merchantAccountParams.masterMerchantAccountId = config.MERCHANT_ACCOUNT_ID
+    let merchantAccountParams = ctx.request.body.merchantAccountParams
+
+    let result = await gateway.merchantAccount.create(merchantAccountParams)
+    let merchantAccountId = result.merchantAccount.id
+    if (result.success) {    
+      ctx.response.status = 201
+      ctx.body = 'Succesful payment setup'
+      ctx.redirect('/')
+    }
   }) 
 
 module.exports = {

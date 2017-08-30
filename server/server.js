@@ -11,7 +11,10 @@ let messages = require('./routes/messages.js')
 let payments = require('./routes/payments.js')
 let config = require('../webpack.config.js')
 let db = require('../db/db_config.js')
-const bodyParser = require('koa-bodyparser')
+const bodyParser = require('koa-bodyparser');
+let send = require('koa-send');
+const path = require('path')
+let serve = require('koa-static')
 
 // db connection
 // db now available from ctx throughout app
@@ -23,6 +26,7 @@ const middleware = koaWebpack({
   config: config
 })
 app.use(middleware)
+app.use(serve(__dirname + 'dist'));
 
 // bodyparser
 // the parsed body will store in ctx.request.body
@@ -63,12 +67,11 @@ app
 	.use(api.routes())
 	.use(api.allowedMethods())
 
-app.use(function *(){
-	// console.log(this.URL)
-  this.redirect('/')
-});
-
 const port = process.env.PORT || 8000
+
+app.use(async (ctx) => { 
+  await send(ctx, '/index.html', { root: 'dist' }) 
+})
 
 app.listen(port, () => {
 	console.log('Listening on port: ', port)
