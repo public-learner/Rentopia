@@ -3,13 +3,18 @@ const app = new Koa()
 let api = require('koa-router')()
 let users = require('./routes/users.js')
 let tenants = require('./routes/tenants.js')
+let landlords = require('./routes/landlords.js')
 let auth = require('./routes/auth.js')
 let docs = require('./routes/docs.js')
 let props = require('./routes/props.js')
 let messages = require('./routes/messages.js')
+let payments = require('./routes/payments.js')
 let config = require('../webpack.config.js')
 let db = require('../db/db_config.js')
 const bodyParser = require('koa-bodyparser');
+let send = require('koa-send');
+const path = require('path')
+let serve = require('koa-static')
 
 // db connection
 // db now available from ctx throughout app
@@ -21,6 +26,7 @@ const middleware = koaWebpack({
   config: config
 })
 app.use(middleware)
+app.use(serve(__dirname + 'dist'));
 
 // bodyparser
 // the parsed body will store in ctx.request.body
@@ -43,12 +49,14 @@ app.use(bodyParser())
 
 
 // routing
-api.use('/api/users', users.routes())
-api.use('/api/tenants', tenants.routes())
-api.use('/api/docs', docs.routes())
-api.use('/api/props', props.routes())
-api.use('/api/messages', messages.routes())
-api.use('/api/auth', auth.routes())
+api.use('/api/users', users.routes.routes())
+api.use('/api/tenants', tenants.routes.routes())
+api.use('/api/docs', docs.routes.routes())
+api.use('/api/props', props.routes.routes())
+api.use('/api/messages', messages.routes.routes())
+api.use('/api/payments', payments.routes.routes())
+api.use('/api/auth', auth.routes.routes())
+api.use('/api/landlords', landlords.routes.routes())
 
 // app.use(async (ctx, next) => {
 // 	//ctx.body = await ctx.db.query(`SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public'; `)
@@ -60,6 +68,10 @@ app
 	.use(api.allowedMethods())
 
 const port = process.env.PORT || 8000
+
+app.use(async (ctx) => { 
+  await send(ctx, '/index.html', { root: 'dist' }) 
+})
 
 app.listen(port, () => {
 	console.log('Listening on port: ', port)

@@ -1,13 +1,13 @@
 # Instructions for PostgreSQL installation
 
 # Install postgreSQL using brew
-brew install postgres
+brew install postgresql
 
 # Install postgres module for node.js
 npm install -g pg
 
 # To start the DB, run this command:
-brew services start postgres
+brew services start postgresql
 
 # Check to see if you have postgres user
 In terminal, type psql to enter postgres CLI
@@ -25,6 +25,7 @@ then type \q
 From Sublime, get the filepath of the createdb.sql file in the db folder
 In terminal now, run the following command:
 psql leasetopia < [insert file path]
+Example: [psql leasetopia < /Users/BChilds/Desktop/PropMan/db/createdb.sql]
 
 # Set environment variables, as seen on this page: [https://node-postgres.com/features/connecting]
 I ended up putting PGUSER, PGDATABASE and PGPASSWORD in my .bash_profile to always run for every terminal. PGUSER should be postgres, PGPASSWORD is the password you set for that user, and PGDATABASE is leasetopia

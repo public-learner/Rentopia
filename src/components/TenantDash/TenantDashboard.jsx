@@ -75,7 +75,7 @@ class TenantDashboard extends Component {
 
 function mapStateToProps(state) {
 	return {
-		tenantRentDue: state.tenantRentDue,
+		tenantRentDue: state.tenantData && state.tenantData.rent,
     media: state.selectedTenantMedia
 	}
 }
