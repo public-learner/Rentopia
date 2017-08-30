@@ -3,12 +3,14 @@ import { statesList, months, days, years } from './formHelperData'
 import { submerchantCreation } from '../../actions/paymentGetters'
 
 import { Accordion, Panel } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 class PaymentSetup extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      bankIsSelected: true
+      bankIsSelected: true,
+      fireRedirect: false
     }
   }
 
@@ -65,13 +67,10 @@ class PaymentSetup extends React.Component {
       tosAccepted: true, // need to do a terms of service thing
       masterMerchantAccountId: "" // inside of braintree.config.js
     }
-    console.log(params)
     submerchantCreation(params)
   }
 
   handleOptionChange(e) {
-    console.log(e.target.value)
-    console.log(this.state.bankIsSelected)
 
     this.setState({
       bankIsSelected: (e.target.value === 'bank')
@@ -133,8 +132,8 @@ class PaymentSetup extends React.Component {
   render() {
     return (
       <div className="paymentSetup">
-        <h1>Set up your payments</h1>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+        <h2 className="methodTitle">Set up my payment method</h2>
+          <form className="paymentSetupForm" onSubmit={this.handleSubmit.bind(this)}>
             <Accordion>
               <Panel header="1. Personal Information" eventKey="1">
                 <label>Full Name</label><br/><input name="name" className="paymentInput" defaultValue="Jordan Hoang"></input><br/>
@@ -160,7 +159,7 @@ class PaymentSetup extends React.Component {
                 <br/>
                 <label>Zip Code</label><br/><input name="zip" type="text" className="paymentInput"></input><br/>
               </Panel>
-              <Panel header="3. Funding Information" eventKey="3">
+              <Panel className="fundingPanel" header="3. Funding Information" eventKey="3">
                   <h5>Select your desired payment method</h5>
                   <label>Bank </label>
                   <input className="paymentOption"
@@ -180,9 +179,12 @@ class PaymentSetup extends React.Component {
                   <div>{!this.state.bankIsSelected && this.renderVenmoForm()}</div>
               </Panel>
             </Accordion>
-            <div>By clicking submit, you agree to our <a href='#'>Terms of Service</a></div>
-            <button type="submit">Submit</button>
+            <div className="paymentSetupSubmit">
+              <span>By clicking submit, you agree to our <Link to='/terms' className="link">Terms of Service </Link></span>
+              <button type="submit"> Submit</button>
+            </div>
           </form>
+
       </div>
     )
   }

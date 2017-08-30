@@ -27,15 +27,29 @@
   margin: 0 auto;
 }
 
-.paymentSetup {
-  margin-left: 5px;
+.methodTitle {
+  text-align: center
+}
+
+.paymentSetupForm {
+  width: 40%;
+  margin: 0 auto;
 }
 
 .paymentInput {
-  width: 200px;
+  width: 100%;
   margin-bottom: 5px;
 }
 
 .paymentOption {
   margin: 4px !important;
+}
+
+.paymentSetupSubmit {
+  text-align: center;
+}
+
+.termsOfService {
+  width: 40%;
+  margin: 0 auto;
 }
