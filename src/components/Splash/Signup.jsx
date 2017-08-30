@@ -3,19 +3,27 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link, Redirect } from 'react-router-dom'
 
-import { signupUser } from '../../actions/authGetters'
+import { signupUser, loginUser } from '../../actions/authGetters'
 
 class Signup extends React.Component {
 
   handleSignup(e) {
     e.preventDefault()
     let isLandlord = (e.target.userType.value === 'landlord')
-    this.props.signupUser({
+    let res = this.props.signupUser({
       name: e.target.name.value,
       email: e.target.email.value,
       password: e.target.password.value,
       isLandlord: isLandlord        
+    }, (res, data) => {
+      if (res) {
+        this.props.loginUser({
+          email: data.email,
+          password: data.password
+        })
+      } else { alert('failure to login upon signup')}
     })
+
     e.target.name.value = ''
     e.target.email.value = ''
     e.target.password.value = ''
@@ -53,7 +61,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({signupUser}, dispatch)
+  return bindActionCreators({signupUser, loginUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
