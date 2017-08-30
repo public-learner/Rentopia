@@ -30,13 +30,16 @@ router
     let nonceFromClient = ctx.request.body.nonce
 
     let result = await gateway.transaction.sale({
-      amount: "100.00",
+      merchantAccountId: 'j_dawg_instant_dxm5kfqq',
+      amount: "500.00",
       paymentMethodNonce: 'fake-valid-nonce',
       options: {
         submitForSettlement: true
-      }
+      },
+      serviceFeeAmount: "00.00"
     })
 
+    console.log(result)
     let paymentIdentifier = result.transaction.id
     if (result.success) {
       ctx.response.status = 201
@@ -48,10 +51,11 @@ router
     let merchantAccountParams = ctx.request.body.merchantAccountParams
 
     let result = await gateway.merchantAccount.create(merchantAccountParams)
-
+    let merchantAccountId = result.merchantAccount.id
     if (result.success) {    
       ctx.response.status = 201
       ctx.body = 'Succesful payment setup'
+      ctx.redirect('/')
     }
   }) 
 
