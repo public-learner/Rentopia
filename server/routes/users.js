@@ -1,5 +1,5 @@
 let router = require('koa-router')()
-let bcrypt = require('bcrypt')
+let bcrypt = require('bcrypt-nodejs')
 //responds to /users, /users/:email
 
 const getUserByEmail = async (ctx, email) => {
