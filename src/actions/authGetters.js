@@ -6,7 +6,7 @@ export const USER_SIGNUP = 'user_signup'
 const ROOT_URL = 'http://localhost:8000'
 
 export function signupUser(credentials) {
-  const request = axios.post(`${ROOT_URL}/signup`, {
+  const request = axios.post(`${ROOT_URL}/api/auth/signup`, {
       name: credentials.name,
       email: credentials.email,
       password: credentials.password,
@@ -20,7 +20,7 @@ export function signupUser(credentials) {
 }
 
 export function loginUser(credentials) {
-  const request = axios.post(`${ROOT_URL}/login`, {
+  const request = axios.post(`${ROOT_URL}/api/auth/login`, {
       email: credentials.email,
       password: credentials.password
     })
