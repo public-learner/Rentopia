@@ -6,8 +6,8 @@ import { selectedMedia, getMessages, getDocs } from '../../actions/tenantDashboa
 class TenantSideBar extends Component {
 
 	componentDidMount() {
-		this.props.getMessages(this.props.userId)
-		this.props.getDocs(this.props.userId)
+		// this.props.getMessages(this.props.userId)
+		// this.props.getDocs(this.props.userId)
 	}
 
 	renderMessages() {
