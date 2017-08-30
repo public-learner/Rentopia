@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import { signupUser } from '../../actions/authGetters'
 
@@ -16,8 +16,7 @@ class Signup extends React.Component {
       password: e.target.password.value,
       isLandlord: isLandlord        
     })
-    e.target.firstName.value = ''
-    e.target.lastName.value = ''
+    e.target.name.value = ''
     e.target.email.value = ''
     e.target.password.value = ''
   }
@@ -40,13 +39,22 @@ class Signup extends React.Component {
           <button className="signupButton" type="submit">Create Account</button>
         </form>
         <div>Have an account? <Link to='/' className="link">Log in</Link></div>
+        {this.props.loggedIn ? (this.props.isLandlord ? <Redirect to="/proprietor" /> : <Redirect to="/tenant" />) : null}
       </div>
     )
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({signupUser: signupUser}, dispatch)
+function mapStateToProps(state) {
+  return {
+    isLandlord: state.user && state.user.is_landlord,
+    loggedIn: state.loggedIn
+  }
 }
 
-export default connect(null, mapDispatchToProps)(Signup)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({signupUser}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+

@@ -21,7 +21,7 @@ class UserProfile extends Component {
 		let confirm = event.target.confirm.value
 
 		if (email === confirm && email !== '') {
-			this.props.setEditedProfileInfo({name: name, email: email})
+			this.props.setEditedProfileInfo({name: name, email: email}, this.props.userId)
 			event.target.name.value = ''
 			event.target.email.value = ''
 			event.target.confirm.value = ''
@@ -87,8 +87,9 @@ class UserProfile extends Component {
 
 function mapStateToProps(state) {
 	return {
-		name: state.userData && state.userData.name,
-		email: state.userData && state.userData.email
+		name: state.user && state.user.user_name,
+		email: state.user && state.user.email,
+		userId: state.user && state.user.user_id
 	}
 }
 

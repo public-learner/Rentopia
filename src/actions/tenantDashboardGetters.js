@@ -7,8 +7,10 @@ export const FETCH_SELECTED_MEDIA = 'fetch_selected_media';
 
 const ROOT_URL = 'http://127.0.0.1:8000' // get user's rent url
 
-export function getRentDue() {
-	const request = axios.get(`${ROOT_URL}/rent`) //{params: {id: id}}
+export function getRentDue(userId) {
+	// get current rent due by retrieving the tenant. Tenant 
+	// has rent due property on it.
+	const request = axios.get(`${ROOT_URL}/api/tenant/${userId}`) 
 	// axios is a async helper that was imported
 	return {
 		type: FETCH_RENT,
@@ -18,8 +20,8 @@ export function getRentDue() {
 	}
 }
 
-export function getMessages() {
-	const request = axios.get(`${ROOT_URL}/messages`)
+export function getMessages(userId) {
+	const request = axios.get(`${ROOT_URL}/api/messages/${userId}`)
 
 	return {
 		type: FETCH_MESSAGES,
@@ -27,8 +29,8 @@ export function getMessages() {
 	}
 }
 
-export function getDocs() {
-	const request = axios.get(`${ROOT_URL}/docs`)
+export function getDocs(userId) {
+	const request = axios.get(`${ROOT_URL}/api/docs/${userId}`)
 
 	return {
 		type: FETCH_DOCS,

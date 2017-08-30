@@ -6,8 +6,8 @@ import { selectedMedia, getMessages, getDocs } from '../../actions/tenantDashboa
 class TenantSideBar extends Component {
 
 	componentDidMount() {
-		this.props.getMessages()
-		this.props.getDocs()
+		this.props.getMessages(this.props.userId)
+		this.props.getDocs(this.props.userId)
 	}
 
 	renderMessages() {
@@ -41,10 +41,10 @@ class TenantSideBar extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log('map state', state)
 	return{
-		messages: state.messages,
-		docs: state.docs
+		messages: state.messages && state.messages.received,
+		docs: state.docs && state.docs.tenantDocs,
+		userId: state.user && state.user.user_id
 	}
 }
 
