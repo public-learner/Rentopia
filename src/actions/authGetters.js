@@ -24,7 +24,7 @@ export function loginUser(credentials) {
       email: credentials.email,
       password: credentials.password
     })
-  // request should have userId, rentDue, messages, docs, media
+  // **** request should have userData, tenant info, messages, docs, media
   return {
     type: USER_LOGIN,
     payload: request

@@ -1,9 +1,6 @@
 import React from 'react'
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import Dropdown from 'react-simple-dropdown';
-import { DropdownTrigger } from 'react-simple-dropdown';
-import { DropdownContent } from 'react-simple-dropdown';
 
 const SplashNavBar = () => (
   <Navbar className="navbar" inverse collapseOnSelect>
@@ -25,20 +22,13 @@ const SplashNavBar = () => (
     </Nav>
     <Nav pullRight>
       <NavItem>
-        <Dropdown>
-          <DropdownTrigger>Profile</DropdownTrigger>
-          <DropdownContent>
-            <img src="avatar.jpg" /> Username
-            <ul>
-              <Link className="logout" to={'/logout'}>Logout</Link>
-              <Link className="logout" to={'/profile'}>Your Profile</Link>
-            </ul>
-          </DropdownContent>
-        </Dropdown>
+        <NavDropdown title="Profile/Logout" id="nav-dropdown">
+          <tr><Link className="dropDownMenu" to="/profile"> Your Profile </Link></tr>
+          <tr><Link className="dropDownMenu" to="/logout"> Logout </Link></tr>
+        </NavDropdown>
       </NavItem>
     </Nav>
   </Navbar>
 )
 
 export default SplashNavBar
-// <Link className="logout" to={'/logout'}>Logout</Link>
