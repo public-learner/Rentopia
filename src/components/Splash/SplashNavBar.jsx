@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const SplashNavBar = () => (
@@ -22,7 +22,10 @@ const SplashNavBar = () => (
     </Nav>
     <Nav pullRight>
       <NavItem>
-        <Link className="logout" to={'/logout'}>Logout</Link>
+        <NavDropdown title="Profile/Logout" id="nav-dropdown">
+          <tr><Link className="dropDownMenu" to="/profile"> Your Profile </Link></tr>
+          <tr><Link className="dropDownMenu" to="/logout"> Logout </Link></tr>
+        </NavDropdown>
       </NavItem>
     </Nav>
   </Navbar>
