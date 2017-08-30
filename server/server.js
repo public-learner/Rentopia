@@ -47,7 +47,6 @@ app.use(bodyParser())
 //   console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 // });
 
-
 // routing
 api.use('/api/users', users.routes.routes())
 api.use('/api/tenants', tenants.routes.routes())
