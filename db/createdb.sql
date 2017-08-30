@@ -18,6 +18,7 @@ CREATE TABLE landlords (
 	payment_set_up       bool DEFAULT false ,
 	created_date         date DEFAULT current_date ,
 	user_id              integer  NOT NULL,
+	merchant_id					 text  ,
 	CONSTRAINT pk_landlords PRIMARY KEY ( landlord_id )
  );
 
@@ -48,7 +49,7 @@ CREATE TABLE tenants (
 	is_active            bool DEFAULT true NOT NULL,
 	due_date             date  ,
 	created_date         date DEFAULT current_date ,
-	user_id              integer  NOT NULL,
+	user_id              integer  ,
 	CONSTRAINT pk_tenants PRIMARY KEY ( tenant_id )
  );
 
