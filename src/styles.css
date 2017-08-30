@@ -26,3 +26,16 @@
   width: 100%;
   margin: 0 auto;
 }
+
+.paymentSetup {
+  margin-left: 5px;
+}
+
+.paymentInput {
+  width: 200px;
+  margin-bottom: 5px;
+}
+
+.paymentOption {
+  margin: 4px !important;
+}

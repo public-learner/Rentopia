@@ -26,9 +26,9 @@ router
     paymentRows = ctx.db.query(`SELECT * FROM transactions WHERE transaction_id = ${ctx.params.id};`)
     ctx.body = await paymentRows.rows[0]
   })
-  .post('/payrent', async ctx => {
+  .post('/payRent', async ctx => {
     let nonceFromClient = ctx.request.body.nonce
-    // console.log(nonceFromClient)
+
     await gateway.transaction.sale({
       amount: "100.00",
       paymentMethodNonce: 'fake-valid-nonce',
@@ -39,6 +39,11 @@ router
     let paymentIdentifier = new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
     ctx.response.status = 201
     ctx.body = 'Successful payment'
+  })
+  .post('/submerchantCreation', async ctx => {
+    console.log(ctx.request.body.merchantAccountParams)
+    ctx.response.status = 201
+    ctx.body = 'Succesful payment setup'
   }) 
 
 module.exports = {

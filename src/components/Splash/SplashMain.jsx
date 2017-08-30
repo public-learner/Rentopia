@@ -6,6 +6,7 @@ import Login from './Login.jsx'
 import Signup from './Signup.jsx'
 import LandlordDashboard from '../Landlord/LandlordDashboard.jsx'
 import TenantDashboard from '../TenantDash/TenantDashboard.jsx'
+import PaymentSetup from '../Payment/PaymentSetup.jsx'
 
 class Splash extends React.Component {
 
@@ -19,6 +20,7 @@ class Splash extends React.Component {
             <Route path='/signup' component={Signup} />
             <Route path='/proprietor' component={LandlordDashboard} />
             <Route path='/tenant' component={TenantDashboard} />
+            <Route path='/paymentsetup' component={PaymentSetup} />
           </Switch>
         </main>
       </div>
