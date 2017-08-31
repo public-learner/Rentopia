@@ -13,10 +13,10 @@ const rootReducer = combineReducers({
   tenantData: tenantData,
   landlordData: landlordData,
   messages: messages,
+  notifications: notifications,
   docs: docs,
   properties: properties,
   loggedIn: isLoggedIn
-  // notifications: notifications,
 });
 
 export default rootReducer;

@@ -30,7 +30,7 @@ router
     let nonceFromClient = ctx.request.body.nonce
 
     let result = await gateway.transaction.sale({
-      merchantAccountId: 'j_dawg_instant_dxm5kfqq',
+      merchantAccountId: 'jordan_hoang_instant_8n6sfbpx',
       amount: "500.00",
       paymentMethodNonce: 'fake-valid-nonce',
       options: {
@@ -51,11 +51,15 @@ router
     let merchantAccountParams = ctx.request.body.merchantAccountParams
 
     let result = await gateway.merchantAccount.create(merchantAccountParams)
-    let merchantAccountId = result.merchantAccount.id
-    if (result.success) {    
-      ctx.response.status = 201
-      ctx.body = 'Succesful payment setup'
-      ctx.redirect('/')
+    if (!result.success) {
+      ctx.response.status = 400
+      ctx.body = result.message
+    } else {      
+      let merchantAccountId = result.merchantAccount.id
+      if (result.success) {    
+        ctx.response.status = 201
+        ctx.body = 'Succesful payment setup'
+      }
     }
   }) 
 

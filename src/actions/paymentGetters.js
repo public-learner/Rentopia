@@ -19,4 +19,14 @@ export function submerchantCreation(merchantAccountParams) {
   const request = axios.post(`${ROOT_URL}/api/payments/submerchantCreation`, {
     merchantAccountParams: merchantAccountParams
   })
+
+  return request
+    .then((response) => {
+      console.log(response)
+      return response
+    })
+    .catch((err) => {
+      console.log(err.response)
+      return Promise.reject(err.response)
+    })
 }

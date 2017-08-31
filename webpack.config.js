@@ -2,6 +2,7 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 
 const config = {
   entry: './src/index.js',
@@ -33,6 +34,11 @@ const config = {
     new HtmlWebpackPlugin({
       template: './index.html'
     }),
+    new HardSourceWebpackPlugin({
+      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+      recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
+      configHash: require('node-object-hash')({sort: false}).hash,
+    })
   ]
 }
 

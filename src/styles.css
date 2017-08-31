@@ -76,3 +76,12 @@
 #profileEditButton {
   margin-left: 60%;
 }
+
+.navbar {
+  border-radius: 0px;
+}
+
+.braintree-toggle {
+  visibility: hidden;
+  height: 0px;
+}
