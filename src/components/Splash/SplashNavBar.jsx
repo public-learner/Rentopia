@@ -21,12 +21,10 @@ const SplashNavBar = () => (
       </NavItem>
     </Nav>
     <Nav pullRight>
-      <NavItem>
-        <NavDropdown title="Profile/Logout" id="nav-dropdown">
-          <tr><Link className="dropDownMenu" to="/profile"> Your Profile </Link></tr>
-          <tr><Link className="dropDownMenu" to="/logout"> Logout </Link></tr>
-        </NavDropdown>
-      </NavItem>
+      <NavDropdown title="Profile/Logout" id="nav-dropdown">
+        <Link className="dropDownMenu" to="/profile"> Your Profile </Link><br/>
+        <Link className="dropDownMenu" to="/logout"> Logout </Link>
+      </NavDropdown>
     </Nav>
   </Navbar>
 )
