@@ -17,7 +17,6 @@ const createUser = async (ctx) => {
 	return user
 }
 
-
 router
 	.get('/:id', async (ctx, next) => {
 		let userRows

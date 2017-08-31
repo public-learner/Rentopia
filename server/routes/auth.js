@@ -18,7 +18,7 @@ auth
 		} else {
 			// create new user record here
 			user = await Users.createUser(ctx)
-			console.log(`User created:  ${user.email}`)
+			console.log(`User created:  ${user}`)
 			const isLandlord = ctx.request.body.isLandlord
 			// we created a user. Now we want to make a matching landlord record OR tenant record for them.
 			if(isLandlord){

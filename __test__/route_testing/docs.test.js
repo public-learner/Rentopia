@@ -46,6 +46,7 @@ test('find rawtext doc', async () => {
 
   let tenant_doc = await docs.getUserDocs(ctx, tenant)
   expect(tenant_doc.tenantDocs.length).toBe(1)
-  // let results = await db.query(`DELETE FROM documents WHERE document_id = ${tenant_doc.document_id} RETURNING *;`) 
-  // console.log(results)
 })
+
+
+//need to test routes
