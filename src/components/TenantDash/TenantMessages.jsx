@@ -24,14 +24,17 @@ const customStyles = {
   }
 };
 
+const hvrDesrpCDN = 'https://stackoverflow.com/questions/3559467/description-box-on-mouseover'
 
-class TenantDashboard extends Component {
+class TenantMessages extends Component {
   constructor() {
     super()
 
     this.state = {
       modalIsOpen: true,
+      sendTo: ''
     }
+    this.openModal = this.openModal.bind(this)
   }
 
   componentDidMount() {
@@ -51,19 +54,16 @@ class TenantDashboard extends Component {
   render() {
   	return (
       <div>
-        <h2 className="pageTitle"> Your Dashboard </h2>
+        <h2 className="pageTitle"> Your Messages </h2>
         <TenantSidebar />
 
         <div id="tenantWindow">
-          <h3> Header </h3>
+          <button href="`${hvrDesrpCDN}`" title="Send new message" id="newMessage" onClick={this.openModal}><i className="fa fa-envelope fa-fw" aria-hidden="true"></i></button>
           <p> {this.props.media} </p>
         </div>
 
         <div id="centerTenantDash">
-          <p className="tenantMakePayment">
-          <p>Rent Due: {this.props.tenantRentDue}</p>
-            <button className="btn btn-secondary" onClick={this.openModal.bind(this)}> Make Payment </button>
-          </p>
+     
         </div>
 
         <Modal
@@ -72,7 +72,10 @@ class TenantDashboard extends Component {
           style={customStyles}
           contentLabel="Payment Modal"
         > 
-          <Payment />
+        	<div>
+        		<p>From: {this.props.email}</p>
+        		<p>To: {this.state.sendTo}</p>
+        	</div>
         </Modal>
       </div>
   	)
@@ -82,9 +85,10 @@ class TenantDashboard extends Component {
 function mapStateToProps(state) {
 	return {
 		tenantRentDue: state.tenantData && state.tenantData.rent,
-    media: state.selectedTenantMedia
+    media: state.selectedTenantMedia,
+    email: state.user && state.user.email,
 	}
 }
 
-export default connect(mapStateToProps)(TenantDashboard)
+export default connect(mapStateToProps)(TenantMessages)
 

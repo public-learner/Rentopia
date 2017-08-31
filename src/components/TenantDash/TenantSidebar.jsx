@@ -16,7 +16,7 @@ class TenantSideBar extends Component {
 	renderBroadcasts() {
 		return this.props.broadcasts.map((bcast, i) => {
 			return (
-				<tr key={i} className="truncate" onClick={() => this.props.selectedMedia(bcast)}> {bcast} </tr>
+				<div id="truncate" key={i} onClick={() => this.props.selectedMedia(bcast)}> {bcast} </div>
 			)
 		})
 	}
@@ -24,7 +24,7 @@ class TenantSideBar extends Component {
 	renderDocs() {
 		return this.props.docs && this.props.docs.map((doc, i) => {
 			return (
-				<tr key={i} className="truncate" onClick={() => this.props.selectedMedia(doc)}> {doc} </tr>
+				<div id="truncate" key={i} onClick={() => this.props.selectedMedia(doc)}> {doc} </div>
 			)
 		})
 	}
@@ -32,12 +32,10 @@ class TenantSideBar extends Component {
 	render() {
 		return (
 			<div id="tenantSidebar">
-			  <div> <h4>Broadcasts</h4>
-	        <div>{this.props.broadcasts && this.renderBroadcasts()}</div>
-				</div>
-				<div> <h4>Documents</h4>
-				  <div>{this.props.docs && this.renderDocs()}</div>
-				</div>
+			  <h3>Broadcasts</h3>
+	        {this.props.broadcasts ? this.renderBroadcasts(): 'No Broadcasts'}
+				<h3>Documents</h3>
+				 {this.props.docs ? this.renderDocs(): 'No docs'}
 			</div>
 		)
 	}
