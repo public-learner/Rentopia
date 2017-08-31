@@ -51,16 +51,18 @@ const createNewTenant = async (ctx, user, property_id) => {
 exports.createNewTenant = createNewTenant
 
 const retrieveActiveTenantData = async (ctx, tenant) => {
-  //REFACTOR WITH PROMISE.ALL
-
 	let property, docArray, messagesArray, transactions, broadcasts
 	property = await props.getProperty(ctx, tenant.property_id)
 	if(property) broadcasts = await messages.getPropertyBroadcasts(ctx, property.property_id)
 	// docs will return as {tenant docs, propertyDocs}
-	docArray = await docs.getUserDocs(ctx, tenant)
-	// messages will return as {sentMessages[], receivedMessages[], broadcasts[]}
-	messagesArray = await messages.getUserMessages(ctx, tenant.user_id)
-	transactions = await payments.getUserTransactions(ctx, tenant)
+	[docsArray, messagesArray, transactions] = await Promise.all([
+		docs.getUserDocs(ctx, tenant),
+		messages.getUserMessages(ctx, tenant.user_id),
+		payments.getUserTransactions(ctx, tenant)
+	])
+	// docArray = await docs.getUserDocs(ctx, tenant)
+	// messagesArray = await messages.getUserMessages(ctx, tenant.user_id)
+	// transactions = await payments.getUserTransactions(ctx, tenant)
 	output = {tenant: tenant, property: property, messages: messagesArray, docs: docArray}
 	return output
 }

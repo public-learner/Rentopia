@@ -10,13 +10,18 @@ let gateway = braintree.connect({
 })
 
 const getUserTransactions = async (ctx, tenantOrLandlord) => {
-  //REFACTOR WITH PROMISE.ALL
-  let output, transactionsArray
+  let output, sent, received
   output = {}
-  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
-  output.sentPayments = transactionsArray.rows
-  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
-  output.receivedPayments = transactionsArray.rows
+  [sent, received] = await Promise.all([
+    ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`),
+    ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
+  ])
+  // sent = await ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
+  // output.sentPayments = transactionsArray.rows
+  // received = await ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
+  // output.receivedPayments = transactionsArray.rows
+  output.sentPayments = sent.rows
+  output.receivedPayments = received.rows
   return output
 }
 exports.getUserTransactions = getUserTransactions
