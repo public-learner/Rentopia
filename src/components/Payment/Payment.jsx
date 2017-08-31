@@ -9,10 +9,29 @@ import { TOKENIZATION_KEY } from '../../../braintreeConfig'
 import { tenantPayment } from '../../actions/paymentGetters'
 
 
+let chicken = true
+
 const renderSubmitButton = ({onClick, isDisabled, text}) => {
-  return (
-    <button onClick={onClick} disabled={isDisabled}>Pay Rent</button>
-  )
+
+  if (chicken) {
+    return (
+      <div className="renderSubmitButton">
+        <a>
+              <button 
+                onClick={() => {
+                    chicken = false
+                    onClick()
+                  }
+                } 
+                disabled={isDisabled}>Pay Rent</button></a>
+      </div>
+    )
+  } else {
+    return (
+      <div onClick={onClick} disabled={isDisabled}></div>
+    )
+  }
+
 }
 
 renderSubmitButton.propTypes = {

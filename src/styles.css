@@ -76,3 +76,7 @@
 #profileEditButton {
   margin-left: 60%;
 }
+
+.navbar {
+  border-radius: 0px;
+}
