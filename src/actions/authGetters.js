@@ -9,6 +9,7 @@ const ROOT_URL = 'http://localhost:8000'
 export function signupUser(credentials, cb) {
 
   axios.post(`${ROOT_URL}/api/auth/signup`, {
+    user_name: credentials.name,
     email: credentials.email,
     password: credentials.password,
     isLandlord: credentials.isLandlord

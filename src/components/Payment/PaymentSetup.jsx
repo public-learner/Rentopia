@@ -4,6 +4,7 @@ import { submerchantCreation } from '../../actions/paymentGetters'
 
 import { Accordion, Panel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class PaymentSetup extends React.Component {
   constructor(props) {
@@ -19,10 +20,6 @@ class PaymentSetup extends React.Component {
     let monthNum = months.indexOf(e.target.month.value) + 1
 
     let destination, accountNum, routingNum, phoneNum, venmoEmail
-    // let accountNum
-    // let routingNum
-    // let phoneNum
-    // let venmoEmail
 
     if (this.state.bankIsSelected) {
       destination = 'bank'
@@ -193,4 +190,12 @@ class PaymentSetup extends React.Component {
   }
 }
 
-export default PaymentSetup
+function mapStateToProps(state) {
+  return {
+    userData: state.user,
+    landlordData: state.landlordData
+  }
+
+}
+
+export default connect(mapStateToProps, null)(PaymentSetup)
