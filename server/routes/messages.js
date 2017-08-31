@@ -1,17 +1,14 @@
 let router = require('koa-router')()
+let Users = require('./users.js')
+let Landlords = require('./landlords.js')
+let Tenants = require('./tenants.js')
 
-const getUserMessages = async (ctx, tenantOrLandlord) => {
-  //REFACTOR WITH PROMISE.ALL
-	
-	let messageRows, output
-	output = {} 
-
-	messageRows = await ctx.db.query(`SELECT * FROM messages WHERE sender_id = ${tenantOrLandlord.user_id} AND property_id IS NULL;`)
-	output.sentMessages = messageRows.rows
-	messageRows = await ctx.db.query(`SELECT * FROM messages WHERE recipient_id = ${tenantOrLandlord.user_id} AND property_id IS NULL;`)
-	output.received = messageRows.rows
-	// returns {sentMessages[], receivedMessages[]}
-	return output
+const getUserMessages = async (ctx, user_id) => {
+	let messageRows
+	if(!user_id) user_id = null
+	messageRows = await ctx.db.query(`SELECT * FROM messages WHERE recipient_id = ${user_id} OR sender_id = ${user_id} AND property_id IS NULL;`)
+	// returns array of messages
+	return messageRows.rows
 }
 
 const getPropertyBroadcasts = async (ctx, property_id) => {
@@ -26,6 +23,28 @@ router
 		let messageRows
 		messageRows = await ctx.db.query(`SELECT * FROM messages WHERE message_id = ${ctx.params.id};`)
 		ctx.body = messageRows.rows[0]
+	})
+	.get('/broadcasts/:property_id', async (ctx, next) => {
+		let broadcasts
+		broadcasts = await getPropertyBroadcasts(ctx, ctx.params.property_id)
+		ctx.body = broadcasts
+	})
+	.get('/messages/:user_id', async (ctx, next) => {
+		let user, messages, found
+		found = false
+		//get user by ID
+		user = await Users.getUserById(ctx, ctx.params.user_id)
+		if(user) {
+			found = true
+			messages = await getUserMessages(ctx, user.user_id)
+		}
+		if(found) {
+			ctx.response.status = 302
+			ctx.body = messages
+		} else {
+			ctx.response.status = 404
+			ctx.body = `User not found, messages could not be loaded`
+		}
 	})
 
 module.exports = {

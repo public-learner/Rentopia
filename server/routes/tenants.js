@@ -5,12 +5,12 @@ let docs = require('./docs.js')
 let payments = require('./payments.js')
 let Users = require('./users.js')
 
-const updateTenant = async (ctx, user) => {
+const updateTenant = async (ctx, user, tenant_id, property_id) => {
 	let tenantRows
 	if(user) {
 		tenantRows = await ctx.db.query(`UPDATE tenants SET user_id = ${user.user_id} WHERE tenant_email = '${user.email}' AND is_active = true RETURNING *;`)
 	} else {
-		// add landlord updating here
+		tenantRows = await ctx.db.query(`UPDATE tenants SET property_id = ${property_id} WHERE tenant_id = ${tenant_id} RETURNING *;`)
 	}
 	return tenantRows.rows[0]
 }	
@@ -32,8 +32,13 @@ const createNewTenant = async (ctx, user, property_id) => {
 	if(user && property_id) {
 		// created by landlord
 		// ctx.request.body = {property_id, tenant_email, rent, due_date}
+		// first check to see if user has active record
+			//if he does and it has no prop_id, update that
+			//if he does and it has prop_id, return error
+			//if he doesn't, create
 		tenant = await ctx.db.query(`INSERT INTO tenants (user_id, tenant_email, is_active, rent, due_date) VALUES (${user.user_id}, '${ctx.request.body.tenant_email}', true, ${ctx.request.body.rent}, TO_DATE('${ctx.request.body.due_date}', 'DD/MM/YYYY')) RETURNING *;`)
 	} else if (!user && property_id) {
+		// Tenant has no user, so we create a tenant record for them to claim
 		tenant = await ctx.db.query(`INSERT INTO tenants (tenant_email, is_active, rent, due_date) VALUES ('${ctx.request.body.tenant_email}', true, ${ctx.request.body.rent}, TO_DATE('${ctx.request.body.due_date}', 'DD/MM/YYYY')) RETURNING *;`)
 	} else {
 		// created by user signing up with no active tenants for email address
@@ -45,12 +50,13 @@ const createNewTenant = async (ctx, user, property_id) => {
 const retrieveActiveTenantData = async (ctx, tenant) => {
   //REFACTOR WITH PROMISE.ALL
 
-	let property, docArray, messagesArray, transactions
+	let property, docArray, messagesArray, transactions, broadcasts
 	property = await props.getProperty(ctx, tenant.property_id)
 	// docs will return as {tenant docs, propertyDocs}
 	docArray = await docs.getUserDocs(ctx, tenant)
 	// messages will return as {sentMessages[], receivedMessages[], broadcasts[]}
-	messagesArray = await messages.getUserMessages(ctx, tenant)
+	messagesArray = await messages.getUserMessages(ctx, tenant.user_id)
+	broadcasts = await messages.getPropertyBroadcasts(ctx, property.property_id)
 	transactions = await payments.getUserTransactions(ctx, tenant)
 	output = {tenant: tenant, property: property, messages: messagesArray, docs: docArray}
 	return output
@@ -83,10 +89,14 @@ router
 			tenant = await checkForActiveTenant(ctx, null, obj.tenant_email)
 		}
 
-		if(tenant) {
-				// if tenant, throw error
+		if(tenant && tenant.property_id) {
+				// if tenant is active and is on a property
 				ctx.response.status = 403
 				ctx.body = `This tenant is currently active in another property`				
+			} else if(tenant && !tenant.property_id) {
+				// if tenant is active but has no property, update
+				tenant = await updateTenant(ctx, null, tenant.tenant_id, obj.property_id)
+				ctx.body = tenant
 			} else {
 				// if no active tenant, create tenant and return it
 				tenant = await createNewTenant(ctx, user, obj.property_id)

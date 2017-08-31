@@ -24,7 +24,7 @@ const getLandlordData = async (ctx, user) => {
 	landlord = await getLandlord(ctx, user.user_id)
 	properties = await props.getLandlordProperties(ctx, landlord.landlord_id)
 	transactions = await payments.getUserTransactions(ctx, landlord)
-	msgs = await messages.getUserMessages(ctx, landlord)
+	msgs = await messages.getUserMessages(ctx, landlord.user_id)
 	return {landlord: landlord, properties: properties, transactions: transactions, messages:msgs}
 }
 
