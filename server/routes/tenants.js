@@ -14,6 +14,7 @@ const updateTenant = async (ctx, user, tenant_id, property_id) => {
 	}
 	return tenantRows.rows[0]
 }	
+exports.updateTenant = updateTenant
 
 const checkForActiveTenant = async (ctx, user, email) => {
 	let tenantRows
@@ -25,6 +26,7 @@ const checkForActiveTenant = async (ctx, user, email) => {
 	}
 	return tenantRows.rows[0]
 }
+exports.checkForActiveTenant = checkForActiveTenant
 
 const createNewTenant = async (ctx, user, property_id) => {
 	console.log('started to create tenant')
@@ -46,21 +48,23 @@ const createNewTenant = async (ctx, user, property_id) => {
 	}
 	return tenant.rows[0]
 }
+exports.createNewTenant = createNewTenant
 
 const retrieveActiveTenantData = async (ctx, tenant) => {
   //REFACTOR WITH PROMISE.ALL
 
 	let property, docArray, messagesArray, transactions, broadcasts
 	property = await props.getProperty(ctx, tenant.property_id)
+	if(property) broadcasts = await messages.getPropertyBroadcasts(ctx, property.property_id)
 	// docs will return as {tenant docs, propertyDocs}
 	docArray = await docs.getUserDocs(ctx, tenant)
 	// messages will return as {sentMessages[], receivedMessages[], broadcasts[]}
 	messagesArray = await messages.getUserMessages(ctx, tenant.user_id)
-	broadcasts = await messages.getPropertyBroadcasts(ctx, property.property_id)
 	transactions = await payments.getUserTransactions(ctx, tenant)
 	output = {tenant: tenant, property: property, messages: messagesArray, docs: docArray}
 	return output
 }
+exports.retrieveActiveTenantData = retrieveActiveTenantData
 
 router
 	.get('/:id', async (ctx, next) => {
@@ -103,11 +107,12 @@ router
 				ctx.body = tenant
 			}
 	})
+exports.routes = router
 
-module.exports = {
-	routes: router,
-	updateTenant: updateTenant,
-	createNewTenant: createNewTenant,
-	checkForActiveTenant: checkForActiveTenant,
-	retrieveActiveTenantData: retrieveActiveTenantData,
-}
+// module.exports = {
+// 	routes: router,
+// 	updateTenant: updateTenant,
+// 	createNewTenant: createNewTenant,
+// 	checkForActiveTenant: checkForActiveTenant,
+// 	retrieveActiveTenantData: retrieveActiveTenantData,
+// }

@@ -10,6 +10,7 @@ const getUserMessages = async (ctx, user_id) => {
 	// returns array of messages
 	return messageRows.rows
 }
+exports.getUserMessages = getUserMessages
 
 const getPropertyBroadcasts = async (ctx, property_id) => {
 	let broadcastsRows, broadcasts
@@ -17,6 +18,7 @@ const getPropertyBroadcasts = async (ctx, property_id) => {
 	broadcasts = broadcastsRows.rows
 	return broadcasts
 }
+exports.getPropertyBroadcasts = getPropertyBroadcasts
 
 router
 	.get('/:id', async (ctx, next) => {
@@ -46,9 +48,10 @@ router
 			ctx.body = `User not found, messages could not be loaded`
 		}
 	})
+	exports.routes = router
 
-module.exports = {
-	routes: router,
-	getUserMessages: getUserMessages,
-	getPropertyBroadcasts: getPropertyBroadcasts,
-}
+// module.exports = {
+// 	routes: router,
+// 	getUserMessages: getUserMessages,
+// 	getPropertyBroadcasts: getPropertyBroadcasts,
+// }
