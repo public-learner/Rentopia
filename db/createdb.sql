@@ -24,7 +24,7 @@ CREATE TABLE landlords (
 
 CREATE INDEX idx_landlords ON landlords ( user_id );
 
-ALTER TABLE landlords ADD CONSTRAINT fk_landlords_users FOREIGN KEY ( user_id ) REFERENCES users( user_id );
+ALTER TABLE landlords ADD CONSTRAINT fk_landlords_users FOREIGN KEY ( user_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
 CREATE TABLE properties ( 
 	property_id          SERIAL NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE properties (
 
 CREATE INDEX idx_properties ON properties ( landlord_id );
 
-ALTER TABLE properties ADD CONSTRAINT fk_properties_landlords FOREIGN KEY ( landlord_id ) REFERENCES landlords( landlord_id );
+ALTER TABLE properties ADD CONSTRAINT fk_properties_landlords FOREIGN KEY ( landlord_id ) REFERENCES landlords( landlord_id ) ON DELETE CASCADE;
 
 CREATE TABLE tenants ( 
 	tenant_id            SERIAL NOT NULL ,
@@ -106,9 +106,9 @@ CREATE INDEX idx_transactions_0 ON transactions ( recipient_id );
 
 COMMENT ON COLUMN transactions.transaction_amount IS 'amount of transaction from sender to recipient';
 
-ALTER TABLE transactions ADD CONSTRAINT fk_transactions_users_sender FOREIGN KEY ( sender_id ) REFERENCES users( user_id );
+ALTER TABLE transactions ADD CONSTRAINT fk_transactions_users_sender FOREIGN KEY ( sender_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
-ALTER TABLE transactions ADD CONSTRAINT fk_transactions_users_recipient FOREIGN KEY ( recipient_id ) REFERENCES users( user_id );
+ALTER TABLE transactions ADD CONSTRAINT fk_transactions_users_recipient FOREIGN KEY ( recipient_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
 CREATE TABLE events ( 
 	event_id             SERIAL  NOT NULL,
