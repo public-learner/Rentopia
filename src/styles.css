@@ -80,3 +80,8 @@
 .navbar {
   border-radius: 0px;
 }
+
+.braintree-toggle {
+  visibility: hidden;
+  height: 0px;
+}
