@@ -8,6 +8,7 @@ const getUserById = async (ctx, user_id) => {
 	user = userRows.rows[0]
 	return user
 }
+exports.getUserById = getUserById
 
 const getUserByEmail = async (ctx, email) => {
 	let userRows, user
@@ -16,6 +17,7 @@ const getUserByEmail = async (ctx, email) => {
 	user = userRows.rows[0]
 	return user
 }
+exports.getUserByEmail = getUserByEmail
 
 const createUser = async (ctx) => {
 	//ctx.request.body = {user_name, email, user_password, isLandlord}
@@ -24,12 +26,17 @@ const createUser = async (ctx) => {
 	user = userRows.rows[0]
 	return user
 }
+exports.createUser = createUser
 
 router
 	.get('/:id', async (ctx, next) => {
-		let userRows
-		userRows = await ctx.db.query(`SELECT * FROM users WHERE user_id = ${ctx.params.id};`)
-		ctx.body = userRows.rows[0]
+		let user
+		user = await getUserById(ctx, ctx.params.id)
+		if(user) {
+			ctx.response.status = 303
+
+		}
+		ctx.body = user
 	})
 	.put('/:id', async (ctx, next) => {
 		// ctx.request.body  {user_name, email, user_password, creditcard}
@@ -46,7 +53,7 @@ router
 	.post('/', async (ctx, next) => {
 		// ctx.request.body = {user_name, email, user_password, isLandlord}
 		let user
-		if(await getUserByEmail(ctx.request.body.email)) {
+		if(await getUserByEmail(ctx, ctx.request.body.email)) {
 			ctx.response.status = 418
 			ctx.body = 'User exists'
 		} else {
@@ -60,15 +67,23 @@ router
 			}
 		}
 	})
-	.get('/:email', async (ctx, next) => {
-		let userRows
-		userRows = await ctx.db.query(`SELECT * FROM users WHERE email = '${ctx.params.email};'`)
-		ctx.body = userRows.rows[0]
+	.get('/email/:email', async (ctx, next) => {
+		let user
+		user = await getUserByEmail(ctx, ctx.params.email)
+		if(user){
+			ctx.response.status = 303
+			ctx.body = user
+		} else {
+			ctx.response.status = 404
+			ctx.body = `No user found with that email`
+		}
 	})
+	exports.routes = router
 
-	module.exports = {
-		routes: router,
-		getUserByEmail: getUserByEmail,
-		createUser: createUser,
-		getUserById: getUserById,
-	}
+
+	// module.exports = {
+	// 	routes: router,
+	// 	getUserByEmail: getUserByEmail,
+	// 	createUser: createUser,
+	// 	getUserById: getUserById,
+	// }

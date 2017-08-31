@@ -1,6 +1,7 @@
 let router = require('koa-router')()
 let braintree = require('braintree')
 let config = require('../.././braintreeConfig.js')
+let Promise = require('bluebird')
 
 let gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -9,14 +10,25 @@ let gateway = braintree.connect({
   privateKey: config.PRIVATE_KEY
 })
 
+const getSenderTransactions = async (ctx, tenantOrLandlord) => {
+  let results = ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
+  return results.rows
+}
+
+const getRecipientTransactions = async (ctx, tenantOrLandlord) => {
+  let results = ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
+  return results.rows
+}
+
 const getUserTransactions = async (ctx, tenantOrLandlord) => {
-  //REFACTOR WITH PROMISE.ALL
-  let output, transactionsArray
+  let output, sent, received
   output = {}
-  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
-  output.sentPayments = transactionsArray.rows
-  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
-  output.receivedPayments = transactionsArray.rows
+  [sent, received] = await Promise.all([
+    getSenderTransactions(ctx, tenantOrLandlord),
+    getRecipientTransactions(ctx, tenantOrLandlord)
+  ])
+  output.sentPayments = sent
+  output.receivedPayments = received
   return output
 }
 exports.getUserTransactions = getUserTransactions
