@@ -51,11 +51,15 @@ router
     let merchantAccountParams = ctx.request.body.merchantAccountParams
 
     let result = await gateway.merchantAccount.create(merchantAccountParams)
-    let merchantAccountId = result.merchantAccount.id
-    if (result.success) {    
-      ctx.response.status = 201
-      ctx.body = 'Succesful payment setup'
-      ctx.redirect('/')
+    if (!result.success) {
+      ctx.response.status = 400
+      ctx.body = result.message
+    } else {      
+      let merchantAccountId = result.merchantAccount.id
+      if (result.success) {    
+        ctx.response.status = 201
+        ctx.body = 'Succesful payment setup'
+      }
     }
   }) 
 

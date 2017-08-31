@@ -18,11 +18,11 @@ class PaymentSetup extends React.Component {
     e.preventDefault()
     let monthNum = months.indexOf(e.target.month.value) + 1
 
-    let destination 
-    let accountNum
-    let routingNum
-    let phoneNum
-    let venmoEmail
+    let destination, accountNum, routingNum, phoneNum, venmoEmail
+    // let accountNum
+    // let routingNum
+    // let phoneNum
+    // let venmoEmail
 
     if (this.state.bankIsSelected) {
       destination = 'bank'
@@ -68,6 +68,9 @@ class PaymentSetup extends React.Component {
       masterMerchantAccountId: "" // inside of braintree.config.js
     }
     submerchantCreation(params)
+      .catch((err) => {
+        alert(err.data)
+      })
   }
 
   handleOptionChange(e) {

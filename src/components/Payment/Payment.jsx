@@ -36,14 +36,14 @@ class PaymentForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      turtles: true
+      showPayRentButton: true
     }
   }
 
   handlePaymentMethod(payload) {
     this.props.tenantPayment(payload)
     this.setState({
-      turtles: false
+      showPayRentButton: false
     })
     // send payload aka nonce to server. 
     // server should use nonce with a braintree sdk to charge card
@@ -51,13 +51,13 @@ class PaymentForm extends React.Component {
 
   reshowSubmitButton() {
     this.setState({
-      turtles: true
+      showPayRentButton: true
     })
   }
 
   render () {
 
-    if (this.state.turtles) { 
+    if (this.state.showPayRentButton) { 
       return (
         <div className="paymentForm">
           <BraintreeDropin
