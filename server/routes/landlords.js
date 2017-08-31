@@ -2,6 +2,8 @@ let router = require('koa-router')()
 let props = require('./props.js')
 let payments = require('./payments.js')
 let messages = require('./messages.js')
+let Promise = require('bluebird')
+
 
 const createLandlord = async (ctx, user) => {
 	console.log(`creating landlord.........`)
