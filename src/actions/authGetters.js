@@ -27,30 +27,6 @@ export function signupUser(credentials, cb) {
   })
 }
 
-// export function loginUser(credentials) {
-//   console.log(credentials)
-//   axios.post(`${ROOT_URL}/api/auth/signin`, {
-//       email: credentials.email,
-//       password: credentials.password
-//   })
-//   .then((response) => {
-//     console.log(response)
-//     if (response.data.user.is_landlord) {
-//       return {
-//         type: LL_LOGIN,
-//         payload: response
-//       }
-//     } else {
-//       return {
-//         type: TENANT_LOGIN,
-//         payload: response
-//       }
-//     }
-//   })
-//   .catch((err) => {
-//     console.log('error siging in', err)
-//   })
-
 export function loginUser(credentials) {
   const request = axios.post(`${ROOT_URL}/api/auth/signin`, {
       email: credentials.email,

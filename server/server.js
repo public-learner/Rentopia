@@ -15,6 +15,7 @@ const bodyParser = require('koa-bodyparser');
 let send = require('koa-send');
 const path = require('path')
 let serve = require('koa-static')
+let session = require('koa-session')
 
 // db connection
 // db now available from ctx throughout app
@@ -32,6 +33,23 @@ app.use(serve(__dirname + 'dist'));
 // the parsed body will store in ctx.request.body
 // if nothing was parsed, body will be an empty object {}
 app.use(bodyParser())
+
+app.keys = ['ironmen']
+app.use(session(app))
+
+api.use('/api/auth', auth.routes.routes())
+
+app.use(function* (next) {
+  this.session.test = 'test'
+  this.session.isLoggedIn = this.session.isLoggedIn || false
+  console.log('server.js', this.session)
+  if (!this.session.isLoggedIn) {
+    console.log('redirecting')
+    this.redirect('/')
+  }  
+   
+  yield next
+});
 
 // app.use(async (ctx, next) => {
 //   const start = Date.now();
@@ -54,7 +72,6 @@ api.use('/api/docs', docs.routes.routes())
 api.use('/api/props', props.routes.routes())
 api.use('/api/messages', messages.routes.routes())
 api.use('/api/payments', payments.routes.routes())
-api.use('/api/auth', auth.routes.routes())
 api.use('/api/landlords', landlords.routes.routes())
 
 // app.use(async (ctx, next) => {

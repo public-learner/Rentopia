@@ -50,6 +50,7 @@ auth
 
 // Sign in
 	.post('/signin', async (ctx, next) => {
+		console.log('running')
 		// insert actual user auth here
 		let user, tenant, landlord, properties, output
 		user = await Users.getUserByEmail(ctx)
@@ -62,6 +63,10 @@ auth
 		if(user && user.is_landlord) {
 			output = await landlords.getLandlordData(ctx, user)
 			output.user = user
+			ctx.session.isLoggedIn = true
+			console.log(ctx.session)
+			console.log('next', next)
+			ctx.response.status = 200
 			ctx.body = output
 		} else if(user) {
 			tenant = await tenants.checkForActiveTenant(ctx, user)
@@ -69,6 +74,7 @@ auth
 				//all gucci
 				output = await tenants.retrieveActiveTenantData(ctx, tenant)
 				output.user = user
+				ctx.session.isLoggedIn = true
 				ctx.body = output
 			} else {
 				ctx.response.status = 403
@@ -76,6 +82,10 @@ auth
 			}
 		}
 	}) // end sign in
+
+	.get('/logout', async (ctx, next) => {
+
+	})
 
 
 
