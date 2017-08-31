@@ -6,6 +6,7 @@ const getProperty = async (ctx, property_id) => {
 	let property = await ctx.db.query(`SELECT * FROM properties WHERE property_id = ${property_id};`)
 	return property.rows[0]
 }
+exports.getProperty = getProperty
 
 const getLandlordProperties = async (ctx, landlord_id) => {
 	let propsRows, props
@@ -13,6 +14,7 @@ const getLandlordProperties = async (ctx, landlord_id) => {
 	props = propsRows.rows
 	return props
 }
+exports.getLandlordProperties = getLandlordProperties
 
 const addProperty = async (ctx, landlord_id) => {
 	let propsRows, prop, obj
@@ -21,6 +23,7 @@ const addProperty = async (ctx, landlord_id) => {
 	prop = propsRows.rows[0]
 	return prop
 }
+exports.addProperty = addProperty
 
 router
 	.get('/:id', async (ctx, next) => {
@@ -35,9 +38,10 @@ router
 	.post('/', async (ctx, next) => {
 		ctx.body = await addProperty(ctx, ctx.request.body.landlord_id)
 	})
+exports.routes = router
 
-module.exports = {
-	routes: router,
-	getProperty: getProperty,
-	getLandlordProperties: getLandlordProperties,
-}
+// module.exports = {
+// 	routes: router,
+// 	getProperty: getProperty,
+// 	getLandlordProperties: getLandlordProperties,
+// }

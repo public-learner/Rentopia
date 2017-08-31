@@ -19,6 +19,7 @@ const getUserTransactions = async (ctx, tenantOrLandlord) => {
   output.receivedPayments = transactionsArray.rows
   return output
 }
+exports.getUserTransactions = getUserTransactions
 
 router
   .get('/:id', async (ctx, next) => {
@@ -62,8 +63,9 @@ router
       }
     }
   }) 
+  exports.routes = router
 
-module.exports = {
-  routes: router,
-  getUserTransactions: getUserTransactions,
-}
+// module.exports = {
+//   routes: router,
+//   getUserTransactions: getUserTransactions,
+// }
