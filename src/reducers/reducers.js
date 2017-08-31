@@ -57,7 +57,7 @@ export function landlordData(state = null, action) {
 // export function notifications(state = null, action) {
 //   switch(action.type) {
 //     case USER_LOGIN: 
-//       return action.payload.data.notifications
+//       return action.payload.data.broadcasts
 
 //     default:
 //       return state;
@@ -92,10 +92,10 @@ export function docs(state = null, action) {
   }
 }
 
-export function properties(state = null, action) {
+export function properties(state = {}, action) {
   switch(action.type) {
     case USER_LOGIN: 
-      return action.payload.data.properties || null
+      return action.payload.data.properties || {}
 
     default:
       return state;

@@ -49,17 +49,20 @@ class TenantDashboard extends Component {
 
   render() {
   	return (
-      <div>
-        <TenantSidebar />
-        <div style={{marginRight: "300px", float: "right", width: "50%", height: "350px", border: "1px solid gray"}}>
-          <h3> Header </h3>
-          <p> {this.props.media} </p>
+      <div >
+        <div style={{display: "inline"}}>
+          <TenantSidebar />
+          <div id="tenantWindow">
+            <h3> Header </h3>
+            <p> {this.props.media} </p>
+          </div>
         </div>
-          <p style={{width: "100%", float: "right", textAlign: "center"}}>
-            Rent Due: {this.props.tenantRentDue}
-            <button onClick={this.openModal.bind(this)}> Make Payment </button>
+        <div>
+          <p className="tenantMakePayment">
+          <p>Rent Due: {this.props.tenantRentDue}</p>
+            <button className="btn btn-secondary" onClick={this.openModal.bind(this)}> Make Payment </button>
           </p>
-
+        </div>
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal.bind(this)}

@@ -73,6 +73,13 @@
   margin-top: 30px;
 }
 
+.tenantMakePayment {
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: center;
+}
+
 #profileEditButton {
   margin-left: 60%;
 }
@@ -84,4 +91,23 @@
 .braintree-toggle {
   visibility: hidden;
   height: 0px;
+}
+
+#tenantWindow {
+  display: inline-block;
+  border: 1px solid black;
+}
+
+#tenantSidebar {
+  width: 20%;
+  margin: 10px;
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.truncate {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
