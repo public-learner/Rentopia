@@ -11,8 +11,14 @@ class PaymentSetup extends React.Component {
     super(props)
     this.state = {
       bankIsSelected: true,
-      fireRedirect: false
+      fireRedirect: false,
+      user: this.props.user
     }
+  }
+
+  componentWillMount() {
+    // console.log(this.props.user.user_name)
+    // console.log(this.props.user.email)
   }
 
   handleSubmit(e) {
@@ -136,8 +142,8 @@ class PaymentSetup extends React.Component {
           <form className="paymentSetupForm" onSubmit={this.handleSubmit.bind(this)}>
             <Accordion>
               <Panel header="1. Personal Information" eventKey="1">
-                <label>Full Name</label><br/><input name="name" className="paymentInput" defaultValue="Jordan Hoang"></input><br/>
-                <label>E-mail address</label><br/><input name="email" className="paymentInput" defaultValue="jordan.n.hoang@gmail.com"></input><br/>
+                <label>Full Name</label><br/><input name="name" className="paymentInput" defaultValue={this.state.user.user_name}></input><br/>
+                <label>E-mail address</label><br/><input name="email" className="paymentInput" defaultValue={this.state.user.email}></input><br/>
                 <label>Birthday</label><br/>
                 <select name="month">
                   {this.renderMonths()}
@@ -192,7 +198,7 @@ class PaymentSetup extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userData: state.user,
+    user: state.user,
     landlordData: state.landlordData
   }
 
