@@ -50,11 +50,3 @@ export function logoutUser(cb) {
     payload: request
   }
 }
-
-export function checkSession() {
-  const request = axios.get(`${ROOT_URL}/api/auth/checkSession`)
-  return {
-    type: CHECK_SESSION,
-    payload: request
-  }
-}

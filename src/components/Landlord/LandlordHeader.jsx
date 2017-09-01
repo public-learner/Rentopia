@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 
 import { logoutUser } from '../../actions/authGetters'
 
-class LandlordNavBar extends Component {
+class Header extends Component {
     constructor(props) {
     super() 
 
@@ -57,4 +57,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({logoutUser}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(LandlordNavBar))
+export default connect(null, mapDispatchToProps)(withRouter(Header))

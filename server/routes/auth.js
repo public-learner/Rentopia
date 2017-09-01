@@ -88,13 +88,6 @@ auth
 		ctx.body = 'Successful signout'
 	})
 
-	.get('/checkSession', async(ctx, next) => {
-		console.log('wwwww')
-		console.log(ctx.session)
-	})
-
-
-
 module.exports = {
 	routes: auth,
 }

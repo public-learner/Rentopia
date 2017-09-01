@@ -7,7 +7,6 @@ import Properties  from './LandlordProperties.jsx'
 import Login from '../Splash/Login.jsx'
 import Tenants  from './LandlordTenants.jsx'
 
-
 class LandlordMain extends React.Component {
 
   render() {

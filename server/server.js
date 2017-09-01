@@ -37,12 +37,8 @@ app.use(bodyParser())
 app.keys = ['ironmen']
 app.use(session(app))
 
-api.use('/api/auth', auth.routes.routes())
-
 app.use(function* (next) {
-  this.session.test = 'test'
   this.session.isLoggedIn = this.session.isLoggedIn || false
-  console.log('server.js', this.session)
   if (!this.session.isLoggedIn) {
     console.log('redirecting')
     this.redirect('/')
@@ -72,6 +68,7 @@ api.use('/api/docs', docs.routes.routes())
 api.use('/api/props', props.routes.routes())
 api.use('/api/messages', messages.routes.routes())
 api.use('/api/payments', payments.routes.routes())
+api.use('/api/auth', auth.routes.routes())
 api.use('/api/landlords', landlords.routes.routes())
 
 // app.use(async (ctx, next) => {

@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import LandlordNavBar  from './LandlordHeader.jsx'
+import Header  from './LandlordHeader.jsx'
 import Properties  from './LandlordProperties.jsx'
 import Property  from './LandlordPropertyComponent.jsx'
 import Tenants  from './LandlordTenants.jsx'
