@@ -1,9 +1,11 @@
+
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import LandlordHeader  from './LandlordHeader.jsx'
 import Properties  from './LandlordProperties.jsx'
+import Property  from './LandlordPropertyComponent.jsx'
 import Tenants  from './LandlordTenants.jsx'
 
 class LandlordDashboard extends React.Component {
@@ -12,10 +14,10 @@ class LandlordDashboard extends React.Component {
     return (
       <div>
         <LandlordHeader />
-        <h2 className="pageTitle"> Manage your Estate </h2>
         <main>
           <Switch>
-            <Route path='/proprietor/properties' component={Properties} />
+            <Route exact path='/proprietor/properties' component={Properties} />
+            <Route path='/proprietor/properties/:id' component={Property} />
             <Route path='/proprietor/tenants' component={Tenants} />
           </Switch>
         </main>
