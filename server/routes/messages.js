@@ -21,9 +21,9 @@ const getPropertyBroadcasts = async (ctx, property_id) => {
 exports.getPropertyBroadcasts = getPropertyBroadcasts
 
 router
-	.get('/:id', async (ctx, next) => {
+	.get('/:message_id', async (ctx, next) => {
 		let messageRows
-		messageRows = await ctx.db.query(`SELECT * FROM messages WHERE message_id = ${ctx.params.id};`)
+		messageRows = await ctx.db.query(`SELECT * FROM messages WHERE message_id = ${ctx.params.message_id};`)
 		ctx.body = messageRows.rows[0]
 	})
 	.get('/broadcasts/:property_id', async (ctx, next) => {
@@ -31,7 +31,7 @@ router
 		broadcasts = await getPropertyBroadcasts(ctx, ctx.params.property_id)
 		ctx.body = broadcasts
 	})
-	.get('/messages/:user_id', async (ctx, next) => {
+	.get('/direct/:user_id', async (ctx, next) => {
 		let user, messages, found
 		found = false
 		//get user by ID

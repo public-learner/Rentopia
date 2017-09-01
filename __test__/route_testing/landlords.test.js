@@ -27,6 +27,8 @@ beforeAll( async () => {
 
 afterAll( async () => {
 	await db.query(`DELETE FROM users WHERE email = ${user.email};`)
+	await db.query(`DELETE FROM landlords WHERE landlord_id = ${landlord.landlord_id}`)
+	db.end()
 })
 
 test(`Can create landlord`, async () => {
@@ -50,3 +52,4 @@ test(`Can retrieve landlord data`, async () => {
 	expect(result.status).toBe(302)
 })
 
+//get all tenants at a property

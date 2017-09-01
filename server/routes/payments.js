@@ -69,7 +69,8 @@ router
       ctx.body = result.message
     } else {      
       let merchantAccountId = result.merchantAccount.id
-      if (result.success) {    
+      if (result.success) {
+        // update the landlord record with the merchantAccount id using ctx.request.body.landlord_id    
         ctx.response.status = 201
         ctx.body = 'Succesful payment setup'
       }
