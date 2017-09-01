@@ -22,6 +22,14 @@ const getLandlord = async (ctx, user_id) => {
 }
 exports.getLandlord = getLandlord
 
+const getLandlordById = async (ctx, landlord_id) => {
+	let ll, llRows
+	llRows = await ctx.db.query(`SELECT * from landlords WHERE landlord_id = ${landlord_id}`)
+	ll = llRows.rows[0]
+	return ll
+}
+exports.getLandlordById = getLandlordById
+
 const getLandlordData = async (ctx, user) => {
 	let landlord, properties, transactions, msgs
 	landlord = await getLandlord(ctx, user.user_id)

@@ -11,6 +11,7 @@ CREATE TABLE users (
 	created_date         date DEFAULT current_date ,
 	is_landlord          bool  NOT NULL,
 	CONSTRAINT pk_users PRIMARY KEY ( user_id )
+	-- CONSTRAINT uniq_email unique ( email )
  );
 
 CREATE TABLE landlords ( 
@@ -57,7 +58,7 @@ CREATE INDEX idx_tenants ON tenants ( property_id );
 
 CREATE INDEX idx_tenants_0 ON tenants ( user_id );
 
-ALTER TABLE tenants ADD CONSTRAINT fk_tenants_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id );
+ALTER TABLE tenants ADD CONSTRAINT fk_tenants_properties FOREIGN KEY ( property_id ) REFERENCES properties( property_id ) ON DELETE CASCADE;
 
 ALTER TABLE tenants ADD CONSTRAINT fk_tenants_users FOREIGN KEY ( user_id ) REFERENCES users( user_id ) ON DELETE CASCADE;
 
@@ -69,7 +70,9 @@ CREATE TABLE messages (
 	is_read              bool DEFAULT false ,
 	importance           text  ,
 	sender_id            integer  ,
+	sender_name					 text     ,
 	recipient_id         integer  ,
+	recipient_name       text     ,
 	created_date         date DEFAULT current_date ,
 	CONSTRAINT pk_messages PRIMARY KEY ( message_id )
  );

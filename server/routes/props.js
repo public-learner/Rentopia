@@ -25,6 +25,18 @@ const addProperty = async (ctx, landlord_id) => {
 }
 exports.addProperty = addProperty
 
+const getPropertyTenants = async (ctx, property_id, tenant_id) => {
+	let tenantsRows, tenants
+	if(tenant_id) {
+		tenantsRows = await ctx.db.query(`SELECT tenants.*, users.user_name FROM tenants FULL OUTER JOIN users ON tenants.user_id = users.user_id WHERE property_id = ${property_id} AND is_active = true AND tenant_id <> ${tenant_id};`)
+	} else {
+		tenantsRows = await ctx.db.query(`SELECT tenants.*, users.user_name FROM tenants FULL OUTER JOIN users ON tenants.user_id = users.user_id WHERE property_id = ${property_id} AND is_active = true;`)
+	}
+	tenants = tenantsRows.rows
+	return tenants
+}
+exports.getPropertyTenants = getPropertyTenants
+
 router
 	.get('/:id', async (ctx, next) => {
 		ctx.body = await getProperty(ctx, ctx.params.id)
@@ -39,9 +51,3 @@ router
 		ctx.body = await addProperty(ctx, ctx.request.body.landlord_id)
 	})
 exports.routes = router
-
-// module.exports = {
-// 	routes: router,
-// 	getProperty: getProperty,
-// 	getLandlordProperties: getLandlordProperties,
-// }

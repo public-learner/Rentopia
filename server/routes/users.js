@@ -12,7 +12,7 @@ exports.getUserById = getUserById
 
 const getUserByEmail = async (ctx, email) => {
 	let userRows, user
-	if(ctx.request.body.email) email = ctx.request.body.email
+	if(!email && ctx.request.body.email) email = ctx.request.body.email
 	userRows = await ctx.db.query(`SELECT * FROM users WHERE email = '${email}';`)
 	user = userRows.rows[0]
 	return user
@@ -33,7 +33,7 @@ router
 		let user
 		user = await getUserById(ctx, ctx.params.id)
 		if(user) {
-			ctx.response.status = 303
+			ctx.response.status = 302
 
 		}
 		ctx.body = user
@@ -71,7 +71,7 @@ router
 		let user
 		user = await getUserByEmail(ctx, ctx.params.email)
 		if(user){
-			ctx.response.status = 303
+			ctx.response.status = 302
 			ctx.body = user
 		} else {
 			ctx.response.status = 404
