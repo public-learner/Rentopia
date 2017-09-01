@@ -16,7 +16,7 @@ exports.createLandlord = createLandlord
 
 const getLandlord = async (ctx, user_id) => {
 	let ll, llRows
-	llRows = await ctx.db.query(`SELECT * FROM landlords WHERE user_id = ${user_id};`)
+	llRows = await ctx.db.query(`SELECT landlords.*, users.user_name FROM landlords FULL OUTER JOIN users ON landlords.user_id = users.user_id WHERE landlords.user_id = ${user_id};`)
 	ll = llRows.rows[0]
 	return ll
 }
@@ -24,11 +24,19 @@ exports.getLandlord = getLandlord
 
 const getLandlordById = async (ctx, landlord_id) => {
 	let ll, llRows
-	llRows = await ctx.db.query(`SELECT * from landlords WHERE landlord_id = ${landlord_id}`)
+	llRows = await ctx.db.query(`SELECT landlords.*, users.user_name FROM landlords FULL OUTER JOIN users ON landlords.user_id = users.user_id WHERE landlord_id = ${landlord_id}`)
 	ll = llRows.rows[0]
 	return ll
 }
 exports.getLandlordById = getLandlordById
+
+const updateMerchant = async (ctx, landlord_id) => {
+	let ll, llRows
+	llRows = await ctx.db.query(`UPDATE landlords SET merchant_id = ${ctx.request.body.merchant_id}, payment_set_up = true WHERE landlord_id = ${ctx.request.body.landlord_id} RETURNING *;`)
+	ll = llRows.rows[0]
+	return ll
+}
+exports.updateMerchant = updateMerchant
 
 const getLandlordData = async (ctx, user) => {
 	let landlord, properties, transactions, msgs
@@ -39,9 +47,6 @@ const getLandlordData = async (ctx, user) => {
 			payments.getUserTransactions(ctx, landlord),
 			messages.getUserMessages(ctx, landlord.user_id)
 			])
-		// properties = await props.getLandlordProperties(ctx, landlord.landlord_id)
-		// transactions = await payments.getUserTransactions(ctx, landlord)
-		// msgs = await messages.getUserMessages(ctx, landlord.user_id)
 		return {landlord: landlord, properties: properties, transactions: transactions, messages:msgs}
 	} else {
 		return null
@@ -85,11 +90,17 @@ router
 			ctx.body = `There was an error with your request`
 		}
 	})
+	.put('/merchant/:landlord_id', async (ctx, next) => {
+		let ll
+		ll = await updateMerchant(ctx, ctx.params.landlord_id)
+		if(ll) {
+			ctx.response.status = 200
+			ctx.body = ll
+		} else {
+			ctx.response.status = 400
+			ctx.body = `There was an error updating merchant_id`
+		}
+	})
 exports.routes = router
 
-// module.exports = {
-// 	routes: router,
-// 	createLandlord: createLandlord,
-// 	getLandlord: getLandlord,
-// 	getLandlordData: getLandlordData,
-// }
+

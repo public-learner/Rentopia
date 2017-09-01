@@ -113,7 +113,6 @@ test(`Landlord makes a tenant with user but has active tenant record with no pro
 	// there is no user and the property is gone, create new record
 	let results
 	let testTenant = await Tenants.createNewTenant(ctx, user, null)
-	console.log(testTenant)
 	results = await request.post(`/api/tenants/bylandlord/create`).send(ctx.request.body)
 	tenant = results.body
 	expect(results.status).toBe(201)

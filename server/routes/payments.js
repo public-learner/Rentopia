@@ -1,6 +1,7 @@
 let router = require('koa-router')()
 let braintree = require('braintree')
 let config = require('../.././braintreeConfig.js')
+let Landlords = require('./landlords.js')
 let Promise = require('bluebird')
 
 let gateway = braintree.connect({
@@ -22,12 +23,11 @@ const getRecipientTransactions = async (ctx, tenantOrLandlord) => {
 
 const getUserTransactions = async (ctx, tenantOrLandlord) => {
   let output, sent, received
-  output = {}
   [sent, received] = await Promise.all([
     getSenderTransactions(ctx, tenantOrLandlord),
     getRecipientTransactions(ctx, tenantOrLandlord)
   ])
-  output.sentPayments = sent
+  output = { sentPayments: sent }
   output.receivedPayments = received
   return output
 }
@@ -59,7 +59,7 @@ router
       ctx.body = 'Successful payment'
     }
   })
-  .post('/submerchantCreation', async ctx => {
+  .put('/submerchantCreation/:landlord_id', async ctx => {
     ctx.request.body.merchantAccountParams.masterMerchantAccountId = config.MERCHANT_ACCOUNT_ID
     let merchantAccountParams = ctx.request.body.merchantAccountParams
 
@@ -68,11 +68,15 @@ router
       ctx.response.status = 400
       ctx.body = result.message
     } else {      
-      let merchantAccountId = result.merchantAccount.id
-      if (result.success) {
-        // update the landlord record with the merchantAccount id using ctx.request.body.landlord_id    
+      // update the landlord record with the merchantAccount id using ctx.request.body.landlord_id  
+      ctx.request.body.merchant_id = result.merchantAccount.id
+      let landlord = await Landlords.updateMerchant(ctx, ctx.params.landlord_id)  
+      if(landlord) {
         ctx.response.status = 201
-        ctx.body = 'Succesful payment setup'
+        ctx.body = 'Succesful payment setup'   
+      } else {
+        ctx.response.status = 400
+        ctx.body = 'Error updating Landlord'
       }
     }
   }) 
