@@ -3,6 +3,7 @@ import axios from 'axios'
 export const USER_LOGIN = 'user_login'
 export const LL_LOGIN = 'landlord_login'
 export const TENANT_LOGIN = 'tenant_login'
+export const USER_LOGOUT = 'user_logout'
 
 const ROOT_URL = 'http://localhost:8000'
 
@@ -39,4 +40,12 @@ export function loginUser(credentials) {
   }
 
   // **** request should have userData, tenant info, messages, docs, media
+}
+
+export function logoutUser() {
+  const request = axios.get(`${ROOT_URL}/api/auth/logout`)
+  return {
+    type: USER_LOGOUT,
+    payload: request
+  }
 }

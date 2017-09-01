@@ -24,11 +24,11 @@ const config = {
     new HtmlWebpackPlugin({
       template: './index.html'
     }),
-    new HardSourceWebpackPlugin({
-      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-      recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
-      configHash: require('node-object-hash')({sort: false}).hash,
-    })
+    // new HardSourceWebpackPlugin({
+    //   cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+    //   recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
+    //   configHash: require('node-object-hash')({sort: false}).hash,
+    // })
   ]
 }
 

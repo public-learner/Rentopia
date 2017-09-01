@@ -50,7 +50,6 @@ auth
 
 // Sign in
 	.post('/signin', async (ctx, next) => {
-		console.log('running')
 		// insert actual user auth here
 		let user, tenant, landlord, properties, output
 		user = await Users.getUserByEmail(ctx)
@@ -64,8 +63,6 @@ auth
 			output = await landlords.getLandlordData(ctx, user)
 			output.user = user
 			ctx.session.isLoggedIn = true
-			console.log(ctx.session)
-			console.log('next', next)
 			ctx.response.status = 200
 			ctx.body = output
 		} else if(user) {
@@ -84,7 +81,10 @@ auth
 	}) // end sign in
 
 	.get('/logout', async (ctx, next) => {
-
+		ctx.session = null
+		console.log(ctx.session)
+		ctx.response.status = 202
+		ctx.body = 'Successful signout'
 	})
 
 
