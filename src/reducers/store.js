@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { userData, tenantData, landlordData, messages, docs, properties, isLoggedIn} from './reducers'
+import { userData, tenantData, landlordData, messages, docs, isLoggedIn} from './reducers'
 import { landlordProperties, landlordTenants } from './landlordReducer';
 import { selectedTenantMedia } from './tenantReducer';
 import { tenantPaidRent } from './paymentReducer'
@@ -15,7 +15,6 @@ const rootReducer = combineReducers({
   landlordData,
   messages,
   docs,
-  properties,
   loggedIn: isLoggedIn,
   broadcasts
 });

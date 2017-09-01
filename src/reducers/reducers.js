@@ -81,14 +81,3 @@ export function docs(state = [], action) {
       return state;
   }
 }
-
-export function properties(state = {}, action) {
-  switch(action.type) {
-    case USER_LOGIN: 
-      return action.payload.data.properties || {}
-
-    default:
-      return state;
-  }
-}
-
