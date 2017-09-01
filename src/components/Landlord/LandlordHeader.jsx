@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { logoutUser } from '../../actions/authGetters'
 
-class Header extends Component {
+class LandlordNavBar extends Component {
     constructor(props) {
     super() 
 
@@ -21,15 +21,16 @@ class Header extends Component {
 
   handleLogout() {
     this.props.logoutUser()
-    // this.props.history.push("/")
+      .then(() => {
+        this.props.history.push('/')
+      })
   }
-
   render() {
     return (
       <Navbar className="navbar" inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand className="brand">
-            <Link to="/">Rentopia</Link>
+            <Link to="/proprietor">Rentopia</Link>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
@@ -43,8 +44,8 @@ class Header extends Component {
         <Nav pullRight>
           <NavDropdown title="Profile/Logout" id="nav-dropdown" onToggle={this.toggleDropdown.bind(this)}
             open={this.state.dropdownIsOpen}>
-            <Link className="dropDownMenu" to="/proprietor/profile"> Your Profile </Link><br/>
-            <Link className="dropDownMenu" onClick={this.handleLogout.bind(this)} to="/" > Logout </Link>
+            <Link onClick={this.toggleDropdown.bind(this)} className="dropDownMenu" to="/proprietor/profile"> Your Profile </Link><br/>
+            <a href="javascript:void(0)" className="dropDownMenu" onClick={this.handleLogout.bind(this)} to="/" > Logout </a>
           </NavDropdown>
         </Nav>
       </Navbar>
@@ -56,4 +57,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({logoutUser}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(Header)
+export default connect(null, mapDispatchToProps)(withRouter(LandlordNavBar))

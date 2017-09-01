@@ -7,11 +7,6 @@ import { loginUser, checkSession } from '../../actions/authGetters'
 
 class Login extends React.Component {
 
-  componentWillMount() {
-    console.log('yello')
-    // this.props.checkSession()
-  }
-
   handleLogin(e) {
     e.preventDefault()
     console.log(this)
@@ -33,16 +28,17 @@ class Login extends React.Component {
           <button className="loginButton" type="submit">Log in</button>
         </form>
         <div>Don't have an account? <Link to='/signup' className="link">Sign up</Link></div>
-          {this.props.loggedIn ? (this.props.isLandlord ? <Redirect to="/proprietor" /> : <Redirect to="/tenant" />) : null}
+          {this.props.isLoggedIn && (this.props.isLandlord ? <Redirect to="/proprietor" /> : <Redirect to="/tenant" />)}
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
     isLandlord: state.user && state.user.is_landlord,
-    loggedIn: state.loggedIn
+    isLoggedIn: state.loggedIn
   }
 }
 

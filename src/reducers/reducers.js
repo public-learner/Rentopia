@@ -10,22 +10,25 @@ export function userData(state = {}, action) {
       return action.payload.data.user
     case SET_PROFILE:
     	return Object.assign({}, state, action.payload.data)
-
+    case USER_LOGOUT:
+      return {}
     default:
       return state;
   }
 }
 
-export function isLoggedIn(state = {}, action) {
+export function isLoggedIn(state = null, action) {
   switch(action.type) {
-    case USER_LOGIN: 
+    case USER_LOGIN:
+      console.log('logged in reducer trueeee') 
       return true
     case USER_LOGOUT:
-      return undefined
-    case CHECK_SESSION:
-      return action.payload.data
+      console.log('WHYYYYyyy!')
+      return false
+    // case CHECK_SESSION:
+    //   return action.payload.data
     default:
-      return false;
+      return state;
   }
 }
 

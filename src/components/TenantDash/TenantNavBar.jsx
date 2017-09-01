@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import { connect} from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { logoutUser } from '../../actions/authGetters'
@@ -21,7 +21,9 @@ class TenantNavBar extends Component {
 
   handleLogout() {
     this.props.logoutUser()
-    // this.props.history.push("/")
+      .then(() => {
+        this.props.history.push('/')
+      })
   }
 
   render() {
@@ -44,7 +46,7 @@ class TenantNavBar extends Component {
           <NavDropdown title="Profile/Logout" id="nav-dropdown" onToggle={this.toggleDropdown.bind(this)}
             open={this.state.dropdownIsOpen}>
             <Link onClick={this.toggleDropdown.bind(this)} className="dropDownMenu" to="/tenant/profile"> Your Profile </Link><br/>
-            <Link className="dropDownMenu" onClick={this.handleLogout.bind(this)} to="/" > Logout </Link>
+            <a href="javascript:void(0)" className="dropDownMenu" onClick={this.handleLogout.bind(this)} to="/" > Logout </a>
           </NavDropdown>
         </Nav>
       </Navbar>
@@ -56,4 +58,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({logoutUser}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(TenantNavBar)
+export default connect(null, mapDispatchToProps)(withRouter(TenantNavBar))
