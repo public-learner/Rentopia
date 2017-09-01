@@ -132,27 +132,20 @@ router
 				ctx.body = tenant
 			}
 	})
-	.post('/', async (ctx, next) => {
-		// ctx.request.body = {tenant_email, property_id, rent, due_date, user}
-		let tenant, obj
-		obj = ctx.request.body
-		if(!obj.user){
-			obj.user = null
-		}
-		tenant = await checkForActiveTenant(ctx, ctx.user, ctx.tenant_email)
-		if(tenant && tenant.property_id) {
-			ctx.response.status = 403
-			ctx.body = `Tenant is active `
-		} else {
-
-		}
-	})
+	// .post('/', async (ctx, next) => {
+	// 	// ctx.request.body = {tenant_email, property_id, rent, due_date, user}
+	// 	let tenant, obj
+	// 	obj = ctx.request.body
+	// 	if(!obj.user){
+	// 		obj.user = null
+	// 	}
+	// 	tenant = await checkForActiveTenant(ctx, ctx.user, ctx.tenant_email)
+	// 	if(tenant && tenant.property_id) {
+	// 		ctx.response.status = 403
+	// 		ctx.body = `Tenant is active `
+	// 	} else {
+			
+	// 	}
+	// })
 exports.routes = router
 
-// module.exports = {
-// 	routes: router,
-// 	updateTenant: updateTenant,
-// 	createNewTenant: createNewTenant,
-// 	checkForActiveTenant: checkForActiveTenant,
-// 	retrieveActiveTenantData: retrieveActiveTenantData,
-// }

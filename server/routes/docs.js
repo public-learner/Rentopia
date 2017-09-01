@@ -21,6 +21,7 @@ const getUserDocs = async (ctx, tenantOrLandlord, isLandlord = false, property_i
 	
 	return output // returns the array of results
 }
+exports.getUserDocs = getUserDocs
 
 const createRawtext = async (ctx) => {
 	let doc, obj
@@ -31,7 +32,7 @@ const createRawtext = async (ctx) => {
 	doc = await ctx.db.query(`INSERT INTO documents (landlord_id, doc_type, tenant_id, property_id, doc_body) VALUES (${obj.landlord_id},'${obj.doc_type}', ${obj.tenant_id}, ${obj.property_id}, '${obj.doc_body}') RETURNING *;`)
 	return doc.rows[0]
 }
-
+exports.createRawtext = createRawtext
 
 router
 	.get('/:id', async (ctx, next) => {
@@ -55,9 +56,5 @@ router
 			ctx.body = `Invalid type: must be rawtext, image, other, or lease`
 		}
 	})
+exports.routes = router
 
-module.exports = {
-	routes: router,
-	getUserDocs: getUserDocs,
-	createRawtext: createRawtext,
-}

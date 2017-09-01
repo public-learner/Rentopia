@@ -40,6 +40,14 @@ const makeMessage = async (ctx) => {
 		return null
 	}
 }
+exports.makeMessage = makeMessage
+
+const updateViewed = async (ctx, message_id) => {
+	let message, messageRows
+	messageRows = ctx.db.query(`UPDATE messages SET is_read = NOT is_read WHERE message_id = ${message_id} RETURNING *;`)
+	message = messageRows.rows[0]
+	return message
+}
 
 router
 	.get('/:message_id', async (ctx, next) => {
@@ -78,6 +86,16 @@ router
 		} else {
 			ctx.response.status = 400
 			ctx.body = 'Message failed'
+		}
+	})
+	.put('/:message_id', (ctx, next) => {
+		let message = await updateViewed(ctx, ctx.params.message_id)
+		if(message !== null) {
+			ctx.response.status = 201
+			ctx.body = message
+		} else {
+			ctx.response.status = 400
+			ctx.body = 'Message update failed'
 		}
 	})
 	exports.routes = router
