@@ -3,9 +3,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link, Redirect } from 'react-router-dom'
 
-import { loginUser } from '../../actions/authGetters'
+import { loginUser, checkSession } from '../../actions/authGetters'
 
 class Login extends React.Component {
+
+  componentWillMount() {
+    console.log('yello')
+    // this.props.checkSession()
+  }
 
   handleLogin(e) {
     e.preventDefault()
@@ -42,7 +47,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loginUser: loginUser}, dispatch)
+  return bindActionCreators({loginUser, checkSession}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

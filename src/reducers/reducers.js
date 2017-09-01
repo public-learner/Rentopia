@@ -1,5 +1,5 @@
 import { SET_PROFILE } from '../actions/setEditedProfileInfo'
-import { USER_LOGIN, TENANT_LOGIN, LL_LOGIN, USER_LOGOUT } from '../actions/authGetters'
+import { USER_LOGIN, TENANT_LOGIN, LL_LOGIN, USER_LOGOUT, CHECK_SESSION } from '../actions/authGetters'
 import { FETCH_RENT, FETCH_MESSAGES, FETCH_DOCS, FETCH_SELECTED_MEDIA } 
 	from '../actions/tenantDashboardGetters.js';
 
@@ -21,8 +21,9 @@ export function isLoggedIn(state = {}, action) {
     case USER_LOGIN: 
       return true
     case USER_LOGOUT:
-      return false
-
+      return undefined
+    case CHECK_SESSION:
+      return action.payload.data
     default:
       return false;
   }
