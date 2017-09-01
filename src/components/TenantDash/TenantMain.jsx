@@ -5,6 +5,7 @@ import TenantDashboard from './TenantDashboard.jsx'
 import Profile from '../UserProfile/UserProfile.jsx'
 import TenantMessages from './TenantMessages.jsx'
 import Login from '../Splash/Login.jsx'
+import Transactions from './Transactions.jsx'
 
 
 class TenantMain extends React.Component {
@@ -15,10 +16,10 @@ class TenantMain extends React.Component {
           <TenantNavBar />
           <main>
           <Switch>
-            <Route exact path='/' component={Login} />
             <Route exact path='/tenant/dashboard' component={TenantDashboard} />
             <Route exact path='/tenant/profile' component={Profile} />
             <Route exact path='/tenant/messages' component={TenantMessages} />
+            <Route exact path='/tenant/payments' component={Transactions} />
             <Route path='/tenant' component={TenantDashboard} />
           </Switch>
           </main>

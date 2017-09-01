@@ -21,7 +21,7 @@ class Transactions extends React.Component {
   render() {
     return (
       <div className="transactionsTable">
-        <h2>Transactions</h2>
+        <h2>Past Payments</h2>
         <BootstrapTable data={ transactions } striped={ true } hover={ true } condensed={ true }>
           <TableHeaderColumn dataField='id' dataSort={ true } isKey={ true }>Transaction ID</TableHeaderColumn>
           <TableHeaderColumn dataField='date' dataSort={ true }>Date</TableHeaderColumn>

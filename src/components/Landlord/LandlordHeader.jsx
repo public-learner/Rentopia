@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { logoutUser } from '../../actions/authGetters'
 
 class Header extends Component {
     constructor(props) {
@@ -14,6 +18,11 @@ class Header extends Component {
   toggleDropdown() {
     this.setState({ dropdownIsOpen: !this.state.dropdownIsOpen }
   )}
+
+  handleLogout() {
+    this.props.logoutUser()
+    this.props.history.push("/")
+  }
 
   render() {
     return (
@@ -35,7 +44,7 @@ class Header extends Component {
           <NavDropdown title="Profile/Logout" id="nav-dropdown" onToggle={this.toggleDropdown.bind(this)}
             open={this.state.dropdownIsOpen}>
             <Link className="dropDownMenu" to="/profile"> Your Profile </Link><br/>
-            <Link className="dropDownMenu" to="/logout"> Logout </Link>
+            <Link className="dropDownMenu" onClick={this.handleLogout.bind(this)} to="/" > Logout </Link>
           </NavDropdown>
         </Nav>
       </Navbar>
@@ -43,4 +52,8 @@ class Header extends Component {
   }
 };
 
-export default Header;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({logoutUser}, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(Header)

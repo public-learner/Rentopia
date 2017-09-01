@@ -72,6 +72,7 @@ auth
 				output = await tenants.retrieveActiveTenantData(ctx, tenant)
 				output.user = user
 				ctx.session.isLoggedIn = true
+				ctx.response.status = 200
 				ctx.body = output
 			} else {
 				ctx.response.status = 403
