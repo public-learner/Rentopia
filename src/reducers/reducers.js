@@ -76,10 +76,10 @@ export function messages(state = null, action) {
   }
 }
 
-export function docs(state = null, action) {
+export function docs(state = [], action) {
   switch(action.type) {
     case USER_LOGIN: 
-      if (action.payload.data.tenant) {
+      if (action.payload.data.docs) {
         return action.payload.data.docs
       } else {
         return state

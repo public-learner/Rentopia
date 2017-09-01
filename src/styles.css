@@ -118,8 +118,11 @@
     width: 100%;
 }*/
 
-#messageHeader {
-  text-align: center;
+.messageIcons {
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #centerTenantDash {
@@ -136,6 +139,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.addContact {
+
+}
+
+.messageInput {
+  width: 100%;
+  margin-right: 10px;
+  height: 100%;
 }
 
 
