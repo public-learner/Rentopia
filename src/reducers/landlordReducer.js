@@ -1,4 +1,5 @@
-import { FETCH_LL_PROPERTIES, FETCH_LL_TENANTS } 
+import { USER_LOGIN } from '../actions/authGetters'
+import { FETCH_LL_PROPERTIES, FETCH_LL_TENANTS, ADD_PROPERTY } 
   from '../actions/landlordDashboardGetters.js'
 
 const tenants = [
@@ -19,11 +20,12 @@ const tenants = [
   {name: "Aria Stark", property: "Winterfell", rent: 6000, due:"09/01/2017", message: "false"}
 ];
 
-export function getLandlordProperties(state = null, action) {
+export function landlordProperties(state = null, action) {
   switch(action.type) {
-    case FETCH_LL_PROPERTIES: 
-      return action.payload.data
-
+    case USER_LOGIN: 
+      return action.payload.data.properties || null
+    case ADD_PROPERTY:
+      return [...state, action.payload] || null
     default:
       return state
   }

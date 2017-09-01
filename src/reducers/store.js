@@ -1,23 +1,23 @@
 import { combineReducers } from 'redux';
-import { getLandlordProperties, landlordTenants } from './landlordReducer';
 import { userData, tenantData, landlordData, messages, docs, properties, isLoggedIn} from './reducers'
+import { landlordProperties, landlordTenants } from './landlordReducer';
 import { selectedTenantMedia } from './tenantReducer';
 import { tenantPaidRent } from './paymentReducer'
 import { broadcasts } from './broadcastsReducer'
 
 const rootReducer = combineReducers({
-  selectedTenantMedia: selectedTenantMedia,
-  tenantPaidRent: tenantPaidRent,
-  getLandlordProperties,
+  selectedTenantMedia,
+  tenantPaidRent,
+  landlordProperties,
   landlordTenants,
   user: userData,
-  tenantData: tenantData,
-  landlordData: landlordData,
-  messages: messages,
-  docs: docs,
-  properties: properties,
+  tenantData,
+  landlordData,
+  messages,
+  docs,
+  properties,
   loggedIn: isLoggedIn,
-  broadcasts: broadcasts
+  broadcasts
 });
 
 export default rootReducer;
