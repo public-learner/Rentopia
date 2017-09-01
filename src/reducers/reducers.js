@@ -54,16 +54,6 @@ export function landlordData(state = null, action) {
   }
 }
 
-// export function notifications(state = null, action) {
-//   switch(action.type) {
-//     case USER_LOGIN: 
-//       return action.payload.data.broadcasts
-
-//     default:
-//       return state;
-//   }
-// }
-
 export function messages(state = null, action) {
   switch(action.type) {
     case USER_LOGIN: 
