@@ -25,7 +25,6 @@ export function signupUser(credentials, cb) {
   }
     cb(true, data)
   })
-
 }
 
 // export function loginUser(credentials) {

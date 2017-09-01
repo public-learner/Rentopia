@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import TenantSidebar from './TenantSidebar.jsx';
 import Payment from '../Payment/Payment.jsx';
 import Modal from 'react-modal';
+
 // import { bindActionCreators } from 'redux';
 const customStyles = {
   content : {
@@ -50,24 +51,29 @@ class TenantDashboard extends Component {
   render() {
   	return (
       <div>
+        <h2 className="pageTitle"> Your Dashboard </h2>
         <TenantSidebar />
-        <div style={{marginRight: "300px", float: "right", width: "50%", height: "350px", border: "1px solid gray"}}>
+
+        <div id="tenantWindow">
           <h3> Header </h3>
           <p> {this.props.media} </p>
         </div>
-          <p style={{width: "100%", float: "right", textAlign: "center"}}>
-            Rent Due: {this.props.tenantRentDue}
-            <button onClick={this.openModal.bind(this)}> Make Payment </button>
-          </p>
 
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onRequestClose={this.closeModal.bind(this)}
-            style={customStyles}
-            contentLabel="Payment Modal"
-          > 
-            <Payment />
-          </Modal>
+        <div id="centerTenantDash">
+          <p className="tenantMakePayment">
+          <p>Rent Due: {this.props.tenantRentDue}</p>
+            <button className="btn btn-secondary" onClick={this.openModal.bind(this)}> Make Payment </button>
+          </p>
+        </div>
+
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal.bind(this)}
+          style={customStyles}
+          contentLabel="Payment Modal"
+        > 
+          <Payment />
+        </Modal>
       </div>
   	)
   }

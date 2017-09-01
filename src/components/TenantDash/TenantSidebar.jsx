@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectedMedia, getMessages, getDocs } from '../../actions/tenantDashboardGetters';
+import { getBroadcasts } from '../../actions/broadcastsGetter';
+
 
 class TenantSideBar extends Component {
 
 	componentDidMount() {
-		// this.props.getMessages(this.props.userId)
+		console.log('componentDidMount', this.props.userId)
+		this.props.getBroadcasts(this.props.userId)
 		// this.props.getDocs(this.props.userId)
 	}
 
-	renderMessages() {
-		return this.props.messages.map((mesg, i) => {
+	renderBroadcasts() {
+		return this.props.broadcasts.map((bcast, i) => {
 			return (
-				<tr key={i} onClick={() => this.props.selectedMedia(mesg)}> {mesg} </tr>
+				<div id="truncate" key={i} onClick={() => this.props.selectedMedia(bcast)}> {bcast} </div>
 			)
 		})
 	}
@@ -21,20 +24,18 @@ class TenantSideBar extends Component {
 	renderDocs() {
 		return this.props.docs && this.props.docs.map((doc, i) => {
 			return (
-				<tr key={i} onClick={() => this.props.selectedMedia(doc)}> {doc} </tr>
+				<div id="truncate" key={i} onClick={() => this.props.selectedMedia(doc)}> {doc} </div>
 			)
 		})
 	}
 
 	render() {
 		return (
-			<div style={{width: "20%", height: "400px", border: "1px solid gray", float: "left"}}>
-			  <div> <h4>Messages</h4>
-	        <div>{this.props.messages && this.renderMessages()}</div>
-				</div>
-				<div> <h4>Documents</h4>
-				  <div>{this.props.docs && this.renderDocs()}</div>
-				</div>
+			<div id="tenantSidebar">
+			  <h3>Broadcasts</h3>
+	        {this.props.broadcasts ? this.renderBroadcasts(): 'No Broadcasts'}
+				<h3>Documents</h3>
+				 {this.props.docs ? this.renderDocs(): 'No docs'}
 			</div>
 		)
 	}
@@ -42,14 +43,15 @@ class TenantSideBar extends Component {
 
 function mapStateToProps(state) {
 	return{
-		messages: state.messages && state.messages.received,
+		broadcasts: state.broadcasts,
 		docs: state.docs && state.docs.tenantDocs,
-		userId: state.user && state.user.user_id
+		userId: state.user && state.user.user_id,
+		propId: state.properties && state.properties.propId
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({selectedMedia, getMessages, getDocs}, dispatch)
+  return bindActionCreators({selectedMedia, getBroadcasts, getDocs}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TenantSideBar);
