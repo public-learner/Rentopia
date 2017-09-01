@@ -88,7 +88,7 @@ router
 			ctx.body = 'Message failed'
 		}
 	})
-	.put('/:message_id', (ctx, next) => {
+	.put('/:message_id', async (ctx, next) => {
 		let message = await updateViewed(ctx, ctx.params.message_id)
 		if(message !== null) {
 			ctx.response.status = 201

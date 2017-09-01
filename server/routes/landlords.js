@@ -24,7 +24,7 @@ exports.getLandlord = getLandlord
 
 const getLandlordById = async (ctx, landlord_id) => {
 	let ll, llRows
-	llRows = await ctx.db.query(`SELECT landlords.*, user.user_name FROM landlords FULL OUTER JOIN users ON landlords.user_id = users.user_id WHERE landlords.landlord_id = ${landlord_id}`)
+	llRows = await ctx.db.query(`SELECT landlords.*, users.user_name FROM landlords FULL OUTER JOIN users ON landlords.user_id = users.user_id WHERE landlord_id = ${landlord_id}`)
 	ll = llRows.rows[0]
 	return ll
 }

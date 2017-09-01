@@ -23,12 +23,11 @@ const getRecipientTransactions = async (ctx, tenantOrLandlord) => {
 
 const getUserTransactions = async (ctx, tenantOrLandlord) => {
   let output, sent, received
-  output = {}
   [sent, received] = await Promise.all([
     getSenderTransactions(ctx, tenantOrLandlord),
     getRecipientTransactions(ctx, tenantOrLandlord)
   ])
-  output.sentPayments = sent
+  output = { sentPayments: sent }
   output.receivedPayments = received
   return output
 }

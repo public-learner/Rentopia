@@ -4,7 +4,7 @@ let Messages = require('./messages.js')
 let docs = require('./docs.js')
 let payments = require('./payments.js')
 let Users = require('./users.js')
-let Landlord = require('./landlords.js')
+let Landlords = require('./landlords.js')
 let Promise = require('bluebird')
 
 
@@ -64,9 +64,10 @@ const retrieveActiveTenantData = async (ctx, tenant) => {
 	property = await props.getProperty(ctx, tenant.property_id)
 	if(property) {
 		[broadcasts, otherTenants, landlord] = await Promise.all([
+		//[broadcasts, otherTenants] = await Promise.all([
 			Messages.getPropertyBroadcasts(ctx, property.property_id),
 			props.getPropertyTenants(ctx, property.property_id, tenant.tenant_id),
-			landlord = Landlord.getLandlordById(ctx, property.landlord_id)
+			Landlords.getLandlordById(ctx, property.landlord_id)
 		])
 	}
 	// docs will return as {tenant docs, propertyDocs}
@@ -75,7 +76,10 @@ const retrieveActiveTenantData = async (ctx, tenant) => {
 		Messages.getUserMessages(ctx, tenant.user_id),
 		payments.getUserTransactions(ctx, tenant)
 	])
-	output = {tenant: tenant, property: property, messages: messagesArray, docs: docArray, otherTenants: otherTenants, landlord: landlord}
+	// docArray = await docs.getUserDocs(ctx, tenant)
+	// messagesArray = await Messages.getUserMessages(ctx, tenant.user_id)
+	// transactions = await payments.getUserTransactions(ctx, tenant)
+	output = { tenant: tenant, property: property, messages: messagesArray, docs: docArray, otherTenants: otherTenants, landlord: landlord, transactions: transactions }
 	return output
 }
 exports.retrieveActiveTenantData = retrieveActiveTenantData
@@ -144,7 +148,7 @@ router
 	// 		ctx.response.status = 403
 	// 		ctx.body = `Tenant is active `
 	// 	} else {
-			
+
 	// 	}
 	// })
 exports.routes = router
