@@ -7,6 +7,7 @@ import LandlordHeader  from './LandlordHeader.jsx'
 import Properties  from './LandlordProperties.jsx'
 import Property  from './LandlordPropertyComponent.jsx'
 import Tenants  from './LandlordTenants.jsx'
+import Profile from '../UserProfile/UserProfile.jsx'
 
 class LandlordDashboard extends React.Component {
 
@@ -19,6 +20,7 @@ class LandlordDashboard extends React.Component {
             <Route exact path='/proprietor/properties' component={Properties} />
             <Route path='/proprietor/properties/:id' component={Property} />
             <Route path='/proprietor/tenants' component={Tenants} />
+            <Route path='/proprietor/profile' component={Profile} />
           </Switch>
         </main>
         <p> {this.props.media} </p>

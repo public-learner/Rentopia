@@ -9,22 +9,10 @@ import { bindActionCreators } from 'redux';
 import Payment from './Payment/Payment.jsx';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state ={
-      loggedIn: false
-    }
-  }
-
-  componentWillMount() {
-
-  }
-
   render() {
-
     return(
       <div>
-        {!this.state.loggedIn && <Splash />}
+        <Splash />
       </div>
     )
   }
