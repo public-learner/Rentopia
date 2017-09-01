@@ -11,7 +11,7 @@ import { addProperty } from '../../actions/landlordDashboardGetters'
 
 function mapStateToProps(state) {
   return {
-    properties: state.properties,
+    properties: state.landlordProperties,
     landlordData: state.landlordData
   }
 }
@@ -36,16 +36,18 @@ class Properties extends React.Component {
         alert('failure to login upon signup')
       }
     })
+    e.target.property_name.value = '',
+    e.target.address.value = '',
+    e.target.city.value = '',
+    e.target.state_abbr.value = ''
   }
 
   render() {
     const options = {
       onRowClick: (row, columnIndex, rowIndex) => {
-        console.log(`row id:${row.property_id}`)
         this.props.history.push(`/proprietor/properties/${row.property_id}`);
       }
     }
-    console.log(this.props.addProperty)
 
     return (
       <div>

@@ -1,6 +1,6 @@
 
 import { USER_LOGIN } from '../actions/authGetters'
-import { FETCH_LL_PROPERTIES, FETCH_LL_TENANTS, ADD_PROPERTY } from '../actions/landlordDashboardGetters.js'
+import { FETCH_LL_PROPERTIES, FETCH_LL_TENANTS, ADD_PROPERTY } from '../actions/landlordDashboardGetters'
 
 // const properties = [
 //   {property_id: 1, property_name: "RnM", address: "123 Fake Street", city: "Atlantis", state_abbrv: "DNR"},
@@ -33,7 +33,7 @@ export function landlordProperties(state = null, action) {
     case USER_LOGIN: 
       return action.payload.data.properties || null
     case ADD_PROPERTY:
-      return [...state, action.payload] || null
+      return [...state, action.payload.data] || null
     default:
       return state
   }

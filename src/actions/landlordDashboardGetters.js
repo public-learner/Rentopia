@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const FETCH_LL_PROPERTIES = 'fetch_landlord_properties'
 export const FETCH_LL_TENANTS = 'fetch_landlord_tenants'
-export const NEW_PROPERTY = 'new_property_created'
+export const ADD_PROPERTY = 'add_landlord_property'
 
 const ROOT_URL = 'http://localhost:8000'
 
@@ -36,7 +36,7 @@ export function addProperty(propDetails, cb) {
   })
 
   return {
-    type: NEW_PROPERTY,
+    type: ADD_PROPERTY,
     payload: createdProp
   }
 

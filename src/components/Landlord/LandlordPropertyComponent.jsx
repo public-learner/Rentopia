@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 function mapStateToProps(state, match) {
   const property_id = Number(match.match.params.id);
   return {
-    property: state.landlordProperties.filter(property => property.property_id = property_id)[0],
+    property: state.landlordProperties.filter(property => property.property_id === property_id)[0],
     tenants: state.landlordTenants
   }
 }
