@@ -20,6 +20,27 @@ const getPropertyBroadcasts = async (ctx, property_id) => {
 }
 exports.getPropertyBroadcasts = getPropertyBroadcasts
 
+const makeMessage = async (ctx) => {
+	let obj, messageRows, message
+	obj = ctx.request.body
+	if(obj.property_id && !obj.sender_id && !obj.recipient_id) {
+		//it is a broadcast 
+		// ctx.request.body = {message_content, message_type, property_id, importance, sender_id, sender_name, recipient_id, recipient_name}
+		messageRows = await ctx.db.query(`INSERT INTO messages (message_content, message_type, property_id) VALUES ('${obj.message_content}', 'broadcast', ${obj.property_id}) RETURNING *;`)
+		message = messageRows.rows[0]
+		return message
+	} else if(!obj.property_id && obj.sender_id && obj.recipient_id) {
+		//it is a DM
+		messageRows = await ctx.db.query(`INSERT INTO messages (message_content, message_type, sender_id, sender_name, recipient_id, recipient_name) VALUES ('${obj.message_content}', 'direct', ${obj.sender_id}, '${obj.sender_name}', ${obj.recipient_id}, '${obj.recipient_name}') RETURNING *;`)
+		message = messageRows.rows[0]
+		return message
+	} else {
+		//ERROR
+		console.log('Not a valid message type')
+		return null
+	}
+}
+
 router
 	.get('/:message_id', async (ctx, next) => {
 		let messageRows
@@ -48,10 +69,19 @@ router
 			ctx.body = `User not found, messages could not be loaded`
 		}
 	})
+	.post('/', async (ctx, next) => {
+		// ctx.request.body = {message_content, message_type, property_id, importance, sender_id, sender_name, recipient_id, recipient_name}
+		let message = await makeMessage(ctx)
+		if(message !== null) {
+			ctx.response.status = 201
+			ctx.body = message
+		} else {
+			ctx.response.status = 400
+			ctx.body = 'Message failed'
+		}
+	})
 	exports.routes = router
 
-// module.exports = {
-// 	routes: router,
-// 	getUserMessages: getUserMessages,
-// 	getPropertyBroadcasts: getPropertyBroadcasts,
-// }
+
+
+

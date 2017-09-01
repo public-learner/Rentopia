@@ -61,7 +61,7 @@ Tests:
 - Landlord makes a tenant - tenant has no user, active tenant with no property
 - Landlord makes a tenant - tenant has no user, active tenant with property
 - Landlord makes a tenant - tenant has user, no active tenant
-Landlord makes a tenant - tenant has user, active tenant
+- Landlord makes a tenant - tenant has user, active tenant
 Tenant makes a tenant - has active tenant
 Tenant makes a tenant - has no active tenant
 Active Tenant data is retrieved (on signin)
@@ -130,8 +130,25 @@ test(`Landlord makes a tenant with user but has active tenant record with proper
 	if(testTenant) await ctx.db.query(`DELETE FROM tenants WHERE tenant_id = ${testTenant.tenant_id};`)
 })
 
+// test(`Tenant makes a tenant, active tenant record`, async () => {
 
+// })
 
+// test(`Tenant makes a tenant, NO active tenant record`, async () => {
+	
+// })
 
+// test (`Get all tenants from property` async () => {
+
+//})
+
+test(`Retrieve tenant data successfully`, async () => {
+	let results
+	tenant = await Tenants.createNewTenant(ctx, user, property.property_id)
+	expect(tenant).toBeTruthy()
+	results = await Tenants.retrieveActiveTenantData(ctx, tenant)
+	// console.log(results)
+	expect(results.tenant).toBe(tenant)
+})
 
 
