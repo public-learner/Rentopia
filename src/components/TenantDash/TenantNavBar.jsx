@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { logoutUser } from '../../actions/authGetters'
 
 class TenantNavBar extends Component {
     constructor(props) {
@@ -15,20 +19,24 @@ class TenantNavBar extends Component {
     this.setState({ dropdownIsOpen: !this.state.dropdownIsOpen }
   )}
 
+  handleLogout() {
+    this.props.logoutUser()
+      .then(() => {
+        this.props.history.push('/')
+      })
+  }
+
   render() {
     return (
       <Navbar className="navbar" inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand className="brand">
-            <Link to="/">Rentopia</Link>
+            <Link to="/tenant">Rentopia</Link>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
           <NavItem>
-            <Link to='/tenant/dashboard' className="link">Dashboard</Link>
-          </NavItem>
-          <NavItem>
-            <Link to='/payments' className="link">Payments</Link>
+            <Link to='/tenant/payments' className="link">Payments</Link>
           </NavItem>
           <NavItem>
             <Link to='/tenant/messages' className="link">Messages</Link>
@@ -38,7 +46,7 @@ class TenantNavBar extends Component {
           <NavDropdown title="Profile/Logout" id="nav-dropdown" onToggle={this.toggleDropdown.bind(this)}
             open={this.state.dropdownIsOpen}>
             <Link onClick={this.toggleDropdown.bind(this)} className="dropDownMenu" to="/tenant/profile"> Your Profile </Link><br/>
-            <Link onClick={this.toggleDropdown.bind(this)} className="dropDownMenu" to="/"> Logout </Link>
+            <a href="javascript:void(0)" className="dropDownMenu" onClick={this.handleLogout.bind(this)} to="/" > Logout </a>
           </NavDropdown>
         </Nav>
       </Navbar>
@@ -46,4 +54,8 @@ class TenantNavBar extends Component {
   }
 };
 
-export default TenantNavBar;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({logoutUser}, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(TenantNavBar))
