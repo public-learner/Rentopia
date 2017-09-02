@@ -62,6 +62,8 @@ auth
 		if(user && user.is_landlord) {
 			output = await landlords.getLandlordData(ctx, user)
 			output.user = user
+			ctx.session.isLoggedIn = true
+			ctx.response.status = 200
 			ctx.body = output
 		} else if(user) {
 			tenant = await tenants.checkForActiveTenant(ctx, user)
@@ -69,6 +71,8 @@ auth
 				//all gucci
 				output = await tenants.retrieveActiveTenantData(ctx, tenant)
 				output.user = user
+				ctx.session.isLoggedIn = true
+				ctx.response.status = 200
 				ctx.body = output
 			} else {
 				ctx.response.status = 403
@@ -77,7 +81,12 @@ auth
 		}
 	}) // end sign in
 
-
+	.get('/logout', async (ctx, next) => {
+		ctx.session = null
+		console.log(ctx.session)
+		ctx.response.status = 202
+		ctx.body = 'Successful signout'
+	})
 
 module.exports = {
 	routes: auth,

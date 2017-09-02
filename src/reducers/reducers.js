@@ -1,5 +1,5 @@
 import { SET_PROFILE } from '../actions/setEditedProfileInfo'
-import { USER_LOGIN, TENANT_LOGIN, LL_LOGIN } from '../actions/authGetters'
+import { USER_LOGIN, TENANT_LOGIN, LL_LOGIN, USER_LOGOUT, CHECK_SESSION } from '../actions/authGetters'
 import { FETCH_RENT, FETCH_MESSAGES, FETCH_DOCS, FETCH_SELECTED_MEDIA } 
 	from '../actions/tenantDashboardGetters.js';
 
@@ -10,19 +10,23 @@ export function userData(state = {}, action) {
       return action.payload.data.user
     case SET_PROFILE:
     	return Object.assign({}, state, action.payload.data)
-
+    case USER_LOGOUT:
+      return {}
     default:
       return state;
   }
 }
 
-export function isLoggedIn(state = {}, action) {
+export function isLoggedIn(state = null, action) {
   switch(action.type) {
-    case USER_LOGIN: 
+    case USER_LOGIN:
       return true
-
+    case USER_LOGOUT:
+      return false
+    // case CHECK_SESSION:
+    //   return action.payload.data
     default:
-      return false;
+      return state;
   }
 }
 
@@ -54,16 +58,6 @@ export function landlordData(state = null, action) {
   }
 }
 
-// export function notifications(state = null, action) {
-//   switch(action.type) {
-//     case USER_LOGIN: 
-//       return action.payload.data.notifications
-
-//     default:
-//       return state;
-//   }
-// }
-
 export function messages(state = null, action) {
   switch(action.type) {
     case USER_LOGIN: 
@@ -76,10 +70,10 @@ export function messages(state = null, action) {
   }
 }
 
-export function docs(state = null, action) {
+export function docs(state = [], action) {
   switch(action.type) {
     case USER_LOGIN: 
-      if (action.payload.data.tenant) {
+      if (action.payload.data.docs) {
         return action.payload.data.docs
       } else {
         return state
@@ -91,14 +85,3 @@ export function docs(state = null, action) {
       return state;
   }
 }
-
-export function properties(state = null, action) {
-  switch(action.type) {
-    case USER_LOGIN: 
-      return action.payload.data.properties || null
-
-    default:
-      return state;
-  }
-}
-

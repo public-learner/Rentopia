@@ -15,8 +15,9 @@ export function tenantPayment(payment) {
   }
 }
 
-export function submerchantCreation(merchantAccountParams) {
-  const request = axios.post(`${ROOT_URL}/api/payments/submerchantCreation`, {
+export function submerchantCreation(merchantAccountParams, landlordId) {
+  console.log(`${ROOT_URL}/api/payments/submerchantCreation/${landlordId}`)
+  const request = axios.put(`${ROOT_URL}/api/payments/submerchantCreation/${landlordId}`, {
     merchantAccountParams: merchantAccountParams
   })
 

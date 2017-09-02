@@ -4,9 +4,9 @@ let db, prop, tenant
 
 beforeAll( async () => {
 	db = new Pool()
+	await db.query(`INSERT INTO properties (property_name) VALUES ('jest_test_prop');`)
+	await db.query(`INSERT INTO tenants (tenant_email, rent, is_active) VALUES ('jesttest@test.com', 750, true);`)
 	db.query(`DELETE FROM documents;`)
-	db.query(`INSERT INTO properties (property_name) VALUES ('jest_test_prop');`)
-	db.query(`INSERT INTO tenants (tenant_email, rent, is_active) VALUES ('jesttest@test.com', 750, true);`)
 })
 
 

@@ -1,6 +1,8 @@
 let router = require('koa-router')()
 let braintree = require('braintree')
 let config = require('../.././braintreeConfig.js')
+let Landlords = require('./landlords.js')
+let Promise = require('bluebird')
 
 let gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -9,14 +11,24 @@ let gateway = braintree.connect({
   privateKey: config.PRIVATE_KEY
 })
 
+const getSenderTransactions = async (ctx, tenantOrLandlord) => {
+  let results = ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
+  return results.rows
+}
+
+const getRecipientTransactions = async (ctx, tenantOrLandlord) => {
+  let results = ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
+  return results.rows
+}
+
 const getUserTransactions = async (ctx, tenantOrLandlord) => {
-  //REFACTOR WITH PROMISE.ALL
-  let output, transactionsArray
-  output = {}
-  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE sender_id = ${tenantOrLandlord.user_id};`)
-  output.sentPayments = transactionsArray.rows
-  transactionsArray = await ctx.db.query(`SELECT * FROM transactions WHERE recipient_id = ${tenantOrLandlord.user_id};`)
-  output.receivedPayments = transactionsArray.rows
+  let output, sent, received
+  [sent, received] = await Promise.all([
+    getSenderTransactions(ctx, tenantOrLandlord),
+    getRecipientTransactions(ctx, tenantOrLandlord)
+  ])
+  output = { sentPayments: sent }
+  output.receivedPayments = received
   return output
 }
 exports.getUserTransactions = getUserTransactions
@@ -47,7 +59,7 @@ router
       ctx.body = 'Successful payment'
     }
   })
-  .post('/submerchantCreation', async ctx => {
+  .put('/submerchantCreation/:landlord_id', async ctx => {
     ctx.request.body.merchantAccountParams.masterMerchantAccountId = config.MERCHANT_ACCOUNT_ID
     let merchantAccountParams = ctx.request.body.merchantAccountParams
 
@@ -56,10 +68,15 @@ router
       ctx.response.status = 400
       ctx.body = result.message
     } else {      
-      let merchantAccountId = result.merchantAccount.id
-      if (result.success) {    
+      // update the landlord record with the merchantAccount id using ctx.request.body.landlord_id  
+      ctx.request.body.merchant_id = result.merchantAccount.id
+      let landlord = await Landlords.updateMerchant(ctx, ctx.params.landlord_id)  
+      if(landlord) {
         ctx.response.status = 201
-        ctx.body = 'Succesful payment setup'
+        ctx.body = 'Succesful payment setup'   
+      } else {
+        ctx.response.status = 400
+        ctx.body = 'Error updating Landlord'
       }
     }
   }) 

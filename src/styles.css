@@ -73,6 +73,14 @@
   margin-top: 30px;
 }
 
+.tenantMakePayment {
+  width: 30%;
+  margin: 0 auto;
+  bottom: 0px;
+  margin-top: 30px;
+  text-align: center;
+}
+
 #profileEditButton {
   margin-left: 60%;
 }
@@ -84,4 +92,95 @@
 .braintree-toggle {
   visibility: hidden;
   height: 0px;
+}
+
+#tenantWindow {
+  width: 70%;
+  height: 500px;
+  margin: 10px;
+  display: inline-block;
+  border: 1px solid black;
+  vertical-align: top;
+}
+
+#tenantSidebar {
+  width: 25%;
+  height: 500px;
+  margin: 10px;
+  display: inline-block;
+  border: 1px solid black;
+  vertical-align: top;
+}
+
+/*#tenantDashFooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}*/
+
+.messageIcons {
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#centerTenantDash {
+    width: 500px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+#truncate {
+  font-size: 12px;
+  border-bottom: 1px solid lightgray;
+  max-width: 100%;
+  margin: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addContact {
+
+}
+
+.messageInput {
+  width: 100%;
+  margin-right: 10px;
+  height: 100%;
+}
+
+.paymentSetupWarning {
+  text-align: center
+}
+
+.paymentOption {
+  display: inline-block;
+  text-align: center;
+}
+
+.fa-university {
+  color: black;
+  font-size: 20px;
+}
+
+.paymentOption img {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(236, 240, 241,1.0);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.paymentOption label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+.paymentOption label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid black;
+}
+.paymentOption label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
 }

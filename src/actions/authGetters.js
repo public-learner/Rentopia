@@ -3,6 +3,8 @@ import axios from 'axios'
 export const USER_LOGIN = 'user_login'
 export const LL_LOGIN = 'landlord_login'
 export const TENANT_LOGIN = 'tenant_login'
+export const USER_LOGOUT = 'user_logout'
+export const CHECK_SESSION = 'check_session'
 
 const ROOT_URL = 'http://localhost:8000'
 
@@ -25,32 +27,7 @@ export function signupUser(credentials, cb) {
   }
     cb(true, data)
   })
-
 }
-
-// export function loginUser(credentials) {
-//   console.log(credentials)
-//   axios.post(`${ROOT_URL}/api/auth/signin`, {
-//       email: credentials.email,
-//       password: credentials.password
-//   })
-//   .then((response) => {
-//     console.log(response)
-//     if (response.data.user.is_landlord) {
-//       return {
-//         type: LL_LOGIN,
-//         payload: response
-//       }
-//     } else {
-//       return {
-//         type: TENANT_LOGIN,
-//         payload: response
-//       }
-//     }
-//   })
-//   .catch((err) => {
-//     console.log('error siging in', err)
-//   })
 
 export function loginUser(credentials) {
   const request = axios.post(`${ROOT_URL}/api/auth/signin`, {
@@ -64,4 +41,12 @@ export function loginUser(credentials) {
   }
 
   // **** request should have userData, tenant info, messages, docs, media
+}
+
+export function logoutUser(cb) {
+  const request = axios.get(`${ROOT_URL}/api/auth/logout`)
+  return {
+    type: USER_LOGOUT,
+    payload: request
+  }
 }
