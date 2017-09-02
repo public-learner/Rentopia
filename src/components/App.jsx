@@ -6,7 +6,6 @@ import { getMessages, getDocs, getRentDue } from '../actions/tenantDashboardGett
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import Payment from './Payment/Payment.jsx';
 
 class App extends React.Component {
   render() {

@@ -5,7 +5,7 @@ import TenantDashboard from './TenantDashboard.jsx'
 import Profile from '../UserProfile/UserProfile.jsx'
 import TenantMessages from './TenantMessages.jsx'
 import Login from '../Splash/Login.jsx'
-import Transactions from './Transactions.jsx'
+import Transactions from './TenantTransactions.jsx'
 
 
 class TenantMain extends React.Component {

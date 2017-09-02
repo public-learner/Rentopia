@@ -32,7 +32,7 @@ exports.getLandlordById = getLandlordById
 
 const updateMerchant = async (ctx, landlord_id) => {
 	let ll, llRows
-	llRows = await ctx.db.query(`UPDATE landlords SET merchant_id = ${ctx.request.body.merchant_id}, payment_set_up = true WHERE landlord_id = ${ctx.request.body.landlord_id} RETURNING *;`)
+	llRows = await ctx.db.query(`UPDATE landlords SET (merchant_id, payment_set_up) = ('${ctx.request.body.merchant_id}', true) RETURNING *;`)
 	ll = llRows.rows[0]
 	return ll
 }

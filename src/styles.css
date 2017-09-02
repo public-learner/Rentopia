@@ -151,4 +151,36 @@
   height: 100%;
 }
 
+.paymentSetupWarning {
+  text-align: center
+}
 
+.paymentOption {
+  display: inline-block;
+  text-align: center;
+}
+
+.fa-university {
+  color: black;
+  font-size: 20px;
+}
+
+.paymentOption img {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(236, 240, 241,1.0);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.paymentOption label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+.paymentOption label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid black;
+}
+.paymentOption label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
+}
