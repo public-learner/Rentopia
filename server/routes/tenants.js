@@ -90,7 +90,7 @@ router
 		userRows = await ctx.db.query(`SELECT * FROM tenants WHERE tenant_id = ${ctx.params.id};`)
 		ctx.body = userRows.rows[0]
 	})
-	.get('/:property_id', async (ctx, next) => {
+	.get('/property/:property_id', async (ctx, next) => {
 		// gets all tenants at a specific property
 		let results = props.getPropertyTenants(ctx, ctx.params.property_id)
 		if(results) {
