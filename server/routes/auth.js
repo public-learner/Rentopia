@@ -26,6 +26,7 @@ auth
 				const landlordOut = await landlords.createLandlord(ctx, user)
 				console.log(`Landlord created, user_id:  ${landlordOut.user_id}`)
 				// return the user that was created and the landlord that was created
+				//NEED TO FIX THIS TO NOT DISPLAY PASSWORDS	
 				output = {user: user, landlord: landlordOut}
 			} else {
 				// see if there is an active tenant, via email
@@ -36,11 +37,13 @@ auth
 					console.log(`tenant found, tenant_id:  ${tenant.tenant_id}`)
 					// retrieve the tenant data for this tenant
 					output = await tenants.retrieveActiveTenantData(ctx, tenant)
+					//NEED TO FIX THIS TO NOT DISPLAY PASSWORDS
 					output.user = user
 				} else {
 					// if not, create new tenant user not associated to a property
 					tenant = await tenants.createNewTenant(ctx, user)
 					console.log(`tenant created, tenant_id:  ${tenant.tenant_id}`)
+					//NEED TO FIX THIS TO NOT DISPLAY PASSWORDS
 					output = {user: user, tenant: tenant}
 				}
 			}
