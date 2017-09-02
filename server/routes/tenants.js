@@ -59,6 +59,25 @@ const createNewTenant = async (ctx, user, property_id) => {
 }
 exports.createNewTenant = createNewTenant
 
+const getLandlordTenants = async (ctx, landlord_id, condition) => {
+	//condition will be: all, act, in
+	let resultsRows, results
+	if(condition === 'all') {
+		resultsRows = await ctx.db.query(`SELECT tenants.*, users.user_name FROM tenants FULL OUTER JOIN users ON tenants.user_id = users.user_id FULL OUTER JOIN properties ON tenants.property_id = properties.property_id WHERE properties.landlord_id = ${landlord_id}`)
+		results = resultsRows.rows
+	} else if (condition === 'in') {
+		resultsRows = await ctx.db.query(`SELECT tenants.*, users.user_name FROM tenants FULL OUTER JOIN users ON tenants.user_id = users.user_id FULL OUTER JOIN properties ON tenants.property_id = properties.property_id WHERE properties.landlord_id = ${landlord_id} AND tenants.is_active = false`)
+		results = resultsRows.rows
+	} else if (condition === 'act') {
+		resultsRows = await ctx.db.query(`SELECT tenants.*, users.user_name FROM tenants FULL OUTER JOIN users ON tenants.user_id = users.user_id FULL OUTER JOIN properties ON tenants.property_id = properties.property_id WHERE properties.landlord_id = ${landlord_id} AND tenants.is_active = true;`)
+		results = resultsRows.rows
+	} else {
+		return null
+	}
+	return results
+}
+exports.getLandlordTenants = getLandlordTenants
+
 const retrieveActiveTenantData = async (ctx, tenant) => {
 	let property, docArray, messagesArray, transactions, broadcasts, otherTenants, landlord, output
 	property = await props.getProperty(ctx, tenant.property_id)
@@ -92,7 +111,7 @@ router
 	})
 	.get('/property/:property_id', async (ctx, next) => {
 		// gets all tenants at a specific property
-		let results = props.getPropertyTenants(ctx, ctx.params.property_id)
+		let results = await props.getPropertyTenants(ctx, ctx.params.property_id)
 		if(results) {
 			ctx.response.status = 302
 			ctx.body = results
@@ -136,20 +155,24 @@ router
 				ctx.body = tenant
 			}
 	})
-	// .post('/', async (ctx, next) => {
-	// 	// ctx.request.body = {tenant_email, property_id, rent, due_date, user}
-	// 	let tenant, obj
-	// 	obj = ctx.request.body
-	// 	if(!obj.user){
-	// 		obj.user = null
-	// 	}
-	// 	tenant = await checkForActiveTenant(ctx, ctx.user, ctx.tenant_email)
-	// 	if(tenant && tenant.property_id) {
-	// 		ctx.response.status = 403
-	// 		ctx.body = `Tenant is active `
-	// 	} else {
+	.get('/activedata/:tenant_id', async (ctx, next) => {
+		let tenant
+		tenant = await ctx.db.query(`SELECT * FROM tenants WHERE tenant_id = ${ctx.params.tenant_id};`)
+		tenant = tenant.rows[0]
+		ctx.body = await retrieveActiveTenantData(ctx, tenant)
+	})
+	.get('/landlord/all/:landlord_id/:condition', async (ctx, next) => {
+		// /:condition needs to be all, in, act
+		let results = await getLandlordTenants(ctx, ctx.params.landlord_id, ctx.params.condition)
+		if(results) {
+			ctx.response.body = 200
+			ctx.body = results
+		} else {
+			ctx.response.body = 400
+			ctx.body = 'Error retrieving landlord\'s tenants'
+		}
 
-	// 	}
-	// })
+	})
+
 exports.routes = router
 
