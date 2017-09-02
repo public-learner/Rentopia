@@ -43,9 +43,9 @@ class LandlordTransactions extends React.Component {
       )
     }
     return (
-      <div>
-        <div>Sorry! It looks like you haven't set up your payment information yet.</div>
-        <Link to='/proprietor/paymentsetup'>Set up payment</Link>
+      <div className="paymentSetupWarning">
+        <h4>Sorry! It looks like you haven't set up your payment information yet.</h4>
+        <button><Link to='/proprietor/paymentsetup'>Set up payment</Link></button>
       </div>
     )
   }

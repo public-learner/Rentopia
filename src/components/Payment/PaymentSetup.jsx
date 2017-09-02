@@ -176,30 +176,37 @@ class PaymentSetup extends React.Component {
               </Panel>
               <Panel className="fundingPanel" header="3. Funding Information" eventKey="3">
                   <h5>Select your desired payment method</h5>
-                  <label>Bank </label>
-                  <input className="paymentOption"
-                    type="radio" 
-                    value="bank" 
-                    checked={this.state.bankIsSelected} 
-                    onChange={this.handleOptionChange.bind(this)}>
-                  </input>
-                  <label>Venmo </label>
-                  <input className="paymentOption"
-                    type="radio" 
-                    value="venmo" 
-                    checked={!this.state.bankIsSelected}
-                    onChange={this.handleOptionChange.bind(this)}>
-                  </input>
+                  <div className="paymentOption">
+                    <label>
+                      <img src="http://www.freeiconspng.com/uploads/bank-icon-5.png" /><br/>
+                      <input className="paymentOption"
+                        type="radio" 
+                        value="bank" 
+                        checked={this.state.bankIsSelected} 
+                        onChange={this.handleOptionChange.bind(this)}>
+                      </input>
+                    </label>
+                  </div>
+                  <div className="paymentOption">
+                    <label>
+                      <img className="venmo" src="http://brand.venmo.com/img/logo-mark.png" /><br/>
+                      <input className="paymentOption"
+                        type="radio" 
+                        value="venmo" 
+                        checked={!this.state.bankIsSelected}
+                        onChange={this.handleOptionChange.bind(this)}>
+                      </input>
+                    </label>
+                  </div>
                   <div>{this.state.bankIsSelected && this.renderBankForm()}</div>
                   <div>{!this.state.bankIsSelected && this.renderVenmoForm()}</div>
               </Panel>
             </Accordion>
             <div className="paymentSetupSubmit">
-              <span>By clicking submit, you agree to our <Link to='termsofservice' className="link">Terms of Service </Link></span>
+              <span>By clicking submit, you agree to our <Link target="_blank" to='/termsofservice' className="link">Terms of Service </Link></span>
               <button type="submit"> Submit</button>
             </div>
           </form>
-          {this.state.fireRedirect && <Redirect to='proprietor/payment' />}
       </div>
     )
   }
