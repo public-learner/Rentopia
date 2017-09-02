@@ -40,6 +40,9 @@ class Header extends Component {
           <NavItem>
             <Link to='/proprietor/tenants' className="link">Tenants</Link>
           </NavItem>
+          <NavItem>
+            <Link to='/proprietor/payments' className="link">Payments</Link>
+          </NavItem>
         </Nav>
         <Nav pullRight>
           <NavDropdown title="Profile/Logout" id="nav-dropdown" onToggle={this.toggleDropdown.bind(this)}

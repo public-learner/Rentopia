@@ -20,10 +20,8 @@ export function userData(state = {}, action) {
 export function isLoggedIn(state = null, action) {
   switch(action.type) {
     case USER_LOGIN:
-      console.log('logged in reducer trueeee') 
       return true
     case USER_LOGOUT:
-      console.log('WHYYYYyyy!')
       return false
     // case CHECK_SESSION:
     //   return action.payload.data

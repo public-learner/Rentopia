@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import TenantSidebar from './TenantSidebar.jsx';
-import Payment from '../Payment/Payment.jsx';
+import PaymentForm from '../Payment/PaymentForm.jsx';
 import Modal from 'react-modal';
 
 // import { bindActionCreators } from 'redux';
@@ -72,7 +72,7 @@ class TenantDashboard extends Component {
           style={customStyles}
           contentLabel="Payment Modal"
         > 
-          <Payment />
+          <PaymentForm />
         </Modal>
       </div>
   	)

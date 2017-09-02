@@ -3,7 +3,7 @@ import { statesList, months, days, years } from './formHelperData'
 import { submerchantCreation } from '../../actions/paymentGetters'
 
 import { Accordion, Panel } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class PaymentSetup extends React.Component {
@@ -23,6 +23,7 @@ class PaymentSetup extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    console.log(this.props.landlordData, '1111111')
     let monthNum = months.indexOf(e.target.month.value) + 1
 
     let destination, accountNum, routingNum, phoneNum, venmoEmail
@@ -70,9 +71,14 @@ class PaymentSetup extends React.Component {
       tosAccepted: true, // need to do a terms of service thing
       masterMerchantAccountId: "" // inside of braintree.config.js
     }
-    submerchantCreation(params)
+    submerchantCreation(params, this.props.landlordData.landlord_id)
       .catch((err) => {
         alert(err.data)
+      })
+      .then((res) => {
+        this.setState({
+          fireRedirect: true
+        })
       })
   }
 
@@ -95,6 +101,9 @@ class PaymentSetup extends React.Component {
     return months.map((month, i) => {
       return (
         <option key={i}> {month} </option>
+      )
+      return (
+        <div>HELLO</div>
       )
     })
   }
@@ -186,11 +195,11 @@ class PaymentSetup extends React.Component {
               </Panel>
             </Accordion>
             <div className="paymentSetupSubmit">
-              <span>By clicking submit, you agree to our <Link to='/terms' className="link">Terms of Service </Link></span>
+              <span>By clicking submit, you agree to our <Link to='termsofservice' className="link">Terms of Service </Link></span>
               <button type="submit"> Submit</button>
             </div>
           </form>
-
+          {this.state.fireRedirect && <Redirect to='proprietor/payment' />}
       </div>
     )
   }

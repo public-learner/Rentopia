@@ -19,7 +19,6 @@ class Splash extends React.Component {
             <Route path='/signup' component={Signup} />
             <Route path='/proprietor' component={LandlordMain} />
             <Route path='/tenant' component={TenantMain} />
-            <Route path='/paymentsetup' component={PaymentSetup} />
           </Switch>
         </main>
       </div>
