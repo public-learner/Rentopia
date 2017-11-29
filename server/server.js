@@ -47,7 +47,6 @@ const redirToIndex = async (ctx, next) => {
 }
 
 const sendIndex = async (ctx, next) => {
-	console.log(ctx.path)
 	await send(ctx, 'index.html', { root: 'dist' })
 }
 
@@ -70,8 +69,8 @@ app.use(authFunc)
 api
 	.get('/', sendIndex)
 	.get('/bundle.js', sendBundle)
-	.get('/29584446bf7624d2f1bc24cf4874959f.png', async (ctx) => {
-		await send(ctx, '29584446bf7624d2f1bc24cf4874959f.png', { root: 'dist' })
+	.get('/29584446bf7624d2f1bc24cf4874959f.jpg', async (ctx) => {
+		await send(ctx, '29584446bf7624d2f1bc24cf4874959f.jpg', { root: 'dist' })
 	})
 
 api.use('/api/users', users.routes.routes())
@@ -90,7 +89,7 @@ app
 
 const port = process.env.PORT || 8000
 
-// app.use(sendIndex)
+app.use(sendIndex)
 
 app.listen(port, () => {
 	console.log('Listening on port: ', port)

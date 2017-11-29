@@ -41,16 +41,16 @@ const config = {
         MERCHANT_ACCOUNT_ID: JSON.stringify(process.env.MERCHANT_ACCOUNT_ID),
         AWS_ACCESSKEYID: JSON.stringify(process.env.AWS_ACCESSKEYID),
         AWS_SECRETACCESSKEY: JSON.stringify(process.env.AWS_SECRETACCESSKEY),
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+        NODE_ENV: JSON.stringify('production')
       },
     }),
-    new UglifyJSPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
-    })
+    }),
+    new UglifyJSPlugin()
   ]
 }
 
