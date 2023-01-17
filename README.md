@@ -2,14 +2,6 @@
 
   Open-source renting app project built in React for frontend, Node for backend
 
-## Table of Contents
-
-1. [Usage](#Usage)
-2. [Dependencies](#dependencies)
-3. [Development](#development)
-4. [Team](#team)
-5. [Contributing](#contributing)
-
 ## Dependencies
 
   React, Node, Webpack, Postgres, KOA, Jest, Bootstrap
