@@ -1,29 +1,19 @@
-# Rentopia
+# Renting app
 
   Suite life, Sweet Life.
-
-## Team
-
-  Ben Childs, Eric Fanning, Jordan Hoang, Shehbaz Sherwani
 
 ## Table of Contents
 
 1. [Usage](#Usage)
-1. [Dependencies](#dependencies)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-1. [Team](#team)
-1. [Contributing](#contributing)
-
-## Usage
-
-  
+2. [Dependencies](#dependencies)
+3. [Development](#development)
+    - [Installing Dependencies](#installing-dependencies)
+4. [Team](#team)
+5. [Contributing](#contributing)
 
 ## Dependencies
 
-  Node, Webpack, Postgres, KOA, React, Jest, Bootstrap
-
-## Development
+  React, Node, Webpack, Postgres, KOA, Jest, Bootstrap
 
 ### Getting started
 
