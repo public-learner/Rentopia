@@ -24,10 +24,10 @@
 
 ### [Postgres Installation Instructions] 
 
-Step 1. brew install postgresql
-Step 2. npm install -g pg
-Step 3. brew services start postgresql
-Step 4. in psql, run this query: CREATE DATABASE rentopia;
-Step 5. \q
-Step 6. create all tables in the db
-Step 7. run
+1. brew install postgresql
+2. npm install -g pg
+3. brew services start postgresql
+4. in psql, run this query: CREATE DATABASE rentopia;
+5. \q
+6. create all tables in the db
+7. run
