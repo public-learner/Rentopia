@@ -7,7 +7,6 @@
 1. [Usage](#Usage)
 2. [Dependencies](#dependencies)
 3. [Development](#development)
-    - [Installing Dependencies](#installing-dependencies)
 4. [Team](#team)
 5. [Contributing](#contributing)
 
@@ -21,19 +20,14 @@
   `npm i`
   `npm start`
 
-### [Github issue and Waffle.io workflow](https://github.com/JorBazFanChild/Rentopia/blob/master/waffle_workflow.md)
+### [Github issue and Waffle.io workflow]
 
-### [Postgres Installation Instructions](https://github.com/JorBazFanChild/Rentopia/blob/master/db/postgresql_readme.md) 
+### [Postgres Installation Instructions] 
 
-## Testing
-
-
-
-### Roadmap
-
-View the project roadmap [here](https://github.com/JorBazFanChild/Rentopia/issues)
-
-## Contributing
-
-See [PRESS-RELEASE.md](https://github.com/JorBazFanChild/Rentopia/blob/master/PRESS-RELEASE.md) to learn about PropMan.
-
+  Step 1. brew install postgresql
+  Step 2. npm install -g pg
+  Step 3. brew services start postgresql
+  Step 4. in psql, run this query: CREATE DATABASE rentopia;
+  Step 5. \q
+  Step 6. create all tables in the db
+  Step 7. run
