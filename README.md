@@ -1,6 +1,6 @@
 # Renting app
 
-  Suite life, Sweet Life.
+  Open-source renting app project built in React for frontend, Node for backend
 
 ## Table of Contents
 
